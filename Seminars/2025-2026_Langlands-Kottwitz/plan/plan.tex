@@ -1,0 +1,565 @@
+\documentclass[a4paper, reqno]{amsart} %a4paper
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%\usepackage[ngerman]{babel}
+\usepackage[english]{babel}
+
+\usepackage[margin=1.2in]{geometry}
+\usepackage{enumitem}
+\usepackage[bookmarks = true, pagebackref]{hyperref}
+\hypersetup{  %% Set up hyperref color
+	colorlinks=true,
+	linkcolor=magenta,
+	citecolor=magenta,
+	urlcolor=cyan,
+}
+\usepackage[all]{xy}
+\setcounter{tocdepth}{1}
+
+\usepackage{amsmath, amsthm, amssymb, bbm, mathrsfs,mathtools}
+\usepackage[alphabetic]{amsrefs} 
+\usepackage{varwidth}
+
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{question}[theorem]{Question}
+
+\theoremstyle{definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{construction}[theorem]{Construction}
+
+\numberwithin{equation}{section}
+
+%\mathbb-letters
+\newcommand{\mbA}{\mathbb{A}}
+\newcommand{\mbB}{\mathbb{B}}
+\newcommand{\mbC}{\mathbb{C}}
+\newcommand{\mbD}{\mathbb{D}}
+\newcommand{\mbE}{\mathbb{E}}
+\newcommand{\mbF}{\mathbb{F}}
+\newcommand{\mbG}{\mathbb{G}}
+\newcommand{\mbH}{\mathbb{H}}
+\newcommand{\mbI}{\mathbb{I}}
+\newcommand{\mbJ}{\mathbb{J}}
+\newcommand{\mbK}{\mathbb{K}}
+\newcommand{\mbL}{\mathbb{L}}
+\newcommand{\mbM}{\mathbb{M}}
+\newcommand{\mbN}{\mathbb{N}}
+\newcommand{\mbO}{\mathbb{O}}
+\newcommand{\mbP}{\mathbb{P}}
+\newcommand{\mbQ}{\mathbb{Q}}
+\newcommand{\mbR}{\mathbb{R}}
+\newcommand{\mbS}{\mathbb{S}}
+\newcommand{\mbT}{\mathbb{T}}
+\newcommand{\mbU}{\mathbb{U}}
+\newcommand{\mbV}{\mathbb{V}}
+\newcommand{\mbW}{\mathbb{W}}
+\newcommand{\mbX}{\mathbb{X}}
+\newcommand{\mbY}{\mathbb{Y}}
+\newcommand{\mbZ}{\mathbb{Z}}
+\newcommand{\Qp}{\mbQ_p}
+\newcommand{\Ql}{\mbQ_\ell}
+\newcommand{\Zp}{\mbZ_p}
+\newcommand{\Zl}{\mbZ_\ell}
+\newcommand{\mbvarphi}{\boldsymbol{\varphi}}
+
+%\mathcal-letters
+\newcommand{\mcA}{\mathcal{A}}
+\newcommand{\mcB}{\mathcal{B}}
+\newcommand{\mcC}{\mathcal{C}}
+\newcommand{\mcD}{\mathcal{D}}
+\newcommand{\mcE}{\mathcal{E}}
+\newcommand{\mcF}{\mathcal{F}}
+\newcommand{\mcG}{\mathcal{G}}
+\newcommand{\mcH}{\mathcal{H}}
+\newcommand{\mcI}{\mathcal{I}}
+\newcommand{\mcJ}{\mathcal{J}}
+\newcommand{\mcK}{\mathcal{K}}
+\newcommand{\mcL}{\mathcal{L}}
+\newcommand{\mcM}{\mathcal{M}}
+\newcommand{\mcN}{\mathcal{N}}
+\newcommand{\mcO}{\mathcal{O}}
+\newcommand{\mcP}{\mathcal{P}}
+\newcommand{\mcQ}{\mathcal{Q}}
+\newcommand{\mcR}{\mathcal{R}}
+\newcommand{\mcS}{\mathcal{S}}
+\newcommand{\mcT}{\mathcal{T}}
+\newcommand{\mcU}{\mathcal{U}}
+\newcommand{\mcV}{\mathcal{V}}
+\newcommand{\mcW}{\mathcal{W}}
+\newcommand{\mcX}{\mathcal{X}}
+\newcommand{\mcY}{\mathcal{Y}}
+\newcommand{\mcZ}{\mathcal{Z}}
+
+%\mathfrak-letters
+\newcommand{\mfA}{\mathfrak{A}}
+\newcommand{\mfB}{\mathfrak{B}}
+\newcommand{\mfC}{\mathfrak{C}}
+\newcommand{\mfD}{\mathfrak{D}}
+\newcommand{\mfE}{\mathfrak{E}}
+\newcommand{\mfF}{\mathfrak{F}}
+\newcommand{\mfG}{\mathfrak{G}}
+\newcommand{\mfH}{\mathfrak{H}}
+\newcommand{\mfI}{\mathfrak{I}}
+\newcommand{\mfJ}{\mathfrak{J}}
+\newcommand{\mfK}{\mathfrak{K}}
+\newcommand{\mfL}{\mathfrak{L}}
+\newcommand{\mfM}{\mathfrak{M}}
+\newcommand{\mfN}{\mathfrak{N}}
+\newcommand{\mfO}{\mathfrak{O}}
+\newcommand{\mfP}{\mathfrak{P}}
+\newcommand{\mfQ}{\mathfrak{Q}}
+\newcommand{\mfR}{\mathfrak{R}}
+\newcommand{\mfS}{\mathfrak{S}}
+\newcommand{\mfT}{\mathfrak{T}}
+\newcommand{\mfU}{\mathfrak{U}}
+\newcommand{\mfV}{\mathfrak{V}}
+\newcommand{\mfW}{\mathfrak{W}}
+\newcommand{\mfX}{\mathfrak{X}}
+\newcommand{\mfY}{\mathfrak{Y}}
+\newcommand{\mfZ}{\mathfrak{Z}}
+
+\newcommand{\mfa}{\mathfrak{a}}
+\newcommand{\mfb}{\mathfrak{b}}
+\newcommand{\mfc}{\mathfrak{c}}
+\newcommand{\mfd}{\mathfrak{d}}
+\newcommand{\mfe}{\mathfrak{e}}
+\newcommand{\mff}{\mathfrak{f}}
+\newcommand{\mfg}{\mathfrak{g}}
+\newcommand{\mfh}{\mathfrak{h}}
+\newcommand{\mfi}{\mathfrak{i}}
+\newcommand{\mfj}{\mathfrak{j}}
+\newcommand{\mfk}{\mathfrak{k}}
+\newcommand{\mfl}{\mathfrak{l}}
+\newcommand{\mfm}{\mathfrak{m}}
+\newcommand{\mfn}{\mathfrak{n}}
+\newcommand{\mfo}{\mathfrak{o}}
+\newcommand{\mfp}{\mathfrak{p}}
+\newcommand{\mfq}{\mathfrak{q}}
+\newcommand{\mfr}{\mathfrak{r}}
+\newcommand{\mfs}{\mathfrak{s}}
+\newcommand{\mft}{\mathfrak{t}}
+\newcommand{\mfu}{\mathfrak{u}}
+\newcommand{\mfv}{\mathfrak{v}}
+\newcommand{\mfw}{\mathfrak{w}}
+\newcommand{\mfx}{\mathfrak{x}}
+\newcommand{\mfy}{\mathfrak{y}}
+\newcommand{\mfz}{\mathfrak{z}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\lr}{\longrightarrow}
+\newcommand{\YL}[1]{{\color{blue} {#1}}}
+\newcommand{\ov}{\overline}
+\newcommand{\simto}{\overset{\sim}{\to}}
+\newcommand{\simlr}{\overset{\sim}{\lr}}
+
+
+%inverse diagonal dots
+\makeatletter
+\def\iddots{\mathinner{\mkern1mu\raise\p@
+\vbox{\kern7\p@\hbox{.}}\mkern1mu
+\raise4\p@\hbox{.}\mkern1mu\raise7\p@\hbox{.}\mkern1mu}}
+\makeatother
+
+
+
+\newenvironment{altenumerate}
+	{\begin{list}
+			{(\theenumi) }
+			{\usecounter{enumi}
+				\setlength{\labelwidth}{0pt}
+				\setlength{\labelsep}{0pt}
+				\setlength{\leftmargin}{0pt}
+				\setlength{\itemsep}{\the\smallskipamount}
+				\renewcommand{\theenumi}{\arabic{enumi}}
+		}}
+		{\end{list}}
+	% the following is a "level 2" altenumerate
+	\newenvironment{altenumerate2}
+	{\begin{list}
+			{\textup{(\theenumii)} }
+			{\usecounter{enumii}
+				\setlength{\labelwidth}{0pt}
+				\setlength{\labelsep}{0pt}
+				\setlength{\leftmargin}{2em}
+				\setlength{\itemsep}{\the\smallskipamount}
+				\renewcommand{\theenumii}{\roman{enumii}}
+		}}
+		{\end{list}}
+
+
+
+	\newenvironment{altitemize}
+	{\begin{list}
+			{$\bullet$}
+			{\setlength{\labelwidth}{0pt}
+				\setlength{\itemindent}{5pt}
+				\setlength{\labelsep}{5pt}
+				\setlength{\leftmargin}{0pt}
+				\setlength{\itemsep}{\the\smallskipamount}
+		}}
+		{\end{list}}
+
+%Categories
+\newcommand{\Nilp}{\operatorname{Nilp}}
+\newcommand{\QCoh}{\operatorname{QCoh}}
+\newcommand{\Sch}{\operatorname{Sch}}
+\newcommand{\Rep}{\operatorname{Rep}}
+\newcommand{\Mod}{\operatorname{Mod}}
+
+%Functors
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\Mor}{\operatorname{Mor}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\Ext}{\operatorname{Ext}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Herm}{\operatorname{Herm}}
+\newcommand{\Lie}{\operatorname{Lie}}
+\newcommand{\Sp}{\operatorname{Sp}}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Spa}{\operatorname{Spa}}
+\newcommand{\Spd}{\operatorname{Spd}}
+\newcommand{\Spf}{\operatorname{Spf}}
+\newcommand{\Proj}{\operatorname{Proj}}
+\newcommand{\codim}{\operatorname{codim}}
+\newcommand{\Br}{\operatorname{Br}}
+\newcommand{\Quot}{\operatorname{Quot}}
+\newcommand{\Ind}{\operatorname{Ind}}
+\newcommand{\colim}{\operatorname{colim}}
+
+
+
+\newcommand{\GL}{\operatorname{GL}}
+\newcommand{\SL}{\operatorname{SL}}
+\newcommand{\Her}{\operatorname{Her}}
+\newcommand{\PGL}{\operatorname{PGL}}
+
+%Arbitrary
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\Gal}{\operatorname{Gal}}
+\newcommand{\lcm}{\operatorname{lcm}}
+\newcommand{\len}{\operatorname{len}}
+\newcommand{\Stab}{\operatorname{Stab}}
+\renewcommand{\Im}{\operatorname{Im}}
+
+
+
+%mathrm-Type Shortcuts
+%Short words
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\proet}{\mathrm{pro\acute{e}t}}
+\newcommand{\ad}{\mathrm{ad}}
+\newcommand{\rig}{\mathrm{rig}}
+\newcommand{\trdeg}{\mathrm{trdeg}}
+\newcommand{\Sh}{\mathrm{Sh}}
+\newcommand{\cha}{\mathrm{char}}
+\newcommand{\modulo}{\mathrm{\ mod\ }}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\Fil}{\operatorname{Fil}}
+\newcommand{\Tor}{\operatorname{Tor}}
+\newcommand{\Orb}{\operatorname{Orb}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\Supp}{\operatorname{Supp}}
+\newcommand{\Def}{\operatorname{Def}}
+\newcommand{\Int}{\operatorname{Int}}
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\Perf}{\mathrm{Perf}}
+\newcommand{\red}{\mathrm{red}}
+\newcommand{\rk}{\mathrm{rk}}
+
+
+%Latex Shortcuts
+\newcommand{\mr}{\mathrm}
+\newcommand{\wt}{\widetilde}
+\newcommand{\wh}{\widehat}
+\newcommand{\Ltensor}{\stackrel{\BL}{\otimes}}
+
+
+
+	
+	
+
+\title{Reading seminar 2025 Fall}	
+\author{Yu LUO}
+%\address{University of Wisconsin-Madison, Department of Mathematics, 480 Lincoln Drive,	Madison, WI 53706, USA}
+%\email{yluo237@wisc.edu} 
+	
+\date{\today}
+	
+\begin{document}
+
+\maketitle
+		
+\section{Langlands-Kottwitz methods on modular curve}
+The Langlands program is a central topic in mathematics, relating algebraic geometry, number theory, and representation theory.
+It predicts deep relationships between automorphic representations and Galois representations. Let $G$ be an reductive group over a global field $F$ and let $\wh{G}$ be its dual group. Roughly speaking, the Langlands correspondence is searching for the relation between
+\begin{equation*}
+\bigl\{
+\text{Automorphic representation of $G(\mbA_F)$}
+\bigr\}
+\longleftrightarrow
+\bigl\{
+\text{Galois representation $\Gamma_F\to\wh{G}$}
+\bigr\}
+\end{equation*}
+The bijection are excepted to satisfy certain nice properties, for example, we except the $L$-function constructed in two sides (which are in a totally different flavor) agrees.
+
+Shimura varieties are certain algebraic varieties defined by group-theoretic data. Their cohomology carry both Hecke actions and Galois actions, which allows one to prove important instances of the Langlands correspondence. The Langlands-Kottwitz method \cite{Langlands77,Langlands79-1,Langlands79-2,Kottwitz92} aims to study the cohomology of Shimura varieties via their integral models and their reduction mod $p$. 
+The aim of this reading seminar is to realize this idea over the modular curves, following the master thesis of Peter Scholze \cite{Scholze-MC}. 
+
+
+Let $X$ be a variety over a number field $K$. Recall that the Hasse-Weil zeta function of $X$ is defined as the Euler product of local factors:
+$$
+\zeta(X,s):=\prod_{v\text{ finite places of }K}\zeta_v(X_v,s),
+$$
+where, for each finite place $v$, the local factor is given by
+$$
+\zeta(X_v,s):=\prod_{i=0}^{2\dim X}\det(1-\Phi_q q^{-s}|H^i_c(X\otimes_{K_v}\ov{K}_v,\ov{\mbQ}_\ell)^{I_{K_v}})^{(-1)^i}.
+$$
+Here, $I_{K_v}\subset \Gal(\ov{K}_v,K_v)$ denotes the inertia subgroup and $\Phi_q$ is a lift of the Frobenius element from the residue field $\mbF_q$. The Hasse–Weil zeta function encodes important information about the associated Galois representations.
+
+
+Let $\mcM_m/\mbZ[1/m]$ be the moduli space of modular curve with level-$m$-structure and let $\ov{\mcM}_m$ be its compactification. The ultimate goal is to prove the following identity:
+\begin{equation}\label{equ:main-theorem}
+\zeta(\ov{\mcM}_{m,\mbQ},s)=\prod_{\Pi_{\mathrm{disc}}(\GL_2(\mbA),1)}L\Bigl(\pi,s-\frac{1}{2}\Bigr)^{\frac{1}{2}m(\pi)\chi(\pi_\infty)\dim \pi_f^{K_m}},
+\end{equation}
+where:
+\begin{altitemize}
+\item $K_m=\{g\in \GL(\wh{\mbZ}) | \, g\equiv 1 \mod m\}$ is the principal congruence subgroup of level $m$.
+\item $\Pi_{\mathrm{disc}}(\GL_2(\mbA),1)$ is the set of automorphic representations $\pi=\pi_f\otimes\pi_\infty$ of $\GL_2(\mbA)$ that occurs discretely in $L^2(\GL_2(\mbQ)\mbR^\times\backslash \GL_2(\mbA))$, such that $\pi_\infty$ has trivial central and infinitesimal character.
+\item $m(\pi)$ is the multiplicity of $\pi$ in the discrete spectrum, which equals $1$ by the multiplicity-one theorem.
+\item $\chi(\pi_\infty)$ is $2$ if $\pi_\infty$ is a character and $-2$ otherwise.
+\end{altitemize}
+
+The rough idea toward the formula \eqref{equ:main-theorem} is as follows:
+
+\noindent\textbf{Step 1.} Suppose $\ov{\mcM}_m$ is smooth over $\mbZ_{(p)}$. Then, by the proper base change and the Lefschetz trace formula, the Hasse-Weil local factor at the place $p$ can be computed using point counting formula:
+\begin{equation*}
+\log \zeta(\ov{\mcM}_{m,\mbQ_p},s)=\sum_{r\geq 0}|\ov{\mcM}_{m}(\mbF_{p^r})|\frac{p^{-rs}}{r},
+\end{equation*}
+where $|\ov{\mcM}_{m}(\mbF_{p^r})|$ counts the $\mbF_{p^r}$-points of the special fiber of the modular curve.
+
+However, several issues arise in general:
+\begin{altenumerate}
+\item The moduli integration of $\ov{\mcM}_m$ is only defined over $\mbZ[1/m]$. To extend it to a well-behaved integral model at $p\mid m$, one must carefully revisit the moduli interpretation of modular curves.
+This involves the notion of Drinfeld level structures, as developed in \cite{Katz-Mazur}.
+\item Even when an integral model is availble over $\mbZ_{(p)}$, it is generally not smooth. To relate the Hasse-Weil zeta function over the generic fiber to point counts over the special fiber, one must go beyond the proper base change theorem and instead compute nearby cycles, incorporating semisimple $L$-functions. This requires a deeper analysis of the geometry of the integral model and the use of more advanced tools from algebraic geometry.
+\item The modular curve are not compact, so one must consider their compactifications and compute the corresponding local factors there.
+\end{altenumerate}
+
+\noindent\textbf{Step 2.} Using the moduli interpretation of modular curves, the point counting for $|\ov{\mcM}_{m}(\mbF_{p^r})|$ reduces to counting elliptic curves with additional structure over finite fields up to quasi-isogeny. 
+By applying the theories of Tate modules and Dieudonn\'e modules, this point-counting problem can be further translated into a lattice-counting problems over $\mbA_{f}$. 
+This is analogous to the complex uniformization of elliptic curves over $\mbC$, where elliptic curves correspond to rank two lattices in the complex plane. 
+Similarly, in the $p$-adic setting, the classification of elliptic curves can be interpreted via certain lattice data.
+
+The resulting lattice counting problem then can be expressed in terms of orbital integrals. 
+A technical subtlety arises at the prime $p$: morphism between Dieudonn\'e modules are defined only up to Frobenius twists, due to the semi-linear nature of Dieudonn\'e theory. As a result, the relevant orbital integrals at $p$ are twisted orbital integrals. To relate them to standard orbital integrals, one must invoke the base change fundamental lemma.
+
+
+\noindent\textbf{Step 3.} 
+Having identified the Hasse-Weil zeta function with a sum of orbital integrals, we now apply the Arthur-Selberg trace formula to express this in terms of traces on spaces of automorphic representations. The final step is to compute the trace of the relevant test function and extract the spectral side of the formula.
+
+A technical remark: since we are working with the ``semisimple'' version of the Hasse-Weil zeta function, a more refined analysis of the cohomology of modular curves is required to recover the full genuine Hasse-Weil zeta function.
+
+\section{Talks}
+Below is a rough plan for the seminar, can be more explicit and provide references later.
+\subsection{Talk : Elliptic curves}
+\begin{altitemize}
+\item[Goal:] review basic properties of elliptic curves.
+\item[Content:] isogeny, Tate module, elliptic curve over DVR.
+\item[Reference:]
+\end{altitemize}
+
+
+\subsection{Talk : Finite group scheme and Dieudonn\'e module}
+\begin{altitemize}
+\item[Goal:] discuss Dieudonne theory.
+\item[Content:] basic result on the finite group scheme and Dieudonne theory.
+\item[Reference:]
+\end{altitemize}
+
+\subsection{Talk : Elliptic curves over finite field}
+\begin{altitemize}
+\item[Goal:] discuss elliptic curve over finite field.
+\item[Content:] isogeny, p-torsions and Dieudonne theory of elliptic curve. Endomorphism of elliptic curves. Honda–Tate theory (\cite[Theorem 10.4]{Scholze-MC}).
+\item[Reference:]
+\end{altitemize}
+
+
+\subsection{Talk : Modular curves}
+\begin{altitemize}
+\item[Goal:] cover \cite[\S 4]{Scholze-MC}.
+\item[Content:] modular curve with principal level at good reduction place. If time permit, talk about compactifying modular curves via generalized elliptic curves.
+\item[Reference:] \cite{Deligne-Rapoport}.
+\end{altitemize}
+
+
+
+\subsection{Talk : \'Etale cohomology and crystalline cohomology}
+\begin{altitemize}
+\item[Goal:] overview of \'etale cohomology and crystalline cohomology.
+\item[Content:] definition of the \'etale cohomology. Include proper base change and Lefschetz trace formula. Relating $H^1$ with \'etale fundamental group and compute the it for elliptic curves. Constructible sheaf. 
+Survey the weight-monodromy conjecture. Give a quick overview of the crystalline cohomology. Focus on the case of elliptic curve and its relation to the Dieudonn\'e theory.
+\item[Reference:] \cite{Deligne-Rapoport}.
+\end{altitemize}
+
+
+\subsection{Talk : Counting point: good reduction}
+\begin{altitemize}
+\item[Goal:] cover \cite[\S 5]{Scholze-MC}.
+\item[Content:] discuss the point counting for elliptic curves at good reduction place and find the local zeta function (without compactification). This involves how to relate elliptic curve over finite field to some lattices in the adeles. 
+Define orbital integral and twisted orbital integral, relate the lattice count with orbital integrals.
+\item[Reference:] \cite[\S 5]{Scholze-MC}.
+\end{altitemize}
+
+
+
+\subsection{Talk : Drinfeld level structure} 
+\begin{altitemize}
+\item[Goal:] cover \cite[\S 6]{Scholze-MC}.
+\item[Content:] discuss the Drinfeld level structure, define the integral model of modular curve at bad reduction place. If time permit, discuss its local structure and compactification.
+\item[Reference:] \cite{Katz-Mazur} and \cite{Huang-Thesis}.
+\end{altitemize}
+
+
+\subsection{Talk : Nearby cycles of \'etale cohomology}
+\begin{altitemize}
+\item[Goal:] cover the discussions in \cite[\S 8]{Scholze-MC} before \cite[Corollary 8.5]{Scholze-MC}.
+\item[Content:] discuss derived category of constructible sheaf. Discuss six functor and nearby cycles of \'etale cohomology and illustrate its geometric intuition.  Calculate the nearby cycles for some special cases. 
+\item[Reference:] \cite[\S 2]{RZ82}.
+\end{altitemize}
+
+
+
+\subsection{Talk : The semisimple local zeta factor}
+\begin{altitemize}
+\item[Goal:] cover \cite[\S 7]{Scholze-MC}.
+\item[Content:] define and study the semisimple local zeta factor.
+\item[Reference:] \cite[\S 3]{Haines-Ngo} and \cite{Rapoport-simisimpletrace}.
+\end{altitemize}
+
+
+\subsection{Talk : Counting point: bad reduction}
+\begin{altitemize}
+\item[Goal:] complete \cite[\S 8]{Scholze-MC}. Prove \cite[Corollary 9.6]{Scholze-MC} assuming \cite[Theorem 9.3]{Scholze-MC}. Prove \cite[Corollary 9.8]{Scholze-MC}. Conclude \cite[Corollary 10.1]{Scholze-MC}.
+\item[Content:] 
+\item[Reference:] 
+\end{altitemize}
+
+
+\subsection{Talk : Representation of $p$-adic group}
+\begin{altitemize}
+\item[Goal:] overview of representation of $p$-adic group.
+\item[Content:] smooth, admissible representation, Hecke algebra and relation to representation, Parabolic induction and parahoric induction. Supercuspidal representation.
+\item[Reference:] 
+\end{altitemize}
+
+
+\subsection{Talk : Trace and character theory of local representation}
+\begin{altitemize}
+\item[Goal:] overview of trace and character theory of local representation.
+\item[Content:] trace and character theory of local representation. Weyl’s integration formula and its twisted version.
+\item[Reference:] 
+\end{altitemize}
+
+
+
+\subsection{Talk : Bernstein center}
+\begin{altitemize}
+\item[Goal:] cover \cite[\S 2]{Scholze-MC}.
+\item[Content:] 
+\item[Reference:] \cite{Bernstein-center}, \cite{RZhang-survey}.
+\end{altitemize}
+
+
+\subsection{Talk : Local Langlands correspondence, functoriality, and base change}
+\begin{altitemize}
+\item[Goal:] survey local Langlands correspondence, motivate the base change problem.
+\item[Content:] Tempered representation, Local Langlands correspondence, Satake correspondence, base change lift for $\GL(2)$.
+\item[Reference:] 
+\end{altitemize}
+
+\subsection{Talk : Base change fundamental lemma}
+\begin{altitemize}
+\item[Goal:] cover \cite[\S 3]{Scholze-MC}.
+\item[Content:] 
+\item[Reference:] \cite{RZhang-survey}.
+\end{altitemize}
+
+
+\subsection{Talk : Semisimple trace of Frobenius as a twisted orbital integral}
+\begin{altitemize}
+\item[Goal:] complete \cite[\S 9]{Scholze-MC}.
+\item[Content:] 
+\item[Reference:] 
+\end{altitemize}
+
+
+
+
+\subsection{Talk : Langlands-Kottwitz approach}
+\begin{altitemize}
+\item[Goal:] complete \cite[\S 10]{Scholze-MC}.
+\item[Content:] review of computations in good reduction and bad reduction. Apply base change fundamental lemma, and use Honda-Tate theory to further simplify the formula. 
+\item[Reference:] 
+\end{altitemize}
+
+\subsection{Talk : Langlands-Kottwitz approach: boundary}
+\begin{altitemize}
+\item[Goal:] cover \cite[\S 11]{Scholze-MC}.
+\item[Content:] compactification of modular curve. Computation of boundary. Point-counting on the boundary.
+\item[Reference:] 
+\end{altitemize}
+
+
+\subsection{Talk : Automorphic representation of $\GL_2$}
+\begin{altitemize}
+\item[Goal:] overview of automorphic representation of $\GL_2$.
+\item[Content:] automorphic representation for $\GL_2$. Admissible representation, discrete series. Spectral decomposition.
+\item[Reference:] 
+\end{altitemize}
+
+
+\subsection{Talk : Arthur-Selberg trace formula}
+\begin{altitemize}
+\item[Goal:] Cover \cite[\S 12]{Scholze-MC}.
+\item[Content:] 
+\item[Reference:] 
+\end{altitemize}
+
+
+
+\subsection{Talk : Comparison of the Lefschetz and Arthur–Selberg Trace Formula}
+\begin{altitemize}
+\item[Goal:] Cover \cite[\S 13]{Scholze-MC}.
+\item[Content:] 
+\item[Reference:] 
+\end{altitemize}
+
+
+
+%\begin{thebibliography}{AB}			
+%\bibitem[IHES Project]{CLH}
+%Chen M, LUO Y, Hou J - On a Theorem of Mingfeng Chen, and the proof of the Riemann hypothesis,
+%\emph{unpublished} 			
+%\end{thebibliography}
+
+\bibliographystyle{alpha}
+\bibliography{reference}
+		
+\end{document}

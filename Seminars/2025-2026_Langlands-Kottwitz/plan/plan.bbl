@@ -1,0 +1,168 @@
+% \bib, bibdiv, biblist are defined by the amsrefs package.
+\begin{bibdiv}
+\begin{biblist}
+
+\bib{Bernstein-center}{incollection}{
+      author={Bernstein, J.~N.},
+       title={Le ``centre'' de {B}ernstein},
+        date={1984},
+   booktitle={Representations of reductive groups over a local field},
+      editor={Deligne, P.},
+      series={Travaux en Cours},
+   publisher={Hermann, Paris},
+       pages={1\ndash 32},
+      review={\MR{771671}},
+}
+
+\bib{Deligne-Rapoport}{incollection}{
+      author={Deligne, P.},
+      author={Rapoport, M.},
+       title={Les sch\'emas de modules de courbes elliptiques},
+        date={1973},
+   booktitle={Modular functions of one variable, {II} ({P}roc. {I}nternat.
+  {S}ummer {S}chool, {U}niv. {A}ntwerp, {A}ntwerp, 1972)},
+      series={Lecture Notes in Math.},
+      volume={Vol. 349},
+   publisher={Springer, Berlin-New York},
+       pages={143\ndash 316},
+      review={\MR{337993}},
+}
+
+\bib{Haines-Ngo}{article}{
+      author={Haines, T.},
+      author={Ng\^o, B.~C.},
+       title={Nearby cycles for local models of some {S}himura varieties},
+        date={2002},
+        ISSN={0010-437X,1570-5846},
+     journal={Compositio Math.},
+      volume={133},
+      number={2},
+       pages={117\ndash 150},
+         url={https://doi.org/10.1023/A:1019666710051},
+      review={\MR{1923579}},
+}
+
+\bib{Huang-Thesis}{article}{
+      author={Huang, Yu-Liang},
+       title={Integral models of modular curves and their reduction modulo
+  $p$},
+        date={2016},
+  eprint={https://perso.univ-rennes1.fr/matthieu.romagny/etudiants/Huang.pdf},
+}
+
+\bib{Katz-Mazur}{book}{
+      author={Katz, Nicholas~M.},
+      author={Mazur, Barry},
+       title={Arithmetic moduli of elliptic curves},
+      series={Annals of Mathematics Studies},
+   publisher={Princeton University Press, Princeton, NJ},
+        date={1985},
+      volume={108},
+        ISBN={0-691-08349-5; 0-691-08352-5},
+         url={https://doi.org/10.1515/9781400881710},
+      review={\MR{772569}},
+}
+
+\bib{Kottwitz92}{article}{
+      author={Kottwitz, Robert~E.},
+       title={Points on some {S}himura varieties over finite fields},
+        date={1992},
+        ISSN={0894-0347,1088-6834},
+     journal={J. Amer. Math. Soc.},
+      volume={5},
+      number={2},
+       pages={373\ndash 444},
+         url={https://doi.org/10.2307/2152772},
+      review={\MR{1124982}},
+}
+
+\bib{Langlands77}{article}{
+      author={Langlands, R.~P.},
+       title={Shimura varieties and the {S}elberg trace formula},
+        date={1977},
+        ISSN={0008-414X,1496-4279},
+     journal={Canadian J. Math.},
+      volume={29},
+      number={6},
+       pages={1292\ndash 1299},
+         url={https://doi.org/10.4153/CJM-1977-129-2},
+      review={\MR{498400}},
+}
+
+\bib{Langlands79-2}{incollection}{
+      author={Langlands, R.~P.},
+       title={Automorphic representations, {S}himura varieties, and motives.
+  {E}in {M}\"archen},
+        date={1979},
+   booktitle={Automorphic forms, representations and {$L$}-functions ({P}roc.
+  {S}ympos. {P}ure {M}ath., {O}regon {S}tate {U}niv., {C}orvallis, {O}re.,
+  1977), {P}art 2},
+      series={Proc. Sympos. Pure Math.},
+      volume={XXXIII},
+   publisher={Amer. Math. Soc., Providence, RI},
+       pages={205\ndash 246},
+      review={\MR{546619}},
+}
+
+\bib{Langlands79-1}{article}{
+      author={Langlands, R.~P.},
+       title={On the zeta functions of some simple {S}himura varieties},
+        date={1979},
+        ISSN={0008-414X,1496-4279},
+     journal={Canadian J. Math.},
+      volume={31},
+      number={6},
+       pages={1121\ndash 1216},
+         url={https://doi.org/10.4153/CJM-1979-102-1},
+      review={\MR{553157}},
+}
+
+\bib{Rapoport-simisimpletrace}{incollection}{
+      author={Rapoport, M.},
+       title={On the bad reduction of {S}himura varieties},
+        date={1990},
+   booktitle={Automorphic forms, {S}himura varieties, and {$L$}-functions,
+  {V}ol.\ {II} ({A}nn {A}rbor, {MI}, 1988)},
+      series={Perspect. Math.},
+      volume={11},
+   publisher={Academic Press, Boston, MA},
+       pages={253\ndash 321},
+      review={\MR{1044832}},
+}
+
+\bib{RZ82}{article}{
+      author={Rapoport, M.},
+      author={Zink, Th.},
+       title={\"uber die lokale {Z}etafunktion von {S}himuravariet\"aten.
+  {M}onodromiefiltration und verschwindende {Z}yklen in ungleicher
+  {C}harakteristik},
+        date={1982},
+        ISSN={0020-9910,1432-1297},
+     journal={Invent. Math.},
+      volume={68},
+      number={1},
+       pages={21\ndash 101},
+         url={https://doi.org/10.1007/BF01394268},
+      review={\MR{666636}},
+}
+
+\bib{Scholze-MC}{article}{
+      author={Scholze, Peter},
+       title={The {L}anglands-{K}ottwitz approach for the modular curve},
+        date={2011},
+        ISSN={1073-7928,1687-0247},
+     journal={Int. Math. Res. Not. IMRN},
+      number={15},
+       pages={3368\ndash 3425},
+         url={https://doi.org/10.1093/imrn/rnq225},
+      review={\MR{2822177}},
+}
+
+\bib{RZhang-survey}{article}{
+      author={Zhang, Robin},
+       title={Bernstein center and {S}cholze's base change},
+      eprint={https://math.mit.edu/~robinz/papers.html},
+}
+
+\end{biblist}
+\end{bibdiv}
