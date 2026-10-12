@@ -2483,15 +2483,16 @@ body[data-not-sent] > #vis-container ~ #not-sent {
         <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
       </marker>
     </defs>
-  </svg><div id="vis-container"><h2 class="sr-only">Interactive lattice sketch of the EKOR indices (c₊, c₋) at maximal parahoric level, shaded by Bruhat–Tits type, with sliders for n and h.</h2>
-<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;margin:0.5rem 0;font-size:14px;color:var(--text-secondary)">
-<label style="display:flex;align-items:center;gap:8px">n <input type="range" id="nIn" min="2" max="10" step="1" value="5" style="width:140px"><span id="nOut" style="color:var(--text-primary);font-weight:500;min-width:20px">5</span></label>
-<label style="display:flex;align-items:center;gap:8px">h <input type="range" id="hIn" min="0" max="5" step="1" value="2" style="width:140px"><span id="hOut" style="color:var(--text-primary);font-weight:500;min-width:20px">2</span></label>
-<span id="meta" style="font-size:13px">ε = 1, r = 1</span>
+  </svg><div id="vis-container"><div style="max-width:680px;margin:0 auto">
+<h2 class="sr-only">Interactive lattice sketch of the EKOR indices (c₊, c₋) of the Rapoport–Zink space 𝒩_n^[h] at maximal parahoric level, shaded by Bruhat–Tits type, with sliders for n and h.</h2>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;margin:0.5rem 0;font-size:14px;color:var(--text-secondary,#52514e)">
+<label style="display:flex;align-items:center;gap:8px">n <input type="range" id="nIn" min="2" max="10" step="1" value="5" style="width:130px"><span id="nOut" style="color:var(--text-primary,#0b0b0b);font-weight:500;min-width:20px">5</span></label>
+<label style="display:flex;align-items:center;gap:8px">h <input type="range" id="hIn" min="0" max="5" step="1" value="2" style="width:130px"><span id="hOut" style="color:var(--text-primary,#0b0b0b);font-weight:500;min-width:20px">2</span></label>
+<span id="meta" style="font-size:13px"></span>
 </div>
-<svg id="plot" width="100%" viewBox="0 0 680 330" role="img" aria-labelledby="ptitle pdesc">
-<title id="ptitle">EKOR index lattice at maximal parahoric level</title>
-<desc id="pdesc">Lattice points (c₊, c₋) with 0 ≤ c₊ ≤ n − h and 0 ≤ c₋ ≤ h. A purple vertical strip marks c₊ &lt; (n − h)/2 and a teal horizontal strip marks c₋ &lt; h/2. Their union is the L-shaped set of basic EKOR indices, and each basic point is labeled with its dimension c₊ + c₋.</desc>
+<svg id="plot" width="100%" viewBox="0 0 680 280" role="img" aria-labelledby="ptitle pdesc" style="display:block;max-width:680px">
+<title id="ptitle">EKOR index lattice of 𝒩_n^[h] at maximal parahoric level</title>
+<desc id="pdesc">Lattice points (c₊, c₋) with 0 ≤ c₊ ≤ n − h and 0 ≤ c₋ ≤ h. A purple vertical strip marks c₊ &lt; (n − h)/2 and a teal horizontal strip marks c₋ &lt; h/2. Their union is the L-shaped set of EKOR indices of the Rapoport–Zink space 𝒩_n^[h], and each such point is labeled with its dimension c₊ + c₋.</desc>
 <defs>
 <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></marker>
 <pattern id="hatchP" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#7F77DD" stroke-width="1.2" stroke-opacity="0.55"></line></pattern>
@@ -2499,20 +2500,23 @@ body[data-not-sent] > #vis-container ~ #not-sent {
 </defs>
 <g id="layer"></g>
 </svg>
-<div id="info" style="font-size:13px;line-height:1.6;color:var(--text-secondary);min-height:4.8em;margin:0.25rem 0 0.75rem"></div>
-<div style="display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--text-secondary)">
+<div id="info" style="font-size:13px;line-height:1.6;color:var(--text-secondary,#52514e);min-height:4.8em;margin:0.25rem 0 0.75rem"></div>
+<div style="display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--text-secondary,#52514e)">
 <span style="display:flex;align-items:center;gap:6px"><svg width="16" height="16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#7F77DD" fill-opacity="0.14" stroke="#7F77DD" stroke-opacity="0.6" stroke-width="0.75"></rect><rect x="1" y="1" width="14" height="14" fill="url(#hatchP)"></rect></svg>c₊ &lt; (n−h)/2: i₊ ∈ 𝒯, Λ₊ of type t₊</span>
 <span style="display:flex;align-items:center;gap:6px"><svg width="16" height="16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#1D9E75" fill-opacity="0.14" stroke="#1D9E75" stroke-opacity="0.6" stroke-width="0.75"></rect><rect x="1" y="1" width="14" height="14" fill="url(#hatchT)"></rect></svg>c₋ &lt; h/2: i₋ ∈ 𝒯, Λ₋ of type t₋</span>
 <span style="display:flex;align-items:center;gap:6px"><svg width="16" height="16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#7F77DD" fill-opacity="0.14"></rect><rect x="1" y="1" width="14" height="14" fill="#1D9E75" fill-opacity="0.14"></rect><rect x="1" y="1" width="14" height="14" fill="url(#hatchP)"></rect><rect x="1" y="1" width="14" height="14" fill="url(#hatchT)"></rect></svg>both: edge strata Λ₋ ⊂ Λ₊</span>
-<span style="display:flex;align-items:center;gap:6px"><svg width="16" height="16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" style="stroke:var(--text-muted);stroke-dasharray:2.5 2.5"></circle></svg>non-basic</span>
-<span style="display:flex;align-items:center;gap:6px"><svg width="16" height="16" aria-hidden="true"><path d="M3 3L13 13M13 3L3 13" fill="none" style="stroke:var(--text-muted);stroke-width:1.5;stroke-linecap:round"></path></svg>corner, not admissible</span>
+<span style="display:flex;align-items:center;gap:6px"><svg width="16" height="16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" style="stroke:var(--text-muted,#898781);stroke-dasharray:2.5 2.5"></circle></svg>non-basic</span>
+<span style="display:flex;align-items:center;gap:6px"><svg width="16" height="16" aria-hidden="true"><path d="M3 3L13 13M13 3L3 13" fill="none" style="stroke:var(--text-muted,#898781);stroke-width:1.5;stroke-linecap:round"></path></svg>corner, not admissible</span>
 <span>numbers in dots = dimension c₊ + c₋</span>
+</div>
 </div>
 <script>
 const $=id=>document.getElementById(id);
 const nIn=$('nIn'),hIn=$('hIn'),svg=$('plot'),layer=$('layer'),info=$('info'),meta=$('meta');
 let N=5,H=2,G=null,pinned=null;
-const B=t=>`<span style="color:var(--text-primary);font-weight:500">${t}</span>`;
+const TP='var(--text-primary,#0b0b0b)',TS='var(--text-secondary,#52514e)',TM='var(--text-muted,#898781)',TA='var(--text-accent,#2a78d6)',SF='var(--surface-2,#ffffff)';
+const B=t=>`<span style="color:${TP};font-weight:500">${t}</span>`;
+const RZ=()=>`𝒩<sub>${N}</sub><sup>[${H}]</sup>`;
 function kind(a,b){const lp=N-H,lm=H;if(a===lp&&b===lm)return'corner';const p=2*a<=lp-1,m=2*b<=lm-1;if(!p&&!m)return'nonbasic';return p&&m?'edge':(p?'plus':'minus');}
 function summary(){const lp=N-H,lm=H,hs=(H===0||H===N);let cnt=0,dmax=0;
 for(let a=0;a<=lp;a++)for(let b=0;b<=lm;b++){const k=kind(a,b);if(k!=='corner'&&k!=='nonbasic'){cnt++;dmax=Math.max(dmax,a+b);}}
@@ -2523,22 +2527,22 @@ const fam=[];
 if(pt.length)fam.push(`𝒩(Λ₊) for t₊ = ${pt.join(', ')} has dim ${pd.join(', ')}`);
 if(mt.length)fam.push(`𝒩(Λ₋) for t₋ = ${mt.join(', ')} has dim ${md.join(', ')}`);
 const kr=hs?'Hyperspecial: one KR stratum, and each EKOR stratum is a union of whole BT strata.':'Top row lies in KR{i₋}, right column in KR{i₊}, the rest in KR∅.';
-return `${B(cnt+' basic EKOR strata')} · dim 𝒩 = ${dmax} · ℓ₊ = ${lp}, ℓ₋ = ${lm}<br>BT families: ${fam.join(' · ')}<br>${kr} Hover a point for its BT data and closure.`;}
+return `${B(cnt+' EKOR strata of '+RZ())} · dim ${RZ()} = ${dmax} · ℓ₊ = ${lp}, ℓ₋ = ${lm}<br>BT families: ${fam.join(' · ')}<br>${kr} Hover a point for its BT data and closure.`;}
 function describe(a,b){const lp=N-H,lm=H,hs=(H===0||H===N),k=kind(a,b),head=B(`c = (${a}, ${b})`);
 if(k==='corner')return `${head} = (ℓ₊, ℓ₋) is not in ᴷAdm(μ′), so it indexes no EKOR stratum, even in the Shimura variety.`;
-if(k==='nonbasic')return `${head} has 2c₊ ≥ n − h and 2c₋ ≥ h: an EKOR stratum of the Shimura variety lying in a non-basic Newton stratum, so it is empty in 𝒩.`;
+if(k==='nonbasic')return `${head} has 2c₊ ≥ n − h and 2c₋ ≥ h: an EKOR stratum of the Shimura variety lying in a non-basic Newton stratum, so it is empty in ${RZ()}.`;
 const tp=H+1+2*a,tm=H-1-2*b,kr=hs?'the single KR stratum':(a===lp?'KR{i₊}':(b===lm?'KR{i₋}':'KR∅'));let bt;
 if(k==='edge')bt=`𝒯 = {i₊, i₋}: the whole BT strata 𝒩⁰(Λ₋ ⊂ Λ₊) over all edges with t(Λ₋) = ${tm}, t(Λ₊) = ${tp}.`;
 else if(k==='plus'){const lo=Math.ceil(lm/2);bt=lo===lm?`𝒯 = {i₊}: the whole BT strata 𝒩⁰(Λ₊) over all Λ₊ with t(Λ₊) = ${tp}.`:`𝒯 = {i₊}: the piece b₋ = ${b} (b₋ runs over ${lo}…${lm})${b===lm?', the open dense one,':''} of 𝒩⁰(Λ₊), over all Λ₊ with t(Λ₊) = ${tp}; dim 𝒩(Λ₊) = ${a+lm}.`;}
 else{const lo=Math.ceil(lp/2);bt=lo===lp?`𝒯 = {i₋}: the whole BT strata 𝒩⁰(Λ₋) over all Λ₋ with t(Λ₋) = ${tm}.`:`𝒯 = {i₋}: the piece b₊ = ${a} (b₊ runs over ${lo}…${lp})${a===lp?', the open dense one,':''} of 𝒩⁰(Λ₋), over all Λ₋ with t(Λ₋) = ${tm}; dim 𝒩(Λ₋) = ${b+lp}.`;}
-const c=(a+1)*(b+1);return `${head} · dim ${a+b} · in ${kr}<br>${bt}<br>Closure: the ${c} ${c>1?'strata':'stratum'} with c′ ≤ c componentwise (dashed box).`;}
+const c=(a+1)*(b+1);return `${head} · dim ${a+b} · in ${kr} of ${RZ()}<br>${bt}<br>Closure: the ${c} ${c>1?'strata':'stratum'} with c′ ≤ c componentwise (dashed box).`;}
 function select(a,b){const k=kind(a,b),basic=(k!=='corner'&&k!=='nonbasic'),cl=$('clos');
-layer.querySelectorAll('.pt').forEach(e=>{const x=+e.dataset.a,y=+e.dataset.b,me=(x===a&&y===b);e.style.opacity=basic?((x<=a&&y<=b)?'1':'0.3'):(me?'1':'0.45');const d=e.querySelector('.dot');if(d){d.style.stroke=me?'var(--text-accent)':'var(--text-primary)';d.style.strokeWidth=me?'2':'1';}});
+layer.querySelectorAll('.pt').forEach(e=>{const x=+e.dataset.a,y=+e.dataset.b,me=(x===a&&y===b);e.style.opacity=basic?((x<=a&&y<=b)?'1':'0.3'):(me?'1':'0.45');const d=e.querySelector('.dot');if(d){d.style.stroke=me?TA:TP;d.style.strokeWidth=me?'2':'1';}});
 if(basic){cl.setAttribute('x',G.x0+3);cl.setAttribute('y',G.Y(b)-G.s/2+3);cl.setAttribute('width',(a+1)*G.s-6);cl.setAttribute('height',(b+1)*G.s-6);cl.setAttribute('visibility','visible');}else cl.setAttribute('visibility','hidden');
 info.innerHTML=describe(a,b);}
-function clearSel(){layer.querySelectorAll('.pt').forEach(e=>{e.style.opacity='1';const d=e.querySelector('.dot');if(d){d.style.stroke='var(--text-primary)';d.style.strokeWidth='1';}});const cl=$('clos');if(cl)cl.setAttribute('visibility','hidden');info.innerHTML=summary();}
+function clearSel(){layer.querySelectorAll('.pt').forEach(e=>{e.style.opacity='1';const d=e.querySelector('.dot');if(d){d.style.stroke=TP;d.style.strokeWidth='1';}});const cl=$('clos');if(cl)cl.setAttribute('visibility','hidden');info.innerHTML=summary();}
 function render(){const lp=N-H,lm=H,cols=lp+1,rows=lm+1,L=78,R=96,T=50,W=680-L-R;
-const s=Math.max(28,Math.min(58,Math.floor(W/cols),Math.floor(300/rows)));
+const s=Math.max(28,Math.min(50,Math.floor(W/cols),Math.floor(280/rows)));
 const gw=cols*s,gh=rows*s,x0=L+Math.round((W-gw)/2),y0=T,X=a=>x0+s/2+a*s,Y=b=>y0+s/2+(lm-b)*s;
 const kp=Math.ceil(lp/2),km=Math.ceil(lm/2),r=Math.min(11,Math.floor(s/2)-4),ty=y0+(rows-km)*s;
 G={x0,s,Y};svg.setAttribute('viewBox',`0 0 680 ${y0+gh+50}`);let o='';
@@ -2546,7 +2550,7 @@ if(kp>0)o+=`<rect x="${x0}" y="${y0}" width="${kp*s}" height="${gh}" fill="#7F77
 if(km>0)o+=`<rect x="${x0}" y="${ty}" width="${gw}" height="${km*s}" fill="#1D9E75" fill-opacity="0.14" stroke="#1D9E75" stroke-opacity="0.6" stroke-width="0.75"/>`;
 if(kp>0)o+=`<rect x="${x0}" y="${y0}" width="${kp*s}" height="${gh}" fill="url(#hatchP)"/>`;
 if(km>0)o+=`<rect x="${x0}" y="${ty}" width="${gw}" height="${km*s}" fill="url(#hatchT)"/>`;
-const ax='style="stroke:var(--text-secondary);stroke-width:1"';
+const ax=`style="stroke:${TS};stroke-width:1"`;
 o+=`<line x1="${x0}" y1="${y0+gh}" x2="${x0+gw+16}" y2="${y0+gh}" marker-end="url(#arrow)" ${ax}/><line x1="${x0}" y1="${y0+gh}" x2="${x0}" y2="${y0-16}" marker-end="url(#arrow)" ${ax}/>`;
 for(let a=0;a<=lp;a++)o+=`<line x1="${X(a)}" y1="${y0+gh}" x2="${X(a)}" y2="${y0+gh+4}" ${ax}/><text class="ts" x="${X(a)}" y="${y0+gh+16}" text-anchor="middle" dominant-baseline="central">${a}</text>`;
 for(let b=0;b<=lm;b++)o+=`<line x1="${x0-4}" y1="${Y(b)}" x2="${x0}" y2="${Y(b)}" ${ax}/><text class="ts" x="${x0-8}" y="${Y(b)}" text-anchor="end" dominant-baseline="central">${b}</text>`;
@@ -2554,14 +2558,14 @@ o+=`<text class="t" x="${x0+gw/2}" y="${y0+gh+36}" text-anchor="middle" dominant
 for(let a=0;a<kp;a++)o+=`<text class="ts" x="${X(a)}" y="${y0-32}" text-anchor="middle" dominant-baseline="central">t₊=${H+1+2*a}</text>`;
 for(let b=0;b<km;b++)o+=`<text class="ts" x="${x0+gw+10}" y="${Y(b)}" dominant-baseline="central">t₋=${H-1-2*b}</text>`;
 for(let a=0;a<=lp;a++)for(let b=0;b<=lm;b++){const k=kind(a,b),x=X(a),y=Y(b);let m;
-if(k==='corner')m=`<path d="M${x-6} ${y-6}L${x+6} ${y+6}M${x+6} ${y-6}L${x-6} ${y+6}" fill="none" style="stroke:var(--text-muted);stroke-width:1.5;stroke-linecap:round"/>`;
-else if(k==='nonbasic')m=`<circle cx="${x}" cy="${y}" r="${r}" style="fill:none;stroke:var(--text-muted);stroke-width:1;stroke-dasharray:3 3"/>`;
-else m=`<circle class="dot" cx="${x}" cy="${y}" r="${r}" style="fill:var(--surface-2);stroke:var(--text-primary);stroke-width:1"/><text class="ts" x="${x}" y="${y}" text-anchor="middle" dominant-baseline="central" style="fill:var(--text-primary)">${a+b}</text>`;
+if(k==='corner')m=`<path d="M${x-6} ${y-6}L${x+6} ${y+6}M${x+6} ${y-6}L${x-6} ${y+6}" fill="none" style="stroke:${TM};stroke-width:1.5;stroke-linecap:round"/>`;
+else if(k==='nonbasic')m=`<circle cx="${x}" cy="${y}" r="${r}" style="fill:none;stroke:${TM};stroke-width:1;stroke-dasharray:3 3"/>`;
+else m=`<circle class="dot" cx="${x}" cy="${y}" r="${r}" style="fill:${SF};stroke:${TP};stroke-width:1"/><text class="ts" x="${x}" y="${y}" text-anchor="middle" dominant-baseline="central" style="fill:${TP}">${a+b}</text>`;
 o+=`<g class="pt" data-a="${a}" data-b="${b}" style="cursor:pointer">${m}<rect x="${x-s/2}" y="${y-s/2}" width="${s}" height="${s}" fill="transparent" tabindex="0" aria-label="c = (${a}, ${b})"/></g>`;}
-o+=`<rect id="clos" rx="6" visibility="hidden" style="fill:none;stroke:var(--text-accent);stroke-width:1.5;stroke-dasharray:5 4;pointer-events:none"/>`;
+o+=`<rect id="clos" rx="6" visibility="hidden" style="fill:none;stroke:${TA};stroke-width:1.5;stroke-dasharray:5 4;pointer-events:none"/>`;
 layer.innerHTML=o;
 layer.querySelectorAll('.pt').forEach(e=>{const a=+e.dataset.a,b=+e.dataset.b;e.addEventListener('mouseenter',()=>{if(!pinned)select(a,b);});e.addEventListener('focusin',()=>select(a,b));e.addEventListener('click',()=>{if(pinned&&pinned[0]===a&&pinned[1]===b){pinned=null;clearSel();}else{pinned=[a,b];select(a,b);}});});
-const hs=(H===0||H===N);meta.textContent=`ε = ${H%2===0?'1':'−1'}, r = ${(H-H%2)/2}${hs?' · hyperspecial':''}`;clearSel();}
+const hs=(H===0||H===N);meta.innerHTML=`${RZ()} · ε = ${H%2===0?'1':'−1'}, r = ${(H-H%2)/2}${hs?' · hyperspecial':''}`;clearSel();}
 svg.addEventListener('mouseleave',()=>{if(!pinned)clearSel();});
 nIn.addEventListener('input',e=>{N=+e.target.value;$('nOut').textContent=N;hIn.max=N;if(H>N){H=N;hIn.value=N;$('hOut').textContent=N;}pinned=null;render();});
 hIn.addEventListener('input',e=>{H=+e.target.value;$('hOut').textContent=H;pinned=null;render();});
