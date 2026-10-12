@@ -26,11 +26,11 @@
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--ink)}
 body{font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
-.wrap{max-width:980px;margin:0 auto;padding:20px 16px 40px}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 16px 40px}
 h1{font:600 21px/1.25 var(--serif);margin:0}
 h2{font:600 17px/1.3 var(--serif);margin:0}
 h3{font-size:13px;font-weight:600;margin:0 0 8px;color:var(--ink2)}
-.lede{color:var(--ink2);margin:4px 0 14px;font-size:13px;max-width:760px}
+.lede{color:var(--ink2);margin:4px 0 14px;font-size:13px;max-width:780px}
 .m{font-family:var(--serif)} i{font-family:var(--serif)}
 sub,sup{font-size:.72em;line-height:0}
 .ss{display:inline-flex;flex-direction:column;vertical-align:.38em;font-size:.72em;line-height:1;margin-left:1px}
@@ -50,14 +50,17 @@ sub,sup{font-size:.72em;line-height:0}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
 .head{margin-bottom:12px}
 .head p{margin:3px 0 0;color:var(--ink2);font-size:13px}
-.main{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:12px;align-items:start}
-@media (max-width:820px){.main{grid-template-columns:minmax(0,1fr)}}
+.main{display:grid;grid-template-columns:200px minmax(0,1fr) 280px;grid-template-areas:"newton dia side";gap:12px;align-items:start}
+.left{grid-area:newton} .dia{grid-area:dia} .side{grid-area:side}
+@media (max-width:1100px){.main{grid-template-columns:minmax(0,1fr) 280px;grid-template-areas:"dia side" "newton side"}}
+@media (max-width:760px){.main{grid-template-columns:minmax(0,1fr);grid-template-areas:"dia" "side" "newton"}}
 .dia{display:flex;flex-direction:column;align-items:center;overflow:hidden}
 #svg{display:block;max-width:100%;height:auto}
 .stats{margin:6px 0 0;font-size:12.5px;color:var(--ink2);text-align:center}
 .side{display:flex;flex-direction:column;gap:12px}
-.lg{display:flex;align-items:center;gap:8px;font-size:13px;margin:3px 0}
-.sw{width:14px;height:14px;border-radius:3px;border:1px solid;flex:none}
+.lg{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;margin:4px 0;line-height:1.4}
+.lg svg{flex:none;margin-top:1px}
+.sw{width:14px;height:14px;border-radius:3px;border:1px solid;flex:none;margin-top:2px}
 .order{font-size:12.5px;color:var(--ink2);margin:8px 0}
 .note{font-size:11.5px;color:var(--ink3);margin:6px 0 0}
 table{border-collapse:collapse;width:100%}
@@ -75,14 +78,19 @@ table{border-collapse:collapse;width:100%}
 .cN3{--f:var(--N3-f);--s:var(--N3-s);--t:var(--N3-t)} .cN2{--f:var(--N2-f);--s:var(--N2-s);--t:var(--N2-t)}
 .cO{--f:var(--O-f);--s:var(--O-s);--t:var(--O-t)}
 .sw,.badge{background:var(--f);border-color:var(--s);color:var(--t)}
-.node rect{fill:var(--f);stroke:var(--s);stroke-width:1}
-.node text{fill:var(--t)}
 .node{cursor:pointer;transition:opacity .15s}
 .node.off{opacity:.2}
-.node.sel rect,.node:focus-visible rect{stroke:var(--accent);stroke-width:2.4}
 .node:focus{outline:none}
+.nbox rect{fill:var(--f);stroke:var(--s);stroke-width:1}
+.nbox text{fill:var(--t)}
+.ndot .hit{fill:transparent}
+.ndot .vis{stroke-width:1.2}
+.node.basic .ndot .vis{fill:var(--panel);stroke:var(--B-s)} .node.basic .ndot text{fill:var(--B-t)}
+.node.nb .ndot .vis{fill:var(--f);stroke:var(--s)} .node.nb .ndot text{fill:var(--t)}
+.node.sel .nbox rect,.node.sel .ndot .vis,.node:focus-visible .nbox rect,.node:focus-visible .ndot .vis{stroke:var(--accent);stroke-width:2.4}
 .wl{font:italic 13px var(--serif)} .wl .ds{font-style:normal;font-size:9.5px}
 .cl{font:11px var(--serif)} .cl .it{font-style:italic} .cl .ds{font-size:8px}
+.dl{font:500 12.5px var(--serif)}
 .edge{stroke:var(--edge);stroke-width:1.2;transition:opacity .15s}
 .edge.on{stroke:var(--accent);stroke-width:2}
 .edge.off{opacity:.14}
@@ -92,7 +100,11 @@ table{border-collapse:collapse;width:100%}
 .axis{stroke:var(--edge);stroke-width:1}
 .tick{font:11.5px var(--serif);fill:var(--ink2)}
 .axt{font:italic 14px var(--serif);fill:var(--ink)}
-.clos{fill:var(--accent-bg);fill-opacity:.6;stroke:var(--accent);stroke-dasharray:5 4;stroke-width:1.2}
+.krlab{font:italic 11.5px var(--serif);fill:var(--ink3)}
+.strip{fill:#7F77DD;fill-opacity:.13;stroke:#7F77DD;stroke-opacity:.55;stroke-width:.75}
+.nbbox{fill:none;stroke:var(--ink3);stroke-dasharray:4 4;stroke-width:1;opacity:.75}
+.band{stroke:var(--s);fill:var(--s);stroke-linecap:round;opacity:.26}
+.clos{fill:var(--accent-bg);fill-opacity:.45;stroke:var(--accent);stroke-dasharray:5 4;stroke-width:1.2}
 .corner path{stroke:var(--ink3);stroke-width:1.6;fill:none;stroke-linecap:round}
 details.all{margin-top:12px}
 details.all summary{cursor:pointer;font-size:13px;color:var(--ink2)}
@@ -102,14 +114,14 @@ details.all summary{cursor:pointer;font-size:13px;color:var(--ink2)}
 #master tbody tr{cursor:pointer}
 #master tbody tr:hover{background:var(--bg)}
 #master tbody tr.cur{background:var(--accent-bg)}
-.foot{font-size:12px;color:var(--ink3);margin:14px 0 0;max-width:820px}
+.foot{font-size:12px;color:var(--ink3);margin:14px 0 0;max-width:840px}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <h1>EKOR closure atlas</h1>
-    <p class="lede">Unitary Shimura varieties of signature (1, <i>n</i>), 2 ≤ <i>n</i> ≤ 7, at every standard maximal parahoric level (<i>E</i>/ℚ<sub><i>p</i></sub> unramified, <i>p</i> &gt; 2). Each vertex is a whole EKOR stratum, colored by its Newton class. A downward arrow <i>w</i> → <i>v</i> means <span class="m">𝒮<sub><i>v</i></sub></span> is an immediate boundary stratum of <span class="m">𝒮<sub><i>w</i></sub></span>.</p>
+    <p class="lede">Unitary Shimura varieties of signature (1, <i>n</i>), 2 ≤ <i>n</i> ≤ 7, at every standard maximal parahoric level (<i>E</i>/ℚ<sub><i>p</i></sub> unramified, <i>p</i> &gt; 2). The lattice view puts every EKOR stratum at Muller's coordinates (<i>c</i><sub>+</sub>, <i>c</i><sub>−</sub>): the basic locus is the L-shaped pair of strips, and the non-basic Newton strata are the anti-diagonals of the remaining box. The closure-diagram view is the atlas's own picture, whose rows are those anti-diagonals.</p>
   </header>
 
   <nav class="controls" aria-label="Case selection">
@@ -117,8 +129,8 @@ details.all summary{cursor:pointer;font-size:13px;color:var(--ink2)}
     <div class="row"><span class="lab">Level</span><div id="levels" class="pills"></div></div>
     <div class="row"><span class="lab">View</span>
       <div class="pills" role="group" aria-label="View">
-        <button id="vH" class="pill" aria-pressed="true">Closure diagram</button>
-        <button id="vL" class="pill" aria-pressed="false">Lattice (x, y)</button>
+        <button id="vL" class="pill" aria-pressed="true">Lattice (c₊, c₋)</button>
+        <button id="vH" class="pill" aria-pressed="false">Closure diagram</button>
       </div>
       <span class="spacer"></span>
       <button id="prev" class="pill" aria-label="Previous case">←</button>
@@ -130,17 +142,7 @@ details.all summary{cursor:pointer;font-size:13px;color:var(--ink2)}
   <section class="card head" id="casehead" aria-live="polite"></section>
 
   <div class="main">
-    <section class="card dia">
-      <svg id="svg" role="group" aria-label="EKOR closure diagram">
-        <defs>
-          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,1 L9,5 L0,9 z" class="ahp"/></marker>
-          <marker id="ahOn" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,1 L9,5 L0,9 z" class="ahp on"/></marker>
-        </defs>
-        <g id="decoH"></g><g id="decoL"></g><g id="edges"></g><g id="nodes"></g>
-      </svg>
-      <p class="stats" id="stats"></p>
-    </section>
-    <aside class="side">
+    <aside class="left">
       <section class="card">
         <h3>Newton classes</h3>
         <div id="legend"></div>
@@ -148,9 +150,32 @@ details.all summary{cursor:pointer;font-size:13px;color:var(--ink2)}
         <table class="cnt" id="counts"></table>
         <p class="note">Adjoint convention: <span class="m">ν<sub><i>B</i></sub> = 0</span>, <span class="m">ν<sub><i>r</i></sub> = ((1/2<i>r</i>)<sup><i>r</i></sup>, 0<sup><i>d</i>−2<i>r</i></sup>, (−1/2<i>r</i>)<sup><i>r</i></sup>)</span>, <span class="m"><i>O</i> = ν<sub>1</sub></span>. A non-basic stratum of dimension <i>k</i> has <i>r</i> = <i>d</i> − <i>k</i>. Newton dim = largest EKOR dimension in the class.</p>
       </section>
+    </aside>
+    <section class="card dia">
+      <svg id="svg" role="group" aria-label="EKOR stratification diagram">
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,1 L9,5 L0,9 z" class="ahp"/></marker>
+          <marker id="ahOn" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,1 L9,5 L0,9 z" class="ahp on"/></marker>
+          <pattern id="hatchV" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#7F77DD" stroke-width="1.1" stroke-opacity="0.5"/></pattern>
+          <pattern id="hatchH" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#7F77DD" stroke-width="1.1" stroke-opacity="0.5"/></pattern>
+        </defs>
+        <g id="decoH"></g><g id="decoL"></g><g id="edges"></g><g id="nodes"></g>
+      </svg>
+      <p class="stats" id="stats"></p>
+    </section>
+    <aside class="side">
       <section class="card">
         <h3>Selected stratum</h3>
         <div id="info"></div>
+      </section>
+      <section class="card">
+        <h3>Lattice view key</h3>
+        <div class="lg"><svg width="16" height="16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" class="strip"/><rect x="1" y="1" width="14" height="14" fill="url(#hatchV)"/></svg><span><i>c</i><sub>+</sub> &lt; ℓ<sub>+</sub>/2: <i>i</i><sub>+</sub> ∈ 𝒯, a vertex lattice Λ<sub>+</sub> of type <i>t</i><sub>+</sub> = <i>h</i> + 1 + 2<i>c</i><sub>+</sub></span></div>
+        <div class="lg"><svg width="16" height="16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" class="strip"/><rect x="1" y="1" width="14" height="14" fill="url(#hatchH)"/></svg><span><i>c</i><sub>−</sub> &lt; ℓ<sub>−</sub>/2: <i>i</i><sub>−</sub> ∈ 𝒯, a vertex lattice Λ<sub>−</sub> of type <i>t</i><sub>−</sub> = <i>h</i> − 1 − 2<i>c</i><sub>−</sub></span></div>
+        <div class="lg"><svg width="16" height="16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" class="strip"/><rect x="1" y="1" width="14" height="14" class="strip"/><rect x="1" y="1" width="14" height="14" fill="url(#hatchV)"/><rect x="1" y="1" width="14" height="14" fill="url(#hatchH)"/></svg><span>Both strips: edge strata Λ<sub>−</sub> ⊂ Λ<sub>+</sub></span></div>
+        <div class="lg"><svg width="16" height="16" aria-hidden="true"><line x1="3" y1="13" x2="13" y2="3" stroke="#c1880f" stroke-width="7" stroke-linecap="round" opacity=".3"/></svg><span>Dashed box: non-basic strata; each Newton stratum is an anti-diagonal <i>c</i><sub>+</sub> + <i>c</i><sub>−</sub> = <i>d</i> − <i>r</i></span></div>
+        <div class="lg"><svg width="16" height="16" aria-hidden="true"><path d="M3 3L13 13M13 3L3 13" fill="none" stroke="#8b887f" stroke-width="1.6" stroke-linecap="round"/></svg><span>(ℓ<sub>+</sub>, ℓ<sub>−</sub>): full support, not admissible</span></div>
+        <p class="note">Numbers in the dots are dimensions <i>c</i><sub>+</sub> + <i>c</i><sub>−</sub>. The top row lies in KR<sub>{<i>i</i>−}</sub>, the right column in KR<sub>{<i>i</i>+}</sub>, everything else in KR<sub>∅</sub>.</p>
       </section>
     </aside>
   </div>
@@ -158,10 +183,10 @@ details.all summary{cursor:pointer;font-size:13px;color:var(--ink2)}
   <details class="card all">
     <summary>All 30 cases (master summary): click a row to open it</summary>
     <div class="tblwrap"><table id="master"></table></div>
-    <p class="note">Columns <i>B</i> … <i>O</i> give Newton-stratum dimensions; – means the class does not occur.</p>
+    <p class="note"><i>h</i> is Muller's index for the level. Columns <i>B</i> … <i>O</i> give Newton-stratum dimensions; – means the class does not occur.</p>
   </details>
 
-  <p class="foot">Conventions as in the atlas: <i>d</i> = <i>n</i> + 1, affine type <span class="m">Ã<sub><i>d</i>−1</sub></span>, μ = <i>e</i><sub>1</sub>, <span class="m">σ<sub>+</sub>(<i>s<sub>i</sub></i>) = <i>s</i><sub>−<i>i</i></sub></span> (odd <i>d</i> and split even <i>d</i>), <span class="m">σ<sub>−</sub>(<i>s<sub>i</sub></i>) = <i>s</i><sub>1−<i>i</i></sub></span> (nonsplit even <i>d</i>). All data are recomputed in this page from Part II, §§2–4 of the atlas: the arcs <i>A</i>, <i>B</i>, the supports <i>C</i>(<i>x</i>, <i>y</i>) = <i>A</i>[1, <i>x</i>] ∪ <i>B</i>[1, <i>y</i>], the δ<sub>±</sub>-orbit test (8) and <i>r</i> = <i>d</i> − <i>k</i> (7). They agree with all 352 entries of the atlas tables. The closure order is inclusion of supports (13), so the closure of the (<i>x</i>, <i>y</i>)-stratum is the box [0, <i>x</i>] × [0, <i>y</i>].</p>
+  <p class="foot">Conventions as in the atlas: <i>d</i> = <i>n</i> + 1, affine type <span class="m">Ã<sub><i>d</i>−1</sub></span>, μ = <i>e</i><sub>1</sub>, <span class="m">σ<sub>+</sub>(<i>s<sub>i</sub></i>) = <i>s</i><sub>−<i>i</i></sub></span> (odd <i>d</i> and split even <i>d</i>), <span class="m">σ<sub>−</sub>(<i>s<sub>i</sub></i>) = <i>s</i><sub>1−<i>i</i></sub></span> (nonsplit even <i>d</i>). All data are recomputed in this page from Part II, §§2–4 of the atlas (arcs <i>A</i>, <i>B</i>, supports <i>C</i>(<i>x</i>, <i>y</i>) = <i>A</i>[1, <i>x</i>] ∪ <i>B</i>[1, <i>y</i>], the δ<sub>±</sub>-orbit test (8), <i>r</i> = <i>d</i> − <i>k</i> (7)) and agree with all 352 entries of its tables. Muller's coordinates come from the reflection <i>i</i> ↦ −<i>i</i> of ℤ/<i>d</i>ℤ, which turns his Frobenius <i>j</i> ↦ −<i>j</i> − (1−ε)/2 into the atlas's σ<sub>±</sub> and his blocks with their initial segments into the arcs with their prefixes: <i>c</i><sub>−</sub> runs along the arc of length <i>h</i>, <i>c</i><sub>+</sub> along the other one. In these coordinates the atlas's basicness test is exactly Muller's: 2<i>c</i><sub>+</sub> ≤ ℓ<sub>+</sub> − 1 or 2<i>c</i><sub>−</sub> ≤ ℓ<sub>−</sub> − 1. The closure order is the componentwise order, so the closure of a stratum is the box below and to the left of it.</p>
 </div>
 
 <script>
@@ -225,6 +250,18 @@ function compute(c) {
   strata.forEach(s => {
     s.bd = [[s.x - 1, s.y], [s.x, s.y - 1]].map(p => at.get(p[0] + ',' + p[1])).filter(Boolean);
   });
+  let h, lp, lm, r, minusArc = null;
+  if (!two) {
+    if (O[0] === 0) { h = 0; lp = d; lm = 0; r = 0; } else { h = d; lp = 0; lm = d; r = O[0]; }
+  } else if (c.sg === '-' && O[0] === 0) { minusArc = 'B'; h = LB; lp = LA; lm = LB; r = 0; }
+  else { minusArc = 'A'; h = LA; lp = LB; lm = LA; r = c.sg === '+' ? O[0] : O[0] - 1; }
+  strata.forEach(s => {
+    if (!two) { s.cp = h === 0 ? s.x : 0; s.cm = h === 0 ? 0 : s.x; }
+    else if (minusArc === 'A') { s.cm = s.x; s.cp = s.y; }
+    else { s.cm = s.y; s.cp = s.x; }
+    s.inP = 2 * s.cp <= lp - 1;
+    s.inM = 2 * s.cm <= lm - 1;
+  });
   const counts = {}, ndim = {}, byDim = Array(d).fill(0);
   strata.forEach(s => {
     counts[s.cls] = (counts[s.cls] || 0) + 1;
@@ -234,7 +271,7 @@ function compute(c) {
   const arrows = strata.reduce((t, s) => t + s.bd.length, 0);
   const J = range(0, d - 1).filter(i => !O.includes(i));
   const WJ = two ? fact(LA) * fact(LB) : fact(d);
-  return { orbits, A, B, LA, LB, two, strata, at, counts, ndim, byDim, arrows, J, WJ };
+  return { orbits, A, B, LA, LB, two, strata, at, counts, ndim, byDim, arrows, J, WJ, h, lp, lm, r, minusArc, eps: c.sg === '+' ? 1 : -1 };
 }
 CASES.forEach(c => { c.data = compute(c); });
 
@@ -249,36 +286,41 @@ const kHTML = c => {
   const sg = c.form === 'unique' ? '' : (c.sg === '+' ? '+' : '−');
   return `<i>K</i><span class="ss"><sup>${sg || '&nbsp;'}</sup><sub>{${c.O.join(',')}}</sub></span>`;
 };
+const rzHTML = (d, h) => `<span class="m">𝒩<span class="ss"><sup>[${h}]</sup><sub>${d}</sub></span></span>`;
 const nu = (r, d) => [...Array(r).fill(`1/${2 * r}`), ...Array(d - 2 * r).fill('0'), ...Array(r).fill(`−1/${2 * r}`)].join(', ');
 const SUP = '⁰¹²³⁴⁵⁶⁷⁸⁹';
 const poly = byDim => byDim.map((c, k) => {
   if (!c) return null;
   if (k === 0) return String(c);
-  const coef = c === 1 ? '' : String(c);
-  return coef + 'q' + (k === 1 ? '' : String(k).replace(/\d/g, ch => SUP[ch]));
+  return (c === 1 ? '' : String(c)) + 'q' + (k === 1 ? '' : String(k).replace(/\d/g, ch => SUP[ch]));
 }).filter(Boolean).join(' + ');
+const IP = '<i>i</i><sub>+</sub>', IM = '<i>i</i><sub>−</sub>';
 
 const svg = $('svg'), gH = $('decoH'), gL = $('decoL'), gE = $('edges'), gN = $('nodes');
-let cur = null, L = null, nodeEls = [], edgeObjs = [], sel = null, pinned = false, tView = 0, raf = 0;
+let cur = null, L = null, nodeEls = [], nodeBox = [], nodeDot = [], edgeObjs = [], sel = null, pinned = false, tView = 1, raf = 0, animToken = 0;
 
 function layouts(D, d) {
   const HX = 82, HY = 56, GL = 64, HT = 12;
   const rows = range(0, d - 1).map(k => D.strata.filter(s => s.dim === k).sort((p, q) => q.x - p.x));
   const maxRow = Math.max(...rows.map(r => r.length));
   const hW = GL + maxRow * HX + 10, hH = HT * 2 + (d - 1) * HY + BH;
-  const LX = 76, LY = 58, GL2 = 66, LT = 36, LBm = 44;
-  const lW = GL2 + (D.LA + 1) * LX + 30, lH = LT + D.LB * LY + BH + LBm;
-  const WH = Math.max(hW, 380), HH = hH, WL = Math.max(lW, 380), HL = lH;
-  const h = { off: (WH - hW) / 2, voff: 0, GL, HX, HY, HT, hW, maxRow };
-  const l = { off: (WL - lW) / 2, voff: 0, GL2, LX, LY, LT, lW };
-  h.rowY = k => h.voff + HT + (d - 1 - k) * HY + BH / 2;
-  l.colX = x => l.off + GL2 + LX / 2 + x * LX;
-  l.rowY = y => l.voff + LT + (D.LB - y) * LY + BH / 2;
+  const WH = Math.max(hW, 380), HH = hH;
+  const h = { off: (WH - hW) / 2, GL, HX, HY, HT, hW };
+  h.rowY = k => HT + (d - 1 - k) * HY + BH / 2;
+  const cols = D.lp + 1, nrows = D.lm + 1;
+  const s = Math.max(36, Math.min(58, Math.floor(520 / cols), Math.floor(400 / nrows)));
+  const GL2 = 56, LT = 46, LR = 84, LB2 = 48;
+  const lW = GL2 + cols * s + LR, lH = LT + nrows * s + LB2;
+  const WL = Math.max(lW, 380), HL = lH;
+  const l = { off: (WL - lW) / 2, s, gw: cols * s, gh: nrows * s, r: Math.min(13, Math.floor(s / 2) - 6) };
+  l.x0 = l.off + GL2; l.y0 = LT;
+  l.colX = a => l.x0 + s / 2 + a * s;
+  l.rowY = b => l.y0 + (D.lm - b) * s + s / 2;
   const posH = [], posL = [];
-  rows.forEach((r, k) => r.forEach((s, j) => {
-    posH[s.i] = { x: h.off + GL + (maxRow * HX) / 2 + (j - (r.length - 1) / 2) * HX, y: h.rowY(k) };
+  rows.forEach((row, k) => row.forEach((st, j) => {
+    posH[st.i] = { x: h.off + GL + (maxRow * HX) / 2 + (j - (row.length - 1) / 2) * HX, y: h.rowY(k) };
   }));
-  D.strata.forEach(s => { posL[s.i] = { x: l.colX(s.x), y: l.rowY(s.y) }; });
+  D.strata.forEach(st => { posL[st.i] = { x: l.colX(st.cp), y: l.rowY(st.cm) }; });
   return { WH, HH, WL, HL, h, l, posH, posL };
 }
 
@@ -297,21 +339,23 @@ function place(t) {
   svg.style.width = W.toFixed(1) + 'px';
   const P = L.posH.map((p, i) => ({ x: p.x + (L.posL[i].x - p.x) * e, y: p.y + (L.posL[i].y - p.y) * e }));
   nodeEls.forEach((g, i) => g.setAttribute('transform', `translate(${P[i].x.toFixed(2)},${P[i].y.toFixed(2)})`));
+  nodeBox.forEach(b => { b.style.opacity = String(1 - e); b.style.pointerEvents = e < 0.5 ? 'auto' : 'none'; });
+  nodeDot.forEach(b => { b.style.opacity = String(e); b.style.pointerEvents = e < 0.5 ? 'none' : 'auto'; });
   edgeObjs.forEach(o => {
     const c = clipSeg(P[o.from], P[o.to]);
     o.el.setAttribute('x1', c.a.x.toFixed(2)); o.el.setAttribute('y1', c.a.y.toFixed(2));
     o.el.setAttribute('x2', c.b.x.toFixed(2)); o.el.setAttribute('y2', c.b.y.toFixed(2));
     o.el.style.visibility = c.ok ? 'visible' : 'hidden';
   });
+  gE.style.opacity = String(1 - e);
   gH.style.opacity = String(1 - e);
   gL.style.opacity = String(e);
 }
 
-let animToken = 0;
 function animateTo(target) {
   cancelAnimationFrame(raf);
   const token = ++animToken;
-  const from = tView, start = performance.now(), dur = reduceMotion || document.hidden ? 0 : 520;
+  const from = tView, start = performance.now(), dur = reduceMotion || document.hidden ? 0 : 560;
   const step = now => {
     if (token !== animToken) return;
     const k = dur ? Math.min(1, (now - start) / dur) : 1;
@@ -326,36 +370,58 @@ function animateTo(target) {
 }
 
 function buildDecor() {
-  const d = cur.d, D = cur.data, h = L.h, l = L.l;
-  let s = '';
+  const d = cur.d, D = cur.data, h = L.h, l = L.l, s = l.s;
+  let g = '';
   for (let k = 0; k < d; k++) {
     const y = h.rowY(k);
-    s += `<line class="guide" x1="${h.off + h.GL - 6}" y1="${y}" x2="${h.off + h.hW}" y2="${y}"/>`;
-    s += `<text class="dimlab" x="${h.off + 2}" y="${y}" dominant-baseline="central">dim = ${k}</text>`;
+    g += `<line class="guide" x1="${h.off + h.GL - 6}" y1="${y}" x2="${h.off + h.hW}" y2="${y}"/>`;
+    g += `<text class="dimlab" x="${h.off + 2}" y="${y}" dominant-baseline="central">dim = ${k}</text>`;
   }
-  gH.innerHTML = s;
-  const ax0 = l.off + l.GL2 - 8, ay0 = l.rowY(0) + BH / 2 + 12;
-  s = `<rect id="clos" class="clos" rx="10" visibility="hidden"/>`;
-  s += `<line class="axis" x1="${ax0}" y1="${ay0}" x2="${l.colX(D.LA) + l.LX / 2 + 6}" y2="${ay0}" marker-end="url(#ah)"/>`;
-  for (let x = 0; x <= D.LA; x++) {
-    s += `<line class="axis" x1="${l.colX(x)}" y1="${ay0}" x2="${l.colX(x)}" y2="${ay0 + 4}"/>`;
-    s += `<text class="tick" x="${l.colX(x)}" y="${ay0 + 16}" text-anchor="middle">${x}</text>`;
+  gH.innerHTML = g;
+
+  const x0 = l.x0, y0 = l.y0, gw = l.gw, gh = l.gh;
+  const kp = Math.ceil(D.lp / 2), km = Math.ceil(D.lm / 2);
+  g = '';
+  if (kp > 0) g += `<rect class="strip" x="${x0}" y="${y0}" width="${kp * s}" height="${gh}"/>`;
+  if (km > 0) g += `<rect class="strip" x="${x0}" y="${y0 + gh - km * s}" width="${gw}" height="${km * s}"/>`;
+  if (kp > 0) g += `<rect x="${x0}" y="${y0}" width="${kp * s}" height="${gh}" fill="url(#hatchV)"/>`;
+  if (km > 0) g += `<rect x="${x0}" y="${y0 + gh - km * s}" width="${gw}" height="${km * s}" fill="url(#hatchH)"/>`;
+  const bw = gw - kp * s, bh = gh - km * s;
+  if (bw > 0 && bh > 0) g += `<rect class="nbbox" x="${x0 + kp * s + 3}" y="${y0 + 3}" width="${bw - 6}" height="${bh - 6}" rx="8"/>`;
+  const band = Math.min(2 * l.r + 10, s / Math.SQRT2 - 3);
+  const groups = {};
+  D.strata.forEach(t => { if (t.cls !== 'B') (groups[t.cls] = groups[t.cls] || []).push(t); });
+  Object.keys(groups).forEach(k => {
+    const pts = groups[k].slice().sort((p, q) => p.cp - q.cp), p = pts[0], q = pts[pts.length - 1];
+    g += pts.length === 1
+      ? `<circle class="band c${k}" cx="${l.colX(p.cp)}" cy="${l.rowY(p.cm)}" r="${(band / 2).toFixed(1)}"/>`
+      : `<line class="band c${k}" x1="${l.colX(p.cp)}" y1="${l.rowY(p.cm)}" x2="${l.colX(q.cp)}" y2="${l.rowY(q.cm)}" stroke-width="${band.toFixed(1)}"/>`;
+  });
+  g += `<rect id="clos" class="clos" rx="10" visibility="hidden"/>`;
+  const ax0 = x0 - 8, ay0 = y0 + gh + 8;
+  g += `<line class="axis" x1="${ax0}" y1="${ay0}" x2="${x0 + gw + 10}" y2="${ay0}" marker-end="url(#ah)"/>`;
+  for (let a = 0; a <= D.lp; a++) {
+    g += `<line class="axis" x1="${l.colX(a)}" y1="${ay0}" x2="${l.colX(a)}" y2="${ay0 + 4}"/>`;
+    g += `<text class="tick" x="${l.colX(a)}" y="${ay0 + 15}" text-anchor="middle">${a}</text>`;
   }
-  s += `<text class="axt" x="${l.colX(D.LA) + l.LX / 2 + 12}" y="${ay0}" dominant-baseline="central">x</text>`;
-  if (D.LB > 0) {
-    const top = l.rowY(D.LB) - BH / 2 - 10;
-    s += `<line class="axis" x1="${ax0}" y1="${ay0}" x2="${ax0}" y2="${top}" marker-end="url(#ah)"/>`;
-    for (let y = 0; y <= D.LB; y++) {
-      s += `<line class="axis" x1="${ax0 - 4}" y1="${l.rowY(y)}" x2="${ax0}" y2="${l.rowY(y)}"/>`;
-      s += `<text class="tick" x="${ax0 - 8}" y="${l.rowY(y)}" text-anchor="end" dominant-baseline="central">${y}</text>`;
+  g += `<text class="axt" x="${x0 + gw / 2}" y="${ay0 + 33}" text-anchor="middle">c<tspan dy="4" font-size="10">+</tspan></text>`;
+  if (D.lm > 0) {
+    g += `<line class="axis" x1="${ax0}" y1="${ay0}" x2="${ax0}" y2="${y0 - 8}" marker-end="url(#ah)"/>`;
+    for (let b = 0; b <= D.lm; b++) {
+      g += `<line class="axis" x1="${ax0 - 4}" y1="${l.rowY(b)}" x2="${ax0}" y2="${l.rowY(b)}"/>`;
+      g += `<text class="tick" x="${ax0 - 8}" y="${l.rowY(b)}" text-anchor="end" dominant-baseline="central">${b}</text>`;
     }
-    s += `<text class="axt" x="${ax0}" y="${top - 12}" text-anchor="middle">y</text>`;
+    g += `<text class="axt" x="${ax0}" y="${y0 - 20}" text-anchor="middle">c<tspan dy="4" font-size="10">−</tspan></text>`;
   }
-  if (D.two) {
-    const cx = l.colX(D.LA), cy = l.rowY(D.LB);
-    s += `<g class="corner"><title>(L_A, L_B): full affine support, not admissible</title><path d="M${cx - 7} ${cy - 7}L${cx + 7} ${cy + 7}M${cx + 7} ${cy - 7}L${cx - 7} ${cy + 7}"/></g>`;
+  for (let a = 0; a < kp; a++) g += `<text class="tick" x="${l.colX(a)}" y="${y0 - 12}" text-anchor="middle">t₊=${D.h + 1 + 2 * a}</text>`;
+  for (let b = 0; b < km; b++) g += `<text class="tick" x="${x0 + gw + 10}" y="${l.rowY(b)}" dominant-baseline="central">t₋=${D.h - 1 - 2 * b}</text>`;
+  if (!cur.hs) {
+    g += `<text class="krlab" x="${l.colX(D.lp)}" y="${y0 - 12}" text-anchor="middle">KR{i₊}</text>`;
+    g += `<text class="krlab" x="${x0 + gw + 10}" y="${l.rowY(D.lm)}" dominant-baseline="central">KR{i₋}</text>`;
   }
-  gL.innerHTML = s;
+  const cx = l.colX(D.lp), cy = l.rowY(D.lm);
+  g += `<g class="corner"><title>(ℓ₊, ℓ₋) = (${D.lp}, ${D.lm}): full support, not admissible</title><path d="M${cx - 7} ${cy - 7}L${cx + 7} ${cy + 7}M${cx + 7} ${cy - 7}L${cx - 7} ${cy + 7}"/></g>`;
+  gL.innerHTML = g;
 }
 
 function setCase(i) {
@@ -363,7 +429,7 @@ function setCase(i) {
   const D = cur.data;
   sel = null; pinned = false;
   L = layouts(D, cur.d);
-  svg.setAttribute('aria-label', `EKOR closure diagram for U(1,${cur.n}), ${cur.form}, O = {${cur.O.join(',')}}`);
+  svg.setAttribute('aria-label', `EKOR stratification of U(1,${cur.n}), ${cur.form}, level O = {${cur.O.join(',')}}`);
   buildDecor();
   edgeObjs = [];
   D.strata.forEach(s => s.bd.forEach(t => edgeObjs.push({ from: s.i, to: t.i })));
@@ -371,13 +437,17 @@ function setCase(i) {
   edgeObjs.forEach((o, k) => { o.el = gE.children[k]; });
   gN.innerHTML = D.strata.map(s => {
     const lab = s.word.length ? 's' + s.word.join('') + 'τ' : 'τ';
-    return `<g class="node c${s.cls}" tabindex="0" role="button" aria-label="${lab}, dimension ${s.dim}, class ${s.cls}">` +
-      `<title>${lab} · dim ${s.dim} · ${s.cls}</title>` +
-      `<rect x="${-BW / 2}" y="${-BH / 2}" width="${BW}" height="${BH}" rx="6"/>` +
+    return `<g class="node c${s.cls} ${s.cls === 'B' ? 'basic' : 'nb'}" tabindex="0" role="button" aria-label="${lab}, dimension ${s.dim}, class ${s.cls}">` +
+      `<title>${lab} · dim ${s.dim} · ${s.cls} · (c₊, c₋) = (${s.cp}, ${s.cm})</title>` +
+      `<g class="nbox"><rect x="${-BW / 2}" y="${-BH / 2}" width="${BW}" height="${BH}" rx="6"/>` +
       `<text class="wl" y="-3" text-anchor="middle">${wordSVG(s.word)}</text>` +
-      `<text class="cl" y="12" text-anchor="middle">${clsSVG(s.cls)}</text></g>`;
+      `<text class="cl" y="12" text-anchor="middle">${clsSVG(s.cls)}</text></g>` +
+      `<g class="ndot"><circle class="hit" r="${L.l.s / 2 - 2}"/><circle class="vis" r="${L.l.r}"/>` +
+      `<text class="dl" text-anchor="middle" dominant-baseline="central">${s.dim}</text></g></g>`;
   }).join('');
   nodeEls = [...gN.children];
+  nodeBox = nodeEls.map(g => g.querySelector('.nbox'));
+  nodeDot = nodeEls.map(g => g.querySelector('.ndot'));
   nodeEls.forEach((g, k) => {
     const s = D.strata[k];
     g.addEventListener('mouseenter', () => { if (!pinned) select(s); });
@@ -413,9 +483,8 @@ function select(s) {
   });
   const r = $('clos');
   if (s) {
-    const l = L.l;
-    const x1 = l.colX(0) - BW / 2 - 8, x2 = l.colX(s.x) + BW / 2 + 8;
-    const y1 = l.rowY(s.y) - BH / 2 - 8, y2 = l.rowY(0) + BH / 2 + 8;
+    const l = L.l, h = l.s / 2 - 4;
+    const x1 = l.colX(0) - h, x2 = l.colX(s.cp) + h, y1 = l.rowY(s.cm) - h, y2 = l.rowY(0) + h;
     r.setAttribute('x', x1); r.setAttribute('y', y1);
     r.setAttribute('width', x2 - x1); r.setAttribute('height', y2 - y1);
     r.setAttribute('visibility', 'visible');
@@ -428,15 +497,15 @@ function renderHeader() {
   const formTxt = { unique: 'unique local unitary group', split: 'split Hermitian space', nonsplit: 'nonsplit Hermitian space' }[c.form];
   const sig = c.sg === '+' ? '<i>s</i><sub>−<i>i</i></sub>' : '<i>s</i><sub>1−<i>i</i></sub>';
   const arcs = D.two
-    ? `Arcs <i>A</i> = (${D.A.join(', ')}), <i>B</i> = (${D.B.join(', ')}), of lengths <i>L<sub>A</sub></i> = ${D.LA}, <i>L<sub>B</sub></i> = ${D.LB}`
+    ? `Arcs <i>A</i> = (${D.A.join(', ')}), <i>B</i> = (${D.B.join(', ')}) of lengths ${D.LA}, ${D.LB}`
     : `Arc <i>A</i> = (${D.A.join(', ')}): the strata form a chain`;
-  const N = h => `<span class="m">𝒩<span class="ss"><sup>[${h}]</sup><sub>${d}</sub></span></span>`;
-  const hs = D.two ? [...new Set([D.LA, D.LB])].sort((a, b) => a - b) : [0, d];
-  const rz = hs.length === 1 ? N(hs[0]) : `${N(hs[0])} ≅ ${N(hs[1])}`;
+  const muller = D.two
+    ? `ℓ<sub>+</sub> = <i>d</i> − <i>h</i> = ${D.lp} (arc ${D.minusArc === 'A' ? 'B' : 'A'}) and ℓ<sub>−</sub> = <i>h</i> = ${D.lm} (arc ${D.minusArc})`
+    : `${D.h === 0 ? 'ℓ<sub>+</sub> = <i>d</i>' : 'ℓ<sub>−</sub> = <i>d</i>'} (hyperspecial)`;
   $('casehead').innerHTML =
     `<h2>U(1, ${c.n}) · ${formTxt}</h2>` +
     `<p>Maximal parahoric ${kHTML(c)}${c.hs ? ' (hyperspecial)' : ''} · <i>J</i> = ${setTxt(D.J)} · 𝒪 = ${setTxt(c.O)} · σ(<i>s<sub>i</sub></i>) = ${sig} (mod ${d}) · |<i>W<sub>J</sub></i>| = ${D.WJ.toLocaleString('en-US')}</p>` +
-    `<p>${arcs}. Basic (purple) strata = EKOR strata of the Rapoport–Zink space ${rz}, with {<i>h</i>, <i>d</i> − <i>h</i>} = ${D.two ? '{<i>L<sub>A</sub></i>, <i>L<sub>B</sub></i>}' : '{0, <i>d</i>}'}.</p>`;
+    `<p>${arcs}. Muller's level: <i>I</i> = {${D.r}}, ε = ${D.eps === 1 ? '+1' : '−1'}, <i>h</i> = 2<i>r</i> + (1 − ε)/2 = ${D.h}, so ${muller}. Basic strata = EKOR strata of ${rzHTML(d, D.h)}.</p>`;
 }
 
 function renderLegend() {
@@ -454,14 +523,28 @@ function renderStats() {
   $('stats').innerHTML = `${D.strata.length} EKOR strata · ${D.arrows} immediate boundary relations · <span class="m"><i>P</i><sub>𝒪</sub>(<i>q</i>) = ${poly(D.byDim)}</span>`;
 }
 
+function btText(s, D) {
+  const tp = D.h + 1 + 2 * s.cp, tm = D.h - 1 - 2 * s.cm;
+  if (s.inP && s.inM) return `𝒯 = {${IP}, ${IM}}: the whole BT strata 𝒩<sup>0</sup>(Λ<sub>−</sub> ⊂ Λ<sub>+</sub>) over all edges with <i>t</i>(Λ<sub>−</sub>) = ${tm}, <i>t</i>(Λ<sub>+</sub>) = ${tp}`;
+  if (s.inP) {
+    const lo = Math.ceil(D.lm / 2);
+    return lo === D.lm
+      ? `𝒯 = {${IP}}: the whole BT strata 𝒩<sup>0</sup>(Λ<sub>+</sub>) over all Λ<sub>+</sub> with <i>t</i>(Λ<sub>+</sub>) = ${tp}`
+      : `𝒯 = {${IP}}: the piece <i>b</i><sub>−</sub> = ${s.cm} (of ${lo}…${D.lm})${s.cm === D.lm ? ', the open dense one,' : ''} of 𝒩<sup>0</sup>(Λ<sub>+</sub>), over all Λ<sub>+</sub> with <i>t</i>(Λ<sub>+</sub>) = ${tp}`;
+  }
+  const lo = Math.ceil(D.lp / 2);
+  return lo === D.lp
+    ? `𝒯 = {${IM}}: the whole BT strata 𝒩<sup>0</sup>(Λ<sub>−</sub>) over all Λ<sub>−</sub> with <i>t</i>(Λ<sub>−</sub>) = ${tm}`
+    : `𝒯 = {${IM}}: the piece <i>b</i><sub>+</sub> = ${s.cp} (of ${lo}…${D.lp})${s.cp === D.lp ? ', the open dense one,' : ''} of 𝒩<sup>0</sup>(Λ<sub>−</sub>), over all Λ<sub>−</sub> with <i>t</i>(Λ<sub>−</sub>) = ${tm}`;
+}
+
 function renderInfo(s) {
   const c = cur, D = c.data, d = c.d;
   const dl = c.sg === '+' ? 'δ<sub>+</sub>' : 'δ<sub>−</sub>';
-  const orbTxt = D.orbits.map(setTxt).join(' ');
   if (!s) {
     $('info').innerHTML =
-      `<p class="hint">Hover or click a stratum. Its closure stays highlighted: everything reachable by downward arrows, which in the lattice view is the box [0, <i>x</i>] × [0, <i>y</i>].</p>` +
-      `<p class="hint">Basic test: <i>w<sub>C</sub></i> is basic iff its support <i>C</i> misses a whole ${dl}-orbit. Here the orbits are ${orbTxt}.</p>`;
+      `<p class="hint">Hover or click a stratum. Its closure stays highlighted: in the lattice it is the box below and to the left, in the closure diagram everything reachable by downward arrows.</p>` +
+      `<p class="hint">Basic test (atlas): <i>w<sub>C</sub></i> is basic iff its support <i>C</i> misses a whole ${dl}-orbit; here the orbits are ${D.orbits.map(setTxt).join(' ')}. In Muller's coordinates this is 2<i>c</i><sub>+</sub> ≤ ℓ<sub>+</sub> − 1 or 2<i>c</i><sub>−</sub> ≤ ℓ<sub>−</sub> − 1.</p>`;
     return;
   }
   const r = d - s.dim;
@@ -471,31 +554,19 @@ function renderInfo(s) {
   const bd = s.bd.length ? s.bd.map(t => `<span class="m">${wordHTML(t.word)}</span>`).join(', ') : 'none (closed point stratum)';
   const above = D.strata.filter(t => t !== s && t.x >= s.x && t.y >= s.y).length;
   const closN = (s.x + 1) * (s.y + 1);
-  const pos = D.two ? `(<i>x</i>, <i>y</i>) = (${s.x}, ${s.y})` : `<i>x</i> = ${s.x}`;
-  const box = D.two ? `the box [0, ${s.x}] × [0, ${s.y}]` : `the chain below it`;
-  let kr;
-  if (!D.two) kr = 'the unique KR stratum (hyperspecial level)';
-  else {
-    const full = [s.x === D.LA ? '<i>A</i>' : null, s.y === D.LB ? '<i>B</i>' : null].filter(Boolean);
-    kr = `indexed by the full arcs: ${full.length ? '{' + full.join(', ') + '}' : '∅'}`;
-  }
-  let bt = '';
-  if (s.cls === 'B') {
-    const T = D.two
-      ? [2 * s.x <= D.LA - 1 ? '<i>A</i>' : null, 2 * s.y <= D.LB - 1 ? '<i>B</i>' : null].filter(Boolean)
-      : ['<i>A</i>'];
-    const kind = T.length === 2 ? ' (an edge stratum Λ<sub>−</sub> ⊂ Λ<sub>+</sub>)' : '';
-    bt = `<tr><th>BT type</th><td>Muller's 𝒯 = {${T.join(', ')}}${kind}</td></tr>`;
-  }
+  const kr = c.hs ? 'the unique KR stratum (hyperspecial level)'
+    : s.cp === D.lp ? `KR<sub>{${IP}}</sub>` : s.cm === D.lm ? `KR<sub>{${IM}}</sub>` : 'KR<sub>∅</sub>';
+  const atlasPos = D.two ? `(<i>x</i>, <i>y</i>) = (${s.x}, ${s.y})` : `<i>x</i> = ${s.x}`;
   $('info').innerHTML =
     `<div class="ih"><span class="m big">${wordHTML(s.word)}</span><span class="badge c${s.cls}">${clsHTML(s.cls)}</span></div>` +
     `<table class="kv">` +
-    `<tr><th>Position</th><td>${pos}; support <i>C</i> = ${setTxt(s.C)}</td></tr>` +
-    `<tr><th>Dimension</th><td>ℓ(<i>w</i>) = |<i>C</i>| = ${s.dim}</td></tr>` +
+    `<tr><th>Position</th><td>(<i>c</i><sub>+</sub>, <i>c</i><sub>−</sub>) = (${s.cp}, ${s.cm}); atlas ${atlasPos}; support <i>C</i> = ${setTxt(s.C)}</td></tr>` +
+    `<tr><th>Dimension</th><td>ℓ(<i>w</i>) = |<i>C</i>| = <i>c</i><sub>+</sub> + <i>c</i><sub>−</sub> = ${s.dim}</td></tr>` +
     `<tr><th>Newton</th><td>${newton}</td></tr>` +
+    (s.cls === 'B' ? `<tr><th>BT data</th><td>${btText(s, D)}</td></tr>` : '') +
+    `<tr><th>KR stratum</th><td>${kr}</td></tr>` +
     `<tr><th>Boundary</th><td>${bd}</td></tr>` +
-    `<tr><th>Closure</th><td>${closN} strata, ${box}; it lies in the closure of ${above} other ${above === 1 ? 'stratum' : 'strata'}</td></tr>` +
-    `<tr><th>KR stratum</th><td>${kr}</td></tr>` + bt +
+    `<tr><th>Closure</th><td>${closN} strata, the box [0, ${s.cp}] × [0, ${s.cm}]; it lies in the closure of ${above} other ${above === 1 ? 'stratum' : 'strata'}</td></tr>` +
     `</table>`;
 }
 
@@ -505,7 +576,7 @@ function renderPills() {
   CASES.filter(c => c.n === cur.n).forEach(c => {
     if (c.form !== 'unique' && c.form !== last) h += `<span class="grp">${c.form}</span>`;
     last = c.form;
-    h += `<button class="pill" data-i="${c.idx}" aria-pressed="${c === cur}">${kHTML(c)}${c.hs ? '<span class="hs">hyperspecial</span>' : ''}</button>`;
+    h += `<button class="pill" data-i="${c.idx}" aria-pressed="${c === cur}">${kHTML(c)}<span class="hs">${c.hs ? 'hyperspecial' : 'h = ' + c.data.h}</span></button>`;
   });
   $('levels').innerHTML = h;
   $('levels').querySelectorAll('button').forEach(b => b.addEventListener('click', () => setCase(+b.dataset.i)));
@@ -513,10 +584,10 @@ function renderPills() {
 
 function buildMaster() {
   const cap = s => s[0].toUpperCase() + s.slice(1);
-  let h = '<thead><tr><th>Diagram</th><th>Signature</th><th>Form</th><th>𝒪</th><th>Strata</th>' + ORDER.map(k => `<th>${clsHTML(k)}</th>`).join('') + '</tr></thead><tbody>';
+  let h = '<thead><tr><th>Diagram</th><th>Signature</th><th>Form</th><th>𝒪</th><th><i>h</i></th><th>Strata</th>' + ORDER.map(k => `<th>${clsHTML(k)}</th>`).join('') + '</tr></thead><tbody>';
   CASES.forEach(c => {
     const D = c.data;
-    h += `<tr data-i="${c.idx}" tabindex="0"><td>${c.id}</td><td>U(1,${c.n})</td><td>${cap(c.form)}</td><td>{${c.O.join(',')}}</td><td>${D.strata.length}</td>` +
+    h += `<tr data-i="${c.idx}" tabindex="0"><td>${c.id}</td><td>U(1,${c.n})</td><td>${cap(c.form)}</td><td>{${c.O.join(',')}}</td><td>${D.h}</td><td>${D.strata.length}</td>` +
       ORDER.map(k => `<td>${k in D.ndim ? D.ndim[k] : '–'}</td>`).join('') + '</tr>';
   });
   $('master').innerHTML = h + '</tbody>';
@@ -534,12 +605,12 @@ $('sigs').querySelectorAll('button').forEach(b => b.addEventListener('click', ()
   if (+b.dataset.n !== cur.n) setCase(CASES.find(c => c.n === +b.dataset.n).idx);
 }));
 const setView = v => {
-  $('vH').setAttribute('aria-pressed', String(v === 0));
   $('vL').setAttribute('aria-pressed', String(v === 1));
+  $('vH').setAttribute('aria-pressed', String(v === 0));
   animateTo(v);
 };
-$('vH').addEventListener('click', () => setView(0));
 $('vL').addEventListener('click', () => setView(1));
+$('vH').addEventListener('click', () => setView(0));
 $('prev').addEventListener('click', () => setCase((cur.idx + 29) % 30));
 $('next').addEventListener('click', () => setCase((cur.idx + 1) % 30));
 svg.addEventListener('mouseleave', () => { if (!pinned) select(null); });
@@ -548,8 +619,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') { pinned = f
 
 buildMaster();
 const m = /^#D(\d\d)$/.exec(location.hash);
-const start = m ? Math.min(29, Math.max(0, +m[1] - 1)) : 8;
-setCase(start);
+setCase(m ? Math.min(29, Math.max(0, +m[1] - 1)) : 8);
 window.__atlas = { CASES };
 })();
 </script>
