@@ -1,0 +1,1356 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Fibres over the Orbit Space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+/* Layout: one reading column. Figure 1 with the fibre explorer, then conventions, the stabilizer table, and the three-dimensional slice. */
+:root{
+  --bg:#F4F5F7; --surface:#FFFFFF; --ink:#1B1F25; --muted:#586070; --line:#D2D7DF; --wash:rgba(27,31,37,.045);
+  --teal:#15835F; --teal-soft:rgba(29,158,117,.22);
+  --orange:#B96B12; --orange-soft:rgba(232,149,42,.17);
+  --gray:#74736C; --gray-soft:rgba(130,129,122,.30);
+  --purple:#4E45AE; --rs:#1F4E9B;
+  --orange-hi:rgba(232,149,42,.32); --teal-hi:rgba(29,158,117,.40); --gray-hi:rgba(130,129,122,.50); --sel-soft:rgba(78,69,174,.38);
+  --u3:#15835F; --u21:#C9741A; --u12:#2F62CE; --u3-soft:rgba(29,158,117,.22); --u21-soft:rgba(232,149,42,.18); --u12-soft:rgba(47,98,206,.17);
+  --u3-hi:rgba(29,158,117,.40); --u21-hi:rgba(232,149,42,.32); --u12-hi:rgba(47,98,206,.32);
+  --serif:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans:"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#12151A; --surface:#191D24; --ink:#E5E8ED; --muted:#A0A8B5; --line:#303643; --wash:rgba(229,232,237,.06);
+    --teal:#3FC79A; --teal-soft:rgba(63,199,154,.20);
+    --orange:#F0A847; --orange-soft:rgba(240,168,71,.14);
+    --gray:#B3B2AB; --gray-soft:rgba(179,178,171,.22);
+    --purple:#A39BF5; --rs:#86A9F2; --orange-hi:rgba(240,168,71,.30); --teal-hi:rgba(63,199,154,.36); --gray-hi:rgba(179,178,171,.42); --sel-soft:rgba(163,155,245,.48); color-scheme:dark;
+    --u3:#3FC79A; --u21:#F0A847; --u12:#7EA6F6; --u3-soft:rgba(63,199,154,.20); --u21-soft:rgba(240,168,71,.15); --u12-soft:rgba(126,166,246,.20);
+    --u3-hi:rgba(63,199,154,.36); --u21-hi:rgba(240,168,71,.30); --u12-hi:rgba(126,166,246,.36);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#12151A; --surface:#191D24; --ink:#E5E8ED; --muted:#A0A8B5; --line:#303643; --wash:rgba(229,232,237,.06);
+  --teal:#3FC79A; --teal-soft:rgba(63,199,154,.20);
+  --orange:#F0A847; --orange-soft:rgba(240,168,71,.14);
+  --gray:#B3B2AB; --gray-soft:rgba(179,178,171,.22);
+  --purple:#A39BF5; --rs:#86A9F2; --orange-hi:rgba(240,168,71,.30); --teal-hi:rgba(63,199,154,.36); --gray-hi:rgba(179,178,171,.42); --sel-soft:rgba(163,155,245,.48); color-scheme:dark;
+    --u3:#3FC79A; --u21:#F0A847; --u12:#7EA6F6; --u3-soft:rgba(63,199,154,.20); --u21-soft:rgba(240,168,71,.15); --u12-soft:rgba(126,166,246,.20);
+    --u3-hi:rgba(63,199,154,.36); --u21-hi:rgba(240,168,71,.30); --u12-hi:rgba(126,166,246,.36);
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:16.5px;line-height:1.55}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:20px;padding-block:18px 64px;display:grid;gap:28px}
+header{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px}
+.eyebrow{font-family:var(--sans);font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0}
+h1{font-weight:600;font-size:clamp(1.3rem,2.1vw,1.6rem);line-height:1.15;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.lede{margin:0;color:var(--muted);max-width:68ch}
+h2{font-size:1.3rem;font-weight:600;margin:0;text-wrap:balance}
+section{display:grid;gap:12px;min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}
+.caption{font-size:.93rem;color:var(--muted);margin:0;max-width:74ch}
+.stage-outer{position:relative;width:100%;overflow:hidden}
+.stage{position:absolute;left:0;top:0;transform-origin:0 0}
+.stage > svg, .stage > canvas{position:absolute;left:0;top:0}
+.lbl{position:absolute;transform:translate(-50%,-50%);font-family:var(--sans);font-size:12.5px;line-height:1.3;color:var(--ink);text-align:center;white-space:nowrap;pointer-events:none}
+.lbl.muted{color:var(--muted);font-size:11.5px}
+.rg{cursor:pointer;transition:fill .12s}
+.rg-u21{fill:var(--u21-soft)} .rg-u21:hover,.rg-u21.on{fill:var(--u21-hi)}
+.rg-u3{fill:var(--u3-soft)} .rg-u3:hover,.rg-u3.on{fill:var(--u3-hi)}
+.rg-u12{fill:var(--u12-soft)} .rg-u12:hover,.rg-u12.on{fill:var(--u12-hi)}
+.bd{fill:none;stroke:transparent;stroke-width:12;stroke-linecap:round;cursor:pointer;pointer-events:stroke}
+.bd:hover,.bd.on,.bd:focus-visible{stroke:var(--sel-soft);outline:none}
+.tip{fill:transparent;cursor:pointer}
+.tip:hover,.tip.on,.tip:focus-visible{fill:var(--sel-soft);outline:none}
+.rg:focus-visible{outline:none;stroke:var(--purple);stroke-width:2.5}
+.pt{fill:var(--ink);pointer-events:none}
+.ring{fill:none;stroke:var(--purple);stroke-width:2.2;pointer-events:none;filter:drop-shadow(0 0 1.2px var(--surface))}
+#f1svg{touch-action:pan-y;user-select:none;-webkit-user-select:none}
+#f1svg .rg,#f1svg .bd,#f1svg .tip{cursor:grab}
+#f1svg.dragging,#f1svg.dragging *{cursor:grabbing}
+@media (prefers-reduced-motion:reduce){.rg{transition:none}}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tab{font-family:var(--sans);font-size:.84rem;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.tab:focus-visible,.node:focus-visible,a.nl:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
+.info{font-size:.92rem;color:var(--muted);margin:0}
+.explorer{display:grid;grid-template-columns:minmax(0,700px) minmax(0,1fr);gap:18px;align-items:start}
+.leftcol{display:grid;gap:10px;min-width:0}
+.rightcol{display:grid;gap:10px;min-width:0;position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}
+.fig1{padding:10px 12px 8px}
+.figcap{font-family:var(--sans);font-size:.76rem;line-height:1.4;color:var(--muted);margin:4px 0 0}
+@media (max-width:1099px){.explorer{grid-template-columns:minmax(0,1fr)}.rightcol{position:static;max-height:none;overflow:visible}}
+.node{position:absolute;box-sizing:border-box;border:1.6px solid var(--c);border-radius:11px;background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:6px 6px 7px;cursor:pointer;font-family:var(--sans);gap:2px}
+.node::before{content:"";position:absolute;inset:0;border-radius:9px;background:var(--c);opacity:.07;pointer-events:none}
+.node.sel{border-width:3px}
+.node.sel::before{opacity:.15}
+.node.family{border-style:dashed}
+.node.t-rs{border-style:double;border-width:4px}
+.n-l{font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.2;text-align:center}
+.n-m{font-size:12px;color:var(--ink)}
+.n-s{font-size:11px;color:var(--ink)}
+.n-d{font-size:10.5px;color:var(--muted)}
+.n-t{font-size:10.5px;font-weight:600;color:var(--c)}
+.t-ss{--c:var(--teal)} .t-reg{--c:var(--purple)} .t-nei{--c:var(--gray)} .t-rs{--c:var(--rs)}
+.edge{stroke:var(--gray);stroke-width:1.3;fill:none}
+.edge.hot{stroke:var(--ink);stroke-width:2.3}
+.edge.slide{stroke-dasharray:6 4}
+.ahead{fill:var(--gray)} .ahead.hot{fill:var(--ink)}
+.elbl{position:absolute;font-size:12px;color:var(--ink);background:var(--surface);padding:1px 5px;border-radius:5px;border:1px solid var(--line);white-space:nowrap;font-family:var(--sans);pointer-events:none}
+.elbl.hot{border-color:var(--ink);font-weight:600}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-family:var(--sans);font-size:.8rem;color:var(--muted);margin-top:10px}
+.sw{display:inline-block;width:12px;height:12px;border:2px solid var(--c);border-radius:3px;vertical-align:-2px;margin-right:5px}
+.detail{display:grid;gap:10px;font-size:.98rem}
+.dhead{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.dhead strong{font-size:1.06rem}
+.badge{font-family:var(--sans);font-size:.74rem;font-weight:600;color:var(--c);border:1.5px solid var(--c);border-radius:999px;padding:1px 9px;white-space:nowrap}
+.dmat{overflow-x:auto}
+.dtable{border-collapse:collapse;font-size:.94rem}
+.dtable td{padding:4px 12px 4px 0;vertical-align:top}
+.dtable td:first-child{color:var(--muted);white-space:nowrap;font-family:var(--sans);font-size:.8rem;padding-top:6px}
+.arrow{border-top:1px solid var(--line);padding-top:10px;display:grid;gap:6px;min-width:0}
+.arrow .dmat{padding-block:2px}
+a.nl{color:var(--c);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.two{display:grid;grid-template-columns:minmax(0,460px) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:900px){.two{grid-template-columns:minmax(0,1fr)}}
+.scroll{overflow-x:auto}
+table.stab{border-collapse:collapse;font-size:.93rem;min-width:760px}
+table.stab th{font-family:var(--sans);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);font-weight:600}
+table.stab td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+table.stab tr:last-child td{border-bottom:none}
+.notes{display:grid;gap:7px;margin:0;padding-left:1.1rem;font-size:.97rem}
+p{margin:0}
+mjx-container{color:inherit}
+.s3intro{display:grid;gap:8px;max-width:84ch;min-width:0}
+#slice mjx-container[display="true"]{display:block;max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:2px}
+.s3grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,350px);gap:18px;align-items:start}
+@media (max-width:1040px){.s3grid{grid-template-columns:minmax(0,1fr)}}
+.s3main{display:grid;gap:10px;padding:12px}
+.s3view{position:relative;width:100%;height:480px;touch-action:none;cursor:grab;border-radius:8px;overflow:hidden;outline:none}
+.s3view:focus-visible{box-shadow:0 0 0 2px var(--purple)}
+.s3view.drag{cursor:grabbing}
+.s3view.hot{cursor:pointer}
+.s3view canvas{position:absolute;left:0;top:0}
+.s3labels{position:absolute;inset:0;pointer-events:none}
+.s3lbl{position:absolute;transform:translate(-50%,-50%);font-family:var(--sans);font-size:12.5px;line-height:1.25;color:var(--ink);white-space:nowrap;text-align:center;pointer-events:none;text-shadow:0 0 3px var(--surface),0 0 3px var(--surface),0 0 2px var(--surface)}
+.s3lbl.small{font-size:11.5px;color:var(--muted)}
+.s3tip{position:absolute;z-index:3;font-family:var(--sans);font-size:12px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:2px 7px;pointer-events:none;white-space:nowrap;display:none}
+.s3ctl{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-family:var(--sans);font-size:.82rem;color:var(--muted)}
+.s3ctl label{display:inline-flex;gap:6px;align-items:center;cursor:pointer}
+.s3ctl input{accent-color:var(--purple)}
+.btn{font-family:var(--sans);font-size:.82rem;line-height:1.2;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.btn.primary{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.btn:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
+.s3slider{display:flex;gap:10px;align-items:center;font-family:var(--sans);font-size:.82rem;color:var(--muted)}
+.s3slider input[type=range]{flex:1;min-width:120px;accent-color:var(--purple)}
+.s3slider output{min-width:3.6em;text-align:right;color:var(--ink);font-variant-numeric:tabular-nums}
+.s3legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-family:var(--sans);font-size:.78rem;color:var(--muted)}
+.s3legend span{display:inline-flex;align-items:center;gap:5px}
+.sq{display:inline-block;width:12px;height:12px;border-radius:3px;border:1.5px solid var(--c);background:var(--s)}
+.ln{display:inline-block;width:18px;height:0;border-top:3px solid var(--c)}
+.ln.dash{border-top-style:dashed}
+.ln.thin{border-top-width:1.5px}
+.dt{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c)}
+.s3sheet{display:grid;gap:6px;border-top:1px solid var(--line);padding-top:10px;min-width:0}
+.s3sheet h3{font-family:var(--sans);font-size:.88rem;font-weight:600;margin:0;color:var(--ink)}
+.chips{display:inline-flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:5px;font-family:var(--sans);font-size:.78rem;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:2px 9px 2px 6px;cursor:pointer}
+.chip[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.chip:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
+.chiphint{font-size:.74rem;color:var(--muted)}
+.s3side{display:grid;gap:12px;min-width:0}
+.panel{display:grid;gap:8px;padding:12px}
+.panel h3{font-family:var(--sans);font-size:.88rem;font-weight:600;margin:0;color:var(--ink)}
+.pwrap{position:relative;width:100%;border-radius:6px;overflow:hidden}
+.pwrap canvas{position:absolute;left:0;top:0}
+.plabels{position:absolute;inset:0;pointer-events:none}
+.plabels .s3lbl{font-size:12px}
+.snap{display:flex;flex-wrap:wrap;gap:6px}
+.snap .btn{padding:3px 9px;font-size:.78rem}
+.s3list{margin:0;padding-left:1.15rem;display:grid;gap:4px}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+<header>
+  <h1>Fibres over the orbit space</h1>
+  <p class="eyebrow">Companion to the note · rank two · source side \(S_3(\mathbb R)\)</p>
+</header>
+
+<section id="explorer" aria-label="Figure 1 and the fibre over the selected point">
+  <div class="explorer">
+    <div class="leftcol">
+      <div class="card fig1" id="f1card">
+      <div class="stage-outer" id="f1o">
+      <div class="stage" id="f1s" style="width:680px;height:205px">
+        <svg id="f1svg" width="680" height="205" viewBox="0 0 680 205" role="group" aria-label="Figure 1. Click or drag anywhere in the figure to show the fibre over the point under the ring">
+          <rect class="rg rg-u21" data-f="rsU21" tabindex="0" aria-label="regular semisimple point in the U(2,1) chamber" x="10" y="10" width="660" height="180"><title>(b) a regular semisimple point in the U(2,1) chamber</title></rect>
+          <polygon class="rg rg-u12" data-f="rsU12" tabindex="0" aria-label="regular semisimple point in the U(1,2) chamber" points="490,100 670,11.2 670,188.8"><title>(a) a regular semisimple point in the U(1,2) chamber</title></polygon>
+          <path class="rg rg-u3" data-f="rsU3" tabindex="0" aria-label="regular semisimple point in the U(3) chamber" d="M214 100 C286 94 346 38.8 418 55 C448 61.6 472 89.8 490 100 C472 110.2 448 138.4 418 145 C346 161.2 286 106 214 100 Z"><title>(a) a regular semisimple point in the U(3) chamber</title></path>
+          <path d="M490 100 L670 11.2 M490 100 L670 188.8" style="stroke:var(--u12);stroke-width:1.7;fill:none;pointer-events:none"/>
+          <path d="M214 100 C286 94 346 38.8 418 55 C448 61.6 472 89.8 490 100 C472 110.2 448 138.4 418 145 C346 161.2 286 106 214 100 Z" style="fill:none;stroke:var(--u3);stroke-width:1.9;pointer-events:none"/>
+          <line x1="214" y1="100" x2="22" y2="100" style="stroke:var(--orange);stroke-width:1.9;stroke-dasharray:6 4;pointer-events:none"/>
+          <path d="M316 69.2 L295 50 M490 100 L500 131 M214 100 L194 130" style="stroke:var(--muted);stroke-width:1;fill:none;pointer-events:none"/>
+          <circle class="pt" cx="400" cy="124" r="3.6"/><circle class="pt" cx="631" cy="143.2" r="3.6"/><circle class="pt" cx="427" cy="28" r="3.6"/><circle class="pt" cx="316" cy="69.2" r="3.6"/><circle class="pt" cx="580" cy="52" r="3.6"/><circle class="pt" cx="490" cy="100" r="3.6"/><circle class="pt" cx="115" cy="100" r="3.6"/><circle class="pt" cx="214" cy="100" r="3.6"/>
+          <path class="bd" data-f="wallI" tabindex="0" aria-label="wall between U(2,1) and U(3)" d="M214 100 C286 94 346 38.8 418 55 C448 61.6 472 89.8 490 100 C472 110.2 448 138.4 418 145 C346 161.2 286 106 214 100 Z"><title>(c) a wall between U(2,1) and U(3)</title></path>
+          <path class="bd" data-f="wallII" tabindex="0" aria-label="wall between U(2,1) and U(1,2)" d="M490 100 L670 11.2 M490 100 L670 188.8"><title>(c) a wall between U(2,1) and U(1,2)</title></path>
+          <path class="bd" data-f="nonsplit" tabindex="0" aria-label="nonsplit corner" d="M22 100 L214 100"><title>(e) a nonsplit corner</title></path>
+          <circle class="tip" data-f="split" tabindex="0" aria-label="split corner" cx="490" cy="100" r="11"><title>(d) the split corner</title></circle>
+          <circle class="tip" data-f="P" tabindex="0" aria-label="full reduced origin" cx="214" cy="100" r="11"><title>the full reduced origin</title></circle>
+          <circle id="f1ring" class="ring" cx="0" cy="0" r="5.5" style="display:none"/>
+        </svg>
+        <div class="lbl" style="left:361px;top:100px">\(\mathrm U(3)\)<br><span class="muted">chamber</span></div>
+        <div class="lbl" style="left:607px;top:100px">\(\mathrm U(1,2)\)<br><span class="muted">chamber</span></div>
+        <div class="lbl" style="left:511px;top:30px">\(\mathrm U(2,1)\)</div>
+        <div class="lbl" style="left:327px;top:176px">\(\mathrm U(2,1)\)</div>
+        <div class="lbl" style="left:416px;top:124px">(a)</div>
+        <div class="lbl" style="left:647px;top:143px">(a)</div>
+        <div class="lbl" style="left:443px;top:28px">(b)</div>
+        <div class="lbl" style="left:282px;top:38px">(c) wall: \(\dim\mathbb C[g]e=2\)</div>
+        <div class="lbl" style="left:566px;top:42px">(c)</div>
+        <div class="lbl" style="left:503px;top:154px">(d) split corner:<br>\(g|_W\) elliptic</div>
+        <div class="lbl" style="left:115px;top:70px">(e) nonsplit corners:<br>\(g|_W\) hyperbolic</div>
+        <div class="lbl" style="left:190px;top:152px">full reduced origin:<br>\(g|_W\) central</div>
+      </div>
+    </div>
+        <p class="figcap">Figure 1 of the note, schematic. Click anywhere, or drag the small ring, and the explorer shows the fibre over the point under the ring. A chamber gives a regular semisimple point, the boundary of the lens a wall next to \(\mathrm U(3)\), an edge of the blue wedge a wall next to \(\mathrm U(1,2)\), the dashed line a nonsplit corner, and the right and left tips of the lens the split corner and the full reduced origin. Near a wall, the dashed line or a tip, the ring snaps onto it. The last section draws this figure to scale.</p>
+      </div>
+      <div class="tabs" role="tablist" id="tabs" aria-label="Fibres"></div>
+      <div class="card">
+        <div class="stage-outer" id="dgo"><div class="stage" id="dgs"></div></div>
+        <div class="legend">
+          <span><span class="sw t-ss"></span>semisimple (closed orbit), not regular</span>
+          <span><span class="sw t-reg"></span>regular (trivial stabilizer), not semisimple</span>
+          <span><span class="sw t-nei"></span>neither</span>
+          <span><span class="sw t-rs"></span>regular semisimple</span>
+        </div>
+      </div>
+    </div>
+    <div class="rightcol">
+      <p class="info" id="info"></p>
+      <div class="card detail" id="det" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="noh">
+    <h2 id="noh">Conventions</h2>
+    <ul class="notes">
+      <li>\(S_3(\mathbb R)=\{\gamma\in\mathrm{GL}_3(\mathbb C):\gamma\bar\gamma=1\}\). An element \(h\in\mathrm{GL}_2(\mathbb R)\) acts by conjugation by \(\mathrm{diag}(h,1)\). The vector \(e_0\) is the last basis vector, and \(W=\mathrm{span}(e_1,e_2)\).</li>
+      <li>\(\mathrm{inv}(\gamma)=(\det\gamma,\operatorname{tr}\gamma,b)\) with \(b=e_0^t\gamma e_0\). Elements with the same \(\mathrm{inv}\) form one fibre.</li>
+      <li>An element is semisimple if its orbit is closed and regular if its stabilizer is trivial. Both properties belong to the whole orbit. Regular semisimple means both, which is \(\Delta_S\ne0\).</li>
+      <li>\(K_\gamma=[e_0,\gamma e_0,\gamma^2e_0]\) and \(L_\gamma=[e_0,\gamma^te_0,(\gamma^t)^2e_0]^t\), and \(\Delta_S=\det K_\gamma\det L_\gamma/(\det\gamma)^2\).</li>
+      <li>An arrow \(A\to B\) means that \(B\) lies in the closure of \(A\). Conjugating by \(\mathrm{diag}(h_1,h_2,1)\) multiplies \(\gamma_{ij}\) by \(h_i/h_j\) (with \(h_3=1\)).</li>
+      <li>Every matrix was checked numerically: \(\gamma\bar\gamma=1\), the common \(\mathrm{inv}\), the stabilizer dimension, \(\det K_\gamma\), \(\det L_\gamma\), and the limit along each arrow.</li>
+    </ul>
+  </section>
+
+<section aria-labelledby="sth">
+  <h2 id="sth">Stabilizers of the closed orbits</h2>
+  <div class="card scroll">
+    <table class="stab">
+      <thead><tr><th>Kind of point</th><th>Stabilizer \(S\) of the closed orbit</th><th>Elements fixed by \(S\)</th><th>Generic condition</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>(a), (b) regular semisimple</td><td>\(\{1\}\)</td><td>every \(\gamma\)</td><td>\(\Delta_S(\gamma)\ne0\), that is \(\det K_\gamma\det L_\gamma\ne0\)</td><td>\(b=\tfrac13,\ -1,\ 2\)</td></tr>
+        <tr><td>(c) wall</td><td>\(T_L=\{\mathrm{diag}(t,1,1)\}\cong\mathbb R^\times\), after moving the hidden line \(L\) to \(\mathbb Re_1\)</td><td>\(\mathrm{diag}(z,\gamma_\Pi)\) with \(|z|=1\) and \(\gamma_\Pi=\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)\in S_2(\mathbb R)\)</td><td>\(bc\ne0\). The wall is next to \(\mathrm U(3)\) if \(|d|<1\), next to \(\mathrm U(1,2)\) if \(|d|>1\)</td><td>\(b=0\) and \(b=2i\)</td></tr>
+        <tr><td>(d) split corner</td><td>\(\{\mathrm{diag}(t_1,t_2,1)\}\cong(\mathbb R^\times)^2\)</td><td>\(\mathrm{diag}(z_1,z_2,\mu)\), all of absolute value one</td><td>\(z_1\ne z_2\)</td><td>\(\mathrm{diag}(i,-i,1)\)</td></tr>
+        <tr><td>(e) nonsplit corner</td><td>\(\{\mathrm{diag}(a+bJ_0,1)\}\cong\mathbb C^\times\), \(J_0=\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)\)</td><td>\(\mathrm{diag}(\gamma_0,\mu)\) with \(\gamma_0J_0=J_0\gamma_0\): eigenvalues \(\alpha,\bar\alpha^{-1}\) on \(\mathbb C(1,\pm i)\)</td><td>\(|\alpha|\ne1\)</td><td>\(\alpha=2\)</td></tr>
+        <tr><td>full reduced origin</td><td>\(\mathrm{GL}_2(\mathbb R)\)</td><td>\(\mathrm{diag}(\lambda,\lambda,\mu)\)</td><td>none</td><td>\(\gamma=1\)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="caption">In every case the semisimple representatives are exactly the elements fixed by \(S\) that are generic for what \(S\) leaves free. When the generic condition fails, the element lies over a deeper point.</p>
+</section>
+<section id="slice" aria-labelledby="s3title">
+  <h2 id="s3title">The orbit space in three dimensions</h2>
+  <div class="s3intro">
+    <p>\(\mathbb O(S_3(\mathbb R))=\mathrm U(1)\times\mathbb C^2\) has real dimension five. To draw it, replace it by its real analogue \(\{1\}\times\mathbb R\times\mathbb C\), the slice</p>
+    \[\Sigma=\{\det\gamma=1,\ \operatorname{tr}\gamma\in\mathbb R\},\]
+    <p>with coordinates \(h=\tfrac12(\operatorname{tr}\gamma-1)\) and \(b=e_0^t\gamma e_0=x+iy\). Fixing \(\det\gamma=1\) loses nothing. Multiplying \(\gamma\) by a scalar \(\zeta\in\mathrm U(1)\) commutes with \(\mathrm{GL}_2(\mathbb R)\), sends \(\mathrm{inv}=(d,c,b)\) to \((\zeta^3d,\zeta c,\zeta b)\), and preserves \(\Delta_S\) and the chambers. On \(\Sigma\) the characteristic polynomial is \((X-1)(X^2-2hX+1)\). So every \(\gamma\) has the eigenvalues \(1,\lambda,\lambda^{-1}\): \(\lambda=e^{i\theta}\) with \(\cos\theta=h\) if \(|h|\le1\), and \(\lambda=h+\sqrt{h^2-1}\), real, if \(|h|&gt;1\). All eight fibres of the explorer lie in \(\Sigma\). On \(\Sigma\) the discriminant factors as</p>
+    \[\Delta_S=4\,(x-h)\,\bigl((1-h)\,y^2-(1+h)\,(x-1)^2\bigr).\]
+    <ul class="s3list">
+      <li>The first factor is the plane \(x=h\). There \(e\) is orthogonal to the eigenvector of \(g\) for \(1\).</li>
+      <li>The second factor is a Plücker conoid. There \(e\) is orthogonal to the eigenvector for \(\lambda\) or for \(\lambda^{-1}\). At height \(|h|\le1\) the conoid is the pair of lines from \(b=1\) through \(\lambda\) and through \(\lambda^{-1}\). For \(|h|&gt;1\) only its axis \(b=1\) is left.</li>
+      <li>Away from the corners, \(\mathbb C[g]e\) is a plane on both, so these are the walls.</li>
+      <li>Chambers, for \(|h|&lt;1\): write \(b=\beta_1+\beta_2\lambda+\beta_3\lambda^{-1}\) with \(\beta_1+\beta_2+\beta_3=1\). Each \(\beta_j\) has the sign of the corresponding eigenline of \(g\). So the number of negative \(\beta_j\) is \(0\), \(1\) or \(2\), in the \(\mathrm U(3)\), \(\mathrm U(2,1)\) or \(\mathrm U(1,2)\) chamber.</li>
+      <li>Hence the closure of the \(\mathrm U(3)\) chamber is a solid. Its section at height \(h\in[-1,1]\) is the triangle with vertices \(1,\lambda,\lambda^{-1}\), the numerical range of \(g\).</li>
+    </ul>
+  </div>
+
+  <div class="s3grid">
+    <div class="card s3main">
+      <div class="s3ctl">
+        <button class="btn primary" id="s3proj" type="button">Lift the copy of S into the slice</button>
+        <button class="btn" id="s3reset" type="button">Reset view</button>
+        <label><input type="checkbox" id="s3fog" checked> colour the chambers</label>
+        <label><input type="checkbox" id="s3outer" checked> walls next to \(\mathrm U(1,2)\)</label>
+        <label><input type="checkbox" id="s3sheetc" checked> the sheet \(S\)</label>
+        <label><input type="checkbox" id="s3planec" checked> the section</label>
+      </div>
+      <div class="s3view" id="s3view" tabindex="0" role="img" aria-label="Picture of the slice with the x-axis pointing down: the chambers U(3), U(2,1), U(1,2) tinted teal, orange and blue, the walls coloured on each side by the chamber they face; below the slice a copy of the sheet S and, under it, its projection along x, which is Figure 1. Drag sideways to turn about the x-axis, up or down to tilt.">
+        <canvas id="s3c"></canvas>
+        <div class="s3labels" id="s3labels"></div>
+        <div class="s3tip" id="s3tip"></div>
+      </div>
+      <div class="s3legend">
+        <span class="chips" role="group" aria-label="Highlight one chamber">
+          <button class="chip" type="button" data-ch="0" aria-pressed="false"><span class="sq" style="--c:var(--u3);--s:var(--u3-soft)"></span>\(\mathrm U(3)\)</button>
+          <button class="chip" type="button" data-ch="1" aria-pressed="false"><span class="sq" style="--c:var(--u21);--s:var(--u21-soft)"></span>\(\mathrm U(2,1)\)</button>
+          <button class="chip" type="button" data-ch="2" aria-pressed="false"><span class="sq" style="--c:var(--u12);--s:var(--u12-soft)"></span>\(\mathrm U(1,2)\)</button>
+          <span class="chiphint">click one to show it alone</span>
+        </span>
+        <span><span class="ln" style="--c:var(--ink)"></span>split corners</span>
+        <span><span class="ln dash" style="--c:var(--orange)"></span>nonsplit corners</span>
+        <span><span class="dt" style="--c:var(--ink)"></span>full reduced origins \(P_\pm\)</span>
+        <span><span class="dt" style="--c:var(--purple)"></span>the fibres above (click one)</span>
+        <span><span class="ln dash thin" style="--c:var(--muted)"></span>projection along \(x\)</span>
+      </div>
+      <p class="figcap">The \(x\)-axis always points down. Drag sideways to turn the picture about it, and up or down to tilt it. The chambers are tinted: \(\mathrm U(3)\) teal, \(\mathrm U(1,2)\) a strong blue, and \(\mathrm U(2,1)\), which is everything else, a faint orange; each wall is coloured on each side by the chamber that side faces. Click a chamber in the legend to show it alone. The thick edges of the solid are the axis \(b=1\) for \(|h|&lt;1\) and the ellipse \(b=\lambda^{\pm1}\) on the plane; the dashed axis beyond \(P_\pm=(h,b)=(\pm1,1)\) consists of nonsplit corners. Under the slice hangs a copy of the sheet \(S\), moved straight down along \(x\), and under that its projection, which is Figure 1. The dashed vertical lines join the place of \(S\) in the slice, the copy and the projection, and the thin teal and blue curves on the walls show where \(S\) cuts them. The first button lifts the copy back into place.</p>
+    </div>
+    <div class="s3side">
+      <div class="card panel">
+        <h3>The section at <span id="s3hv2">\(h=0\)</span></h3>
+        <div class="s3slider"><label for="s3hs">\(h\)</label><input type="range" id="s3hs" min="-1.6" max="1.6" step="0.01" value="0"><output id="s3hv" for="s3hs">0.00</output></div>
+        <div class="pwrap" id="s3secw"><canvas id="s3sec"></canvas><div class="plabels" id="s3secl"></div></div>
+        <div class="snap" role="group" aria-label="Move the section">
+          <button class="btn" type="button" data-h="-1.3">\(h=-1.3\)</button>
+          <button class="btn" type="button" data-h="-1">\(P_-\)</button>
+          <button class="btn" type="button" data-h="-0.6">\(h=-0.6\)</button>
+          <button class="btn" type="button" data-h="0">\(h=0\)</button>
+          <button class="btn" type="button" data-h="1">\(P_+\)</button>
+          <button class="btn" type="button" data-h="1.25">\(h=\tfrac54\)</button>
+        </div>
+        <p class="figcap" id="s3secap"></p>
+      </div>
+      <div class="card panel">
+        <h3>The sheet \(S\) seen along the \(x\)-axis: Figure 1, drawn to scale</h3>
+        <div class="pwrap" id="s3shw"><canvas id="s3sh"></canvas><div class="plabels" id="s3shl"></div></div>
+        <p class="figcap">The floor of the picture on the left, seen from straight above: \(h\) to the right and \(y=\operatorname{Im}b\) up. Teal and blue curves are walls next to \(\mathrm U(3)\) and next to \(\mathrm U(1,2)\).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="s3intro">
+    <p><strong>How Figure 1 arises.</strong> Let \(S=\{x=1-\beta(h)\}\) be a curved sheet. Here \(\beta\) vanishes for \(h\le-1\), is positive on \((-1,0)\), vanishes at \(0\) and is negative after; in the picture \(\beta(h)=2.6\,(1+h)^2(-h)\) on \([-1,0]\). In the coordinates \((h,y)\) on \(S\):</p>
+    <ul class="s3list">
+      <li>For \(h&lt;-1\), \(S\) is the plane \(x=1\). It lies in \(\mathrm U(2,1)\), except for the axis \(y=0\): this is the dashed line (e).</li>
+      <li>At \(h=-1\), \(S\) passes through the full reduced origin \(P_-\).</li>
+      <li>For \(-1&lt;h&lt;0\), \(S\) cuts the \(\mathrm U(3)\) solid in \(|y|&lt;w(h)\), where \(w(h)=|\beta(h)|\sqrt{(1+h)/(1-h)}\). This is the lens, bounded by walls (c). Since \(w\sim1.8\,(1+h)^{5/2}\), the lens has a cusp at \(P_-\).</li>
+      <li>At \(h=0\), \(S\) crosses the axis at the split corner (d), the point of tab (d).</li>
+      <li>For \(h&gt;0\), \(S\) cuts the \(\mathrm U(1,2)\) region at the vertex \(b=1\) in \(|y|&lt;w(h)\). This is the wedge.</li>
+    </ul>
+    <p>So the projection \((h,x,y)\mapsto(h,y)\) along the \(x\)-axis maps \(S\) with its partition onto Figure 1, with \(h\) increasing to the right. The picture draws this literally. Under the slice hangs a copy of \(S\), moved straight down along \(x\), and under the copy lies its flat projection; all three sit at the same \((h,y)\).</p>
+  </div>
+
+  <div class="card scroll">
+    <table class="stab">
+      <thead><tr><th>Figure 1</th><th>Where it is in \(\Sigma\)</th><th>The elements</th><th>Fibre above</th></tr></thead>
+      <tbody>
+        <tr><td>(a) the lens, \(\mathrm U(3)\)</td><td>the open solid; at height \(|h|&lt;1\), the open triangle with vertices \(1,\lambda,\lambda^{-1}\)</td><td>no \(\beta_j\) negative: \(g\in\mathrm U(3)\)</td><td>\(b=\tfrac13\), \(h=0\)</td></tr>
+        <tr><td>(a) the wedge, \(\mathrm U(1,2)\)</td><td>at \(|h|&lt;1\), the three regions at the vertices of the triangle; \(x&gt;h\) if \(h&gt;1\); \(x&lt;h\) if \(h&lt;-1\)</td><td>two \(\beta_j\) negative</td><td>\(b=2\), \(h=0\)</td></tr>
+        <tr><td>(b) \(\mathrm U(2,1)\)</td><td>the rest; at \(|h|&lt;1\), the three regions across the sides of the triangle</td><td>one \(\beta_j\) negative</td><td>\(b=-1\), \(h=0\)</td></tr>
+        <tr><td>(c) the boundary of the lens</td><td>the faces of the solid: the elliptic disc \(\{x=h,\ h^2+y^2&lt;1\}\) and two pieces of the conoid</td><td>\(\mathbb C[g]e\) is a positive definite plane</td><td>\(b=0\), \(h=0\), on the disc</td></tr>
+        <tr><td>(c) the edges of the wedge</td><td>the rest of the plane \(x=h\) and of the conoid</td><td>\(\mathbb C[g]e\) is a plane of signature \((1,1)\)</td><td>\(b=2i\), \(h=0\), on the plane</td></tr>
+        <tr><td>(d) the right tip</td><td>the edges of the solid: the axis \(b=1\) for \(|h|&lt;1\), and the ellipse \(b=\lambda^{\pm1}\), \(x=h\)</td><td>\(e\) is an eigenvector of \(g\), and \(g|_W\) is elliptic</td><td>\(b=1\), \(h=0\)</td></tr>
+        <tr><td>(e) the dashed line</td><td>the axis \(b=1\) for \(|h|&gt;1\)</td><td>\(e\) is an eigenvector of \(g\), and \(g|_W\) is hyperbolic, with eigenvalues \(\lambda^{\pm1}\)</td><td>\(b=1\), \(h=\tfrac54\)</td></tr>
+        <tr><td>the left tip</td><td>\(P_\pm=(h,b)=(\pm1,1)\)</td><td>\(g|_W=\pm1\) is central</td><td>\(P_+\), which is \(\gamma=1\)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="caption">At \(P_-\), whose eigenvalues are \(1,-1,-1\), the slice is transverse to the torus of full reduced origins. The conoid \((1-h)y^2=(1+h)(x-1)^2\) is then a Whitney umbrella, as in Figure 2 of the note, and its handle is the nonsplit axis below \(P_-\). At \(P_+\), which is \(\gamma=1\), the slice is tangent to that torus, and the plane \(x=h\) passes through \(P_+\) as well. That is why Figure 1 is drawn at \(P_-\). The fibre of the full reduced origin tab lies over \(P_+\). Translating in the Cayley chart of Lemma 7.8 identifies the fibres over all full reduced origins, so that tab also describes the fibre over \(P_-\).</p>
+</section>
+</div>
+
+<script>
+window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'global' }, startup: { typeset: false } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+(function(){
+  const R = String.raw;
+  const NS = 'http://www.w3.org/2000/svg';
+  let texQueue = (window.MathJax && MathJax.startup && MathJax.startup.promise) ? MathJax.startup.promise.catch(function(){}) : null;
+  function tex(el){
+    if (!texQueue) return Promise.resolve();
+    texQueue = texQueue.then(function(){ return MathJax.typesetPromise([el]); }).catch(function(){});
+    return texQueue;
+  }
+  function untex(el){ try { if (window.MathJax && MathJax.typesetClear) MathJax.typesetClear([el]); } catch(e){} }
+  function M(s){ return s.split(R`\\`).map(function(r){ return r.split('&'); }); }
+  function texMat(m, pre){ return (pre || '') + R`\begin{pmatrix}` + m.map(function(r){ return r.join('&'); }).join(R`\\`) + R`\end{pmatrix}`; }
+  function texScale(e, num, den){
+    if (e === '0') return '0';
+    if (!num && !den) return e;
+    const f = e.match(/^(-?)\\tfrac\{([^{}]*)\}\{([^{}]*)\}$/);
+    if (f){ const a = /[+]|.-/.test(f[2]) ? '(' + f[2] + ')' : f[2]; return f[1] + R`\tfrac{` + (num ? a + num : f[2]) + '}{' + f[3] + (den || '') + '}'; }
+    if (/^-?(\d+|\d*i)$/.test(e)){
+      let sg = '', core = e;
+      if (e[0] === '-'){ sg = '-'; core = e.slice(1); }
+      const top = (core === '1') ? (num || '1') : core + (num || '');
+      return den ? sg + R`\frac{` + top + '}{' + den + '}' : sg + top;
+    }
+    return den ? R`\frac{` + (num ? '(' + e + ')' + num : e) + '}{' + den + '}' : '(' + e + ')' + num;
+  }
+  function diagTex(h){ return R`\mathrm{diag}(` + h[0] + ',' + h[1] + ',1)'; }
+
+  const TYPE = {
+    ss: { word: 'semisimple', badge: 'semisimple, not regular' },
+    reg: { word: 'regular', badge: 'regular, not semisimple' },
+    nei: { word: 'neither', badge: 'neither semisimple nor regular' },
+    rs: { word: 'regular semisimple', badge: 'regular and semisimple' }
+  };
+  const ONE = R`\{1\}`;
+  const UNI = R`h=\left(\begin{smallmatrix}1&b\\0&1\end{smallmatrix}\right)`;
+  const UNIL = R`\(\left\{\left(\begin{smallmatrix}1&b\\0&1\end{smallmatrix}\right)\right\}\cong\mathbb R\), the unipotent matrices that commute with \(y\) and fix the coupling vector`;
+  const YH = R`y=\left(\begin{smallmatrix}0&1/2\\0&0\end{smallmatrix}\right)`;
+
+  const FIB = {
+    rsU3: { tab: '(a) in U(3)', point: 'a3', inv: R`\left(1,1,\tfrac13\right)`, layout: 'one', W: 680, H: 250, BW: 260,
+      info: R`A point (a) inside the \(\mathrm U(3)\) chamber, with eigenvalues \(1,\pm i\) and \(b=\tfrac13\). Over a regular semisimple point the fibre is a single orbit, closed and with trivial stabilizer.`,
+      nodes: { o: { x: 340, y: 118, label: 'the only orbit', pre: R`\tfrac13`, m: R`2+i&1-i&1-i\\-2i&-i&2i\\2&1+3i&1`, stab: ONE, stabLong: 'trivial', od: 4, sd: 0, type: 'rs', dK: R`-\tfrac{4i}{9}`, dL: R`-\tfrac{4i}{3}`,
+        what: R`\(e_0\) is cyclic on both sides: \(\det K_\gamma\ne0\) and \(\det L_\gamma\ne0\).` } }, edges: [] },
+    rsU21: { tab: '(b) in U(2,1)', point: 'b', inv: R`(1,1,-1)`, layout: 'one', W: 680, H: 250, BW: 260,
+      info: R`A point (b) in the \(\mathrm U(2,1)\) chamber, with eigenvalues \(1,\pm i\) and \(b=-1\). The fibre is a single orbit, closed and with trivial stabilizer.`,
+      nodes: { o: { x: 340, y: 118, label: 'the only orbit', m: R`0&-i&i\\i&2&-1\\2i&2&-1`, stab: ONE, stabLong: 'trivial', od: 4, sd: 0, type: 'rs', dK: R`-2i`, dL: R`8i`,
+        what: R`\(e_0\) is cyclic on both sides: \(\det K_\gamma\ne0\) and \(\det L_\gamma\ne0\).` } }, edges: [] },
+    rsU12: { tab: '(a) in U(1,2)', point: 'a12', inv: R`(1,1,2)`, layout: 'one', W: 680, H: 250, BW: 260,
+      info: R`A point (a) in the \(\mathrm U(1,2)\) chamber, with eigenvalues \(1,\pm i\) and \(b=2\). The fibre is a single orbit, closed and with trivial stabilizer.`,
+      nodes: { o: { x: 340, y: 118, label: 'the only orbit', pre: R`\tfrac12`, m: R`-2+4i&-1+i&2-2i\\-8i&-4i&4i\\-4&-2-i&4`, stab: ONE, stabLong: 'trivial', od: 4, sd: 0, type: 'rs', dK: R`-4i`, dL: R`-2i`,
+        what: R`\(e_0\) is cyclic on both sides: \(\det K_\gamma\ne0\) and \(\det L_\gamma\ne0\).` } }, edges: [] },
+    wallI: { tab: '(c) wall next to U(3)', point: 'c1', inv: R`(1,1,0)`, layout: 'vee', W: 680, H: 440, BW: 176,
+      info: R`A wall point (c) between \(\mathrm U(2,1)\) and \(\mathrm U(3)\). The eigenvalue \(1\) sits on the hidden line \(L=\mathbb Re_1\), and \(\pm i\) on the plane \(\Pi=\mathrm{span}(e_2,e_0)\). Here \(b=0\), so \(|b|<1\) and \(\Pi\) is positive definite. On the unitary side the closed orbit is \(g=1\oplus g_\Pi\) on \(V=L\oplus\Pi\): a positive \(L\) gives an element of \(\mathrm U(3)\), a negative \(L\) one of \(\mathrm U(2,1)\).`,
+      axis: R`coupling of \(e_0\) to the hidden line \(L=\mathbb Re_1\)`,
+      nodes: {
+        '0': { x: 340, label: 'closed', m: R`1&0&0\\0&0&i\\0&i&0`, stab: R`T_L=\{\mathrm{diag}(t,1,1)\}`, stabLong: R`\(T_L=\{\mathrm{diag}(t,1,1):t\in\mathbb R^\times\}\cong\mathbb R^\times\). It rescales the hidden line \(L\) and fixes \(\Pi\) pointwise`, od: 3, sd: 1, type: 'ss', dK: '0', dL: '0',
+          what: R`\(\gamma=\mathrm{diag}(z,\gamma_\Pi)\) with \(z=1\) and \(\gamma_\Pi=\left(\begin{smallmatrix}0&i\\i&0\end{smallmatrix}\right)\), so \(bc=-1\ne0\) and \(d=0\).` },
+        'v': { x: 570, label: 'v: through the column', m: R`1&-i&1\\0&0&i\\0&i&0`, stab: ONE, stabLong: 'trivial', od: 4, sd: 0, type: 'reg', dK: R`-2i`, dL: '0',
+          what: R`Row 1 couples \(L\) to \(\Pi\): \(\gamma_{12}=-i\) and \(\gamma_{13}=1\). So \(\gamma e_0\) has an \(e_1\)-component and \(e_0^t\gamma\) does not.` },
+        'w': { x: 110, label: 'w: through the row', m: R`1&0&0\\-i&0&i\\1&i&0`, stab: ONE, stabLong: 'trivial', od: 4, sd: 0, type: 'reg', dK: '0', dL: R`-2i`,
+          what: R`Column 1 couples \(L\) to \(\Pi\): \(\gamma_{21}=-i\) and \(\gamma_{31}=1\). So \(e_0^t\gamma\) has an \(e_1\)-component and \(\gamma e_0\) does not.` } },
+      edges: [ { a: 'v', b: '0', h: ['t','1','1'], lim: R`t\to0` }, { a: 'w', b: '0', h: ['t','1','1'], lim: R`t\to\infty` } ] },
+    wallII: { tab: '(c) wall next to U(1,2)', point: 'c2', inv: R`(1,1,2i)`, layout: 'vee', W: 680, H: 440, BW: 176,
+      info: R`A wall point (c) between \(\mathrm U(2,1)\) and \(\mathrm U(1,2)\). Same eigenvalues: \(1\) on \(L=\mathbb Re_1\) and \(\pm i\) on \(\Pi\). Now \(b=2i\), so \(|b|>1\) and \(\Pi\) has signature \((1,1)\). A positive \(L\) gives an element of \(\mathrm U(2,1)\), a negative \(L\) one of \(\mathrm U(1,2)\).`,
+      axis: R`coupling of \(e_0\) to the hidden line \(L=\mathbb Re_1\)`,
+      nodes: {
+        '0': { x: 340, label: 'closed', m: R`1&0&0\\0&-2i&i\\0&-3i&2i`, stab: R`T_L=\{\mathrm{diag}(t,1,1)\}`, stabLong: R`\(T_L=\{\mathrm{diag}(t,1,1):t\in\mathbb R^\times\}\cong\mathbb R^\times\). It rescales the hidden line \(L\) and fixes \(\Pi\) pointwise`, od: 3, sd: 1, type: 'ss', dK: '0', dL: '0',
+          what: R`\(\gamma=\mathrm{diag}(z,\gamma_\Pi)\) with \(z=1\) and \(\gamma_\Pi=\left(\begin{smallmatrix}-2i&i\\-3i&2i\end{smallmatrix}\right)\), so \(bc=3\ne0\) and \(d=2i\).` },
+        'v': { x: 570, label: 'v: through the column', m: R`1&1-i&-1+i\\0&-2i&i\\0&-3i&2i`, stab: ONE, stabLong: 'trivial', od: 4, sd: 0, type: 'reg', dK: R`2i`, dL: '0',
+          what: R`Row 1 couples \(L\) to \(\Pi\): \(\gamma_{12}=1-i\) and \(\gamma_{13}=-1+i\).` },
+        'w': { x: 110, label: 'w: through the row', m: R`1&0&0\\1+i&-2i&i\\1+i&-3i&2i`, stab: ONE, stabLong: 'trivial', od: 4, sd: 0, type: 'reg', dK: '0', dL: R`6i`,
+          what: R`Column 1 couples \(L\) to \(\Pi\): \(\gamma_{21}=\gamma_{31}=1+i\).` } },
+      edges: [ { a: 'v', b: '0', h: ['t','1','1'], lim: R`t\to0` }, { a: 'w', b: '0', h: ['t','1','1'], lim: R`t\to\infty` } ] },
+    split: { tab: '(d) split corner', point: 'd', inv: R`(1,1,1)`, layout: 'grid', W: 760, H: 740, BW: 176,
+      info: R`A split corner (d). \(e_0\) is an eigenvector, and the \(W\)-block \(\mathrm{diag}(i,-i)\) has the real eigenlines \(e_1,e_2\). The label \((s_1,s_2)\) records how \(e_0\) is coupled to each line: 0 means not at all, v through the column, w through the row.`,
+      nodes: {}, edges: [] },
+    nonsplit: { tab: '(e) nonsplit corner', point: 'e', inv: R`\left(1,\tfrac72,1\right)`, layout: 'vee', W: 680, H: 440, BW: 176,
+      info: R`A nonsplit corner (e). \(e_0\) is an eigenvector, and the \(W\)-block \(\gamma_0=\tfrac14\left(\begin{smallmatrix}5&-3i\\3i&5\end{smallmatrix}\right)\) has eigenvalues \(2\) and \(\tfrac12\) on the complex conjugate lines \(\mathbb C(1,\pm i)\). Only \(\mathrm U(2,1)\) is adjacent. A coupling through the column forces the coupling through the row to vanish, which is why there are only three orbits.`,
+      axis: R`coupling of \(e_0\) to the \(W\)-block`,
+      nodes: {
+        '0': { x: 340, label: 'closed', m: R`\tfrac54&-\tfrac{3i}{4}&0\\\tfrac{3i}{4}&\tfrac54&0\\0&0&1`, stab: R`\{\mathrm{diag}(a+bJ_0,1)\}`, stabLong: R`\(\{\mathrm{diag}(a+bJ_0,1):(a,b)\ne(0,0)\}\cong\mathbb C^\times\) with \(J_0=\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)\): the nonsplit torus, the real matrices commuting with \(\gamma_0\)`, od: 2, sd: 2, type: 'ss', dK: '0', dL: '0',
+          what: R`\(\gamma=\mathrm{diag}(\gamma_0,1)\).` },
+        'v': { x: 570, label: 'v: through the column', m: R`\tfrac54&-\tfrac{3i}{4}&\tfrac{9i}{4}\\\tfrac{3i}{4}&\tfrac54&-\tfrac{3}{4}\\0&0&1`, stab: ONE, stabLong: 'trivial', od: 4, sd: 0, type: 'reg', dK: R`-\tfrac{27i}{8}`, dL: '0',
+          what: R`\(\gamma e_0\) has a \(W\)-component, while \(e_0^t\gamma=e_0^t\).` },
+        'w': { x: 110, label: 'w: through the row', m: R`\tfrac54&-\tfrac{3i}{4}&0\\\tfrac{3i}{4}&\tfrac54&0\\\tfrac{9i}{4}&\tfrac{3}{4}&1`, stab: ONE, stabLong: 'trivial', od: 4, sd: 0, type: 'reg', dK: '0', dL: R`\tfrac{27i}{8}`,
+          what: R`\(e_0^t\gamma\) has a \(W\)-component, while \(\gamma e_0=e_0\).` } },
+      edges: [ { a: 'v', b: '0', h: ['t','t','1'], lim: R`t\to0` }, { a: 'w', b: '0', h: ['t','t','1'], lim: R`t\to\infty` } ] },
+    P: { tab: 'full reduced origin', point: 'P', inv: R`(1,3,1)`, layout: 'free', W: 680, H: 790, BW: 176,
+      info: R`The full reduced origin \(P=\mathrm{inv}(1)=(1,3,1)\), where \(q=0\). Rows are orbit dimensions \(4,3,2,0\) from top to bottom. The dashed node is a one-parameter family of orbits, one for each \(\kappa\in\mathbb R\). The two dashed arrows are slides inside the regular orbits; every other arrow is a diagonal conjugation. Stabilizers are written as \(h\in\mathrm{GL}_2(\mathbb R)\), acting by \(\mathrm{diag}(h,1)\). In the chart \(\gamma=1+2iY-2Y^2\), with \(Y=\left(\begin{smallmatrix}y&v\\w&0\end{smallmatrix}\right)\) nilpotent.`,
+      nodes: {
+        rv: { x: 110, y: 85, label: R`\(y\ne0\), \(v\) cyclic`, m: R`1&i&i-\tfrac12\\0&1&i\\0&0&1`, stab: ONE, stabLong: 'trivial', od: 4, sd: 0, type: 'reg', dK: 'i', dL: '0',
+          what: R`Chart: \(y=\left(\begin{smallmatrix}0&1/2\\0&0\end{smallmatrix}\right)\), \(v=(\tfrac12,\tfrac12)^t\), \(w=0\). Since \(v\notin\ker y\), the vectors \(v\) and \(yv\) span \(\mathbb R^2\): \(e_0\) is cyclic on the column side.` },
+        rw: { x: 570, y: 85, label: R`\(y\ne0\), \(w\) cyclic`, m: R`1&i&0\\0&1&0\\i&i-\tfrac12&1`, stab: ONE, stabLong: 'trivial', od: 4, sd: 0, type: 'reg', dK: '0', dL: R`-i`,
+          what: R`Chart: \(y\) as above, \(v=0\), \(w=(\tfrac12,\tfrac12)\). Since \(wy\ne0\), the rows \(w\) and \(wy\) span the row space: \(e_0\) is cyclic on the row side.` },
+        nv: { x: 110, y: 290, label: R`\(y\ne0\), \(yv=0\)`, m: R`1&i&i\\0&1&0\\0&0&1`, stab: UNI, stabLong: UNIL, od: 3, sd: 1, type: 'nei', dK: '0', dL: '0',
+          what: R`Chart: \(y=\left(\begin{smallmatrix}0&1/2\\0&0\end{smallmatrix}\right)\), \(v=(\tfrac12,0)^t\in\ker y\), \(w=0\).` },
+        ka: { x: 340, y: 290, label: R`family \(y=\kappa\,vw\)`, m: R`1&\tfrac{i\kappa-1}{2}&i\\0&1&0\\0&i&1`, stab: UNI, stabLong: UNIL, od: 3, sd: 1, type: 'nei', dK: '0', dL: '0', family: true,
+          what: R`Chart: \(y=\left(\begin{smallmatrix}0&\kappa/4\\0&0\end{smallmatrix}\right)\), \(v=(\tfrac12,0)^t\), \(w=(0,\tfrac12)\), so \(wv=0\) and \(y=\kappa\,vw\). Conjugation does not change \(\kappa\), so each \(\kappa\in\mathbb R\) gives its own orbit; \(\kappa=0\) means \(y=0\). These orbits are maximal (none lies in the closure of another orbit) but not regular.` },
+        nw: { x: 570, y: 290, label: R`\(y\ne0\), \(wy=0\)`, m: R`1&i&0\\0&1&0\\0&i&1`, stab: UNI, stabLong: UNIL, od: 3, sd: 1, type: 'nei', dK: '0', dL: '0',
+          what: R`Chart: \(y\) as above, \(v=0\), \(w=(0,\tfrac12)\), with \(wy=0\).` },
+        v: { x: 110, y: 495, label: R`\(y=0\), only \(v\)`, m: R`1&0&i\\0&1&0\\0&0&1`, stab: R`h=\left(\begin{smallmatrix}1&a\\0&b\end{smallmatrix}\right)`, stabLong: R`\(\left\{\left(\begin{smallmatrix}1&a\\0&b\end{smallmatrix}\right)\right\}\), the \(h\) with \(he_1=e_1\)`, od: 2, sd: 2, type: 'nei', dK: '0', dL: '0',
+          what: R`Chart: \(y=0\), \(v=(\tfrac12,0)^t\), \(w=0\).` },
+        n: { x: 340, y: 495, label: R`\(y\ne0\), \(v=w=0\)`, m: R`1&i&0\\0&1&0\\0&0&1`, stab: R`h=\left(\begin{smallmatrix}a&b\\0&a\end{smallmatrix}\right)`, stabLong: R`\(\left\{\left(\begin{smallmatrix}a&b\\0&a\end{smallmatrix}\right)\right\}\), the centralizer of the nilpotent \(y\)`, od: 2, sd: 2, type: 'nei', dK: '0', dL: '0',
+          what: R`Chart: \(y=\left(\begin{smallmatrix}0&1/2\\0&0\end{smallmatrix}\right)\), \(v=w=0\): a unipotent \(W\)-block, with \(e_0\) an eigenvector on both sides.` },
+        w: { x: 570, y: 495, label: R`\(y=0\), only \(w\)`, m: R`1&0&0\\0&1&0\\0&i&1`, stab: R`h=\left(\begin{smallmatrix}a&b\\0&1\end{smallmatrix}\right)`, stabLong: R`\(\left\{\left(\begin{smallmatrix}a&b\\0&1\end{smallmatrix}\right)\right\}\), the \(h\) with \(e_2^th=e_2^t\)`, od: 2, sd: 2, type: 'nei', dK: '0', dL: '0',
+          what: R`Chart: \(y=0\), \(v=0\), \(w=(0,\tfrac12)\).` },
+        z: { x: 340, y: 700, label: 'closed', m: R`1&0&0\\0&1&0\\0&0&1`, stab: R`\mathrm{GL}_2(\mathbb R)`, stabLong: R`all of \(\mathrm{GL}_2(\mathbb R)\)`, od: 0, sd: 4, type: 'ss', dK: '0', dL: '0',
+          what: R`The only closed orbit in the fibre: the single point \(\gamma=1\), the normal origin \(Y=0\).` } },
+      edges: [
+        { a: 'rv', b: 'nv', slide: true, fam: R`1&i&i-\tfrac{s}{2}\\0&1&is\\0&0&1`, conj: R`\mathrm{diag}(h_s,1),\ h_s=\left(\begin{smallmatrix}s&1-s\\0&s\end{smallmatrix}\right)`, lim: R`s\to0`, short: R`\text{slide},\ s\to0` },
+        { a: 'rw', b: 'nw', slide: true, fam: R`1&i&0\\0&1&0\\is&i-\tfrac{s}{2}&1`, conj: R`\mathrm{diag}(h_s,1),\ h_s=\left(\begin{smallmatrix}1/s&(s-1)/s^2\\0&1/s\end{smallmatrix}\right)`, lim: R`s\to0`, short: R`\text{slide},\ s\to0` },
+        { a: 'nv', b: 'v', h: ['1','t','1'], lim: R`t\to\infty` },
+        { a: 'nv', b: 'n', h: ['s','s','1'], lim: R`s\to0` },
+        { a: 'ka', b: 'v', h: ['1','t','1'], lim: R`t\to\infty` },
+        { a: 'ka', b: 'w', h: ['t','1','1'], lim: R`t\to0` },
+        { a: 'nw', b: 'n', h: ['s','s','1'], lim: R`s\to\infty` },
+        { a: 'nw', b: 'w', h: ['t','1','1'], lim: R`t\to0` },
+        { a: 'v', b: 'z', h: ['s','s','1'], lim: R`s\to0` },
+        { a: 'n', b: 'z', h: ['t','1','1'], lim: R`t\to0` },
+        { a: 'w', b: 'z', h: ['s','s','1'], lim: R`s\to\infty` } ] }
+  };
+
+  // split corner: nine orbits on a 3 x 3 grid
+  (function(){
+    const S = FIB.split, X = { w: 120, '0': 390, v: 660 }, Y = { v: 90, '0': 360, w: 630 };
+    const MAT = { '00': R`i&0&0\\0&-i&0\\0&0&1`, 'v0': R`i&0&-1+i\\0&-i&0\\0&0&1`, '0v': R`i&0&0\\0&-i&1+i\\0&0&1`, 'w0': R`i&0&0\\0&-i&0\\-1+i&0&1`, '0w': R`i&0&0\\0&-i&0\\0&1+i&1`,
+      'vv': R`i&0&-1+i\\0&-i&1+i\\0&0&1`, 'ww': R`i&0&0\\0&-i&0\\-1+i&1+i&1`, 'vw': R`i&-1&-1+i\\0&-i&0\\0&1+i&1`, 'wv': R`i&0&0\\-1&-i&1+i\\-1+i&0&1` };
+    const DK = { vv: R`4i`, ww: '0' }, DL = { vv: '0', ww: R`4i` };
+    const SW = { '0': 'not coupled', v: 'coupled through the column', w: 'coupled through the row' };
+    Object.keys(MAT).forEach(function(k){
+      const n0 = (k[0] === '0') + (k[1] === '0');
+      const type = k === '00' ? 'ss' : (n0 === 0 ? 'reg' : 'nei');
+      let stab, stabLong;
+      if (k === '00'){ stab = R`\{\mathrm{diag}(t_1,t_2,1)\}`; stabLong = R`\(\{\mathrm{diag}(t_1,t_2,1)\}\cong(\mathbb R^\times)^2\), the split torus, rescaling both eigenlines`; }
+      else if (k[1] === '0'){ stab = R`\{\mathrm{diag}(1,t_2,1)\}`; stabLong = R`\(\{\mathrm{diag}(1,t_2,1)\}\cong\mathbb R^\times\): line 1 is coupled, so only line 2 can still be rescaled`; }
+      else if (k[0] === '0'){ stab = R`\{\mathrm{diag}(t_1,1,1)\}`; stabLong = R`\(\{\mathrm{diag}(t_1,1,1)\}\cong\mathbb R^\times\): line 2 is coupled, so only line 1 can still be rescaled`; }
+      else { stab = ONE; stabLong = 'trivial'; }
+      S.nodes[k] = { x: X[k[0]], y: Y[k[1]], label: k === '00' ? '(0, 0), closed' : '(' + k[0] + ', ' + k[1] + ')', m: MAT[k], stab: stab, stabLong: stabLong,
+        od: 4 - (k === '00' ? 2 : (n0 === 1 ? 1 : 0)), sd: k === '00' ? 2 : (n0 === 1 ? 1 : 0), type: type, dK: DK[k] || '0', dL: DL[k] || '0',
+        what: k === '00' ? R`\(\gamma=\mathrm{diag}(i,-i,1)\).` : R`Line 1 (\(e_1\), eigenvalue \(i\)): ` + SW[k[0]] + R`. Line 2 (\(e_2\), eigenvalue \(-i\)): ` + SW[k[1]] + '.' };
+    });
+    Object.keys(MAT).forEach(function(a){ Object.keys(MAT).forEach(function(b){
+      let d = -1, cnt = 0;
+      for (let j = 0; j < 2; j++){ if (a[j] !== b[j]){ cnt++; d = j; } }
+      if (cnt !== 1 || b[d] !== '0') return;
+      const t = d === 0 ? 't_1' : 't_2';
+      S.edges.push({ a: a, b: b, h: d === 0 ? [t, '1', '1'] : ['1', t, '1'], lim: a[d] === 'v' ? t + R`\to0` : t + R`\to\infty` });
+    }); });
+  })();
+  const VEE = { '0': [340, 335], v: [520, 90], w: [160, 90] };
+  ['wallI','wallII','nonsplit'].forEach(function(f){ Object.keys(FIB[f].nodes).forEach(function(k){ FIB[f].nodes[k].x = VEE[k][0]; FIB[f].nodes[k].y = VEE[k][1]; }); });
+
+  const NAMES = { o: 'the only orbit', '0': 'closed orbit', v: 'orbit coupled through the column', w: 'orbit coupled through the row' };
+  function nodeName(f, k){
+    const nd = FIB[f].nodes[k];
+    if (f === 'P') return { rv: R`regular orbit with \(v\) cyclic`, rw: R`regular orbit with \(w\) cyclic`, nv: R`orbit \(y\ne0,\ yv=0\)`, ka: R`family \(y=\kappa\,vw\)`, nw: R`orbit \(y\ne0,\ wy=0\)`, v: R`orbit \(y=0\), only \(v\)`, n: R`orbit \(y\ne0,\ v=w=0\)`, w: R`orbit \(y=0\), only \(w\)`, z: R`closed orbit \(\{1\}\)` }[k];
+    if (f === 'split') return k === '00' ? 'closed orbit (0, 0)' : 'orbit (' + k[0] + ', ' + k[1] + ')';
+    return NAMES[k] || nd.label;
+  }
+  function edgeConj(e){ return e.slide ? e.conj : diagTex(e.h); }
+  function edgeFam(f, e){
+    if (e.slide) return M(e.fam);
+    const m = M(FIB[f].nodes[e.a].m), h = e.h;
+    return m.map(function(r, i){ return r.map(function(x, j){ const hi = h[i], hj = h[j]; if (hi === hj) return x; return texScale(x, hi === '1' ? '' : hi, hj === '1' ? '' : hj); }); });
+  }
+  function down(f, a){ const out = []; (function rec(x){ FIB[f].edges.forEach(function(e){ if (e.a === x && out.indexOf(e.b) < 0){ out.push(e.b); rec(e.b); } }); })(a); return out; }
+  function up(f, b){ const out = []; (function rec(x){ FIB[f].edges.forEach(function(e){ if (e.b === x && out.indexOf(e.a) < 0){ out.push(e.a); rec(e.a); } }); })(b); return out; }
+
+  const ORDER = ['rsU3', 'rsU21', 'rsU12', 'wallI', 'wallII', 'split', 'nonsplit', 'P'];
+  const DEFAULT_SEL = { rsU3: 'o', rsU21: 'o', rsU12: 'o', wallI: 'v', wallII: 'v', split: 'vw', nonsplit: 'v', P: 'rv' };
+  let cur = 'wallI', sel = 'v';
+  const tabsEl = document.getElementById('tabs'), infoEl = document.getElementById('info'), det = document.getElementById('det');
+  const dgo = document.getElementById('dgo'), dgs = document.getElementById('dgs');
+  let edgeEls = [], nodeEls = {};
+
+  ORDER.forEach(function(f){
+    const b = document.createElement('button'); b.className = 'tab'; b.type = 'button'; b.id = 'tab-' + f; b.setAttribute('role', 'tab'); b.textContent = FIB[f].tab;
+    b.addEventListener('click', function(){ choose(f); }); tabsEl.appendChild(b);
+  });
+
+  function fit(outer, stage, W, H){
+    const s = Math.min(1, outer.clientWidth / W);
+    stage.style.transform = 'scale(' + s + ')'; outer.style.height = Math.ceil(H * s) + 'px';
+  }
+  function fitDiagram(){
+    const W = FIB[cur].W, H = FIB[cur].H;
+    let s = Math.min(1, dgo.clientWidth / W);
+    if (window.innerWidth >= 1100){
+      const gap = dgo.getBoundingClientRect().top - document.getElementById('f1card').getBoundingClientRect().top;
+      const avail = window.innerHeight - gap - 64;
+      if (avail > 0) s = Math.min(s, Math.max(0.8, avail / H));
+    }
+    dgs.style.transform = 'scale(' + s + ')'; dgo.style.height = Math.ceil(H * s) + 'px';
+  }
+  function fitAll(){
+    fit(document.getElementById('f1o'), document.getElementById('f1s'), 680, 205);
+    fitDiagram();
+  }
+
+  function buildDiagram(){
+    untex(dgs); dgs.innerHTML = ''; edgeEls = []; nodeEls = {};
+    const fb = FIB[cur], W = fb.W, H = fb.H, BW = fb.BW, BH = 150;
+    dgs.style.width = W + 'px'; dgs.style.height = H + 'px';
+    const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('width', W); svg.setAttribute('height', H); svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.setAttribute('aria-hidden', 'true'); dgs.appendChild(svg);
+    const showAll = fb.layout !== 'free';
+    fb.edges.forEach(function(e){
+      const A = fb.nodes[e.a], B = fb.nodes[e.b];
+      let x1, y1, x2, y2, kind;
+      if (A.y === B.y){ kind = 'h'; const sg = A.x < B.x ? 1 : -1; x1 = A.x + sg * BW / 2; x2 = B.x - sg * BW / 2; y1 = y2 = A.y; }
+      else if (A.x === B.x){ kind = 'v'; const sg = A.y < B.y ? 1 : -1; y1 = A.y + sg * BH / 2; y2 = B.y - sg * BH / 2; x1 = x2 = A.x; }
+      else { kind = 'd'; x1 = A.x; y1 = A.y + BH / 2; x2 = B.x; y2 = B.y - BH / 2; }
+      const ln = document.createElementNS(NS, 'line');
+      const L = Math.hypot(x2 - x1, y2 - y1), ux = (x2 - x1) / L, uy = (y2 - y1) / L;
+      ln.setAttribute('x1', x1); ln.setAttribute('y1', y1); ln.setAttribute('x2', x2 - 8 * ux); ln.setAttribute('y2', y2 - 8 * uy);
+      ln.setAttribute('class', 'edge' + (e.slide ? ' slide' : '')); svg.appendChild(ln);
+      const hd = document.createElementNS(NS, 'path');
+      const px = -uy, py = ux;
+      hd.setAttribute('d', 'M' + x2 + ' ' + y2 + ' L' + (x2 - 10 * ux + 4.5 * px) + ' ' + (y2 - 10 * uy + 4.5 * py) + ' L' + (x2 - 10 * ux - 4.5 * px) + ' ' + (y2 - 10 * uy - 4.5 * py) + ' Z');
+      hd.setAttribute('class', 'ahead'); svg.appendChild(hd);
+      const lb = document.createElement('div'); lb.className = 'elbl'; lb.hidden = !showAll;
+      lb.innerHTML = e.slide ? 'slide, \\(s\\to0\\)' : (fb.layout === 'grid' ? '\\(' + e.lim + '\\)' : '\\(' + diagTex(e.h) + R`,\ ` + e.lim + '\\)');
+      const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+      lb.style.left = mx + 'px'; lb.style.top = my + 'px';
+      if (kind === 'h') lb.style.transform = 'translate(-50%, calc(-100% - 6px))';
+      else if (kind === 'v') lb.style.transform = 'translate(9px, -50%)';
+      else lb.style.transform = x2 > x1 ? 'translate(calc(-100% - 10px), -50%)' : 'translate(10px, -50%)';
+      edgeEls.push({ e: e, line: ln, head: hd, label: lb });
+    });
+    Object.keys(fb.nodes).forEach(function(k){
+      const nd = fb.nodes[k];
+      const d = document.createElement('div');
+      d.className = 'node t-' + nd.type + (nd.family ? ' family' : '');
+      d.style.left = (nd.x - BW / 2) + 'px'; d.style.top = (nd.y - BH / 2) + 'px'; d.style.width = BW + 'px'; d.style.height = BH + 'px';
+      d.tabIndex = 0; d.setAttribute('role', 'button');
+      const stabTeX = (nd.stab.indexOf('h=') === 0 ? R`\mathrm{Stab}:\ ` : R`\mathrm{Stab}=`) + nd.stab;
+      d.innerHTML = '<div class="n-l">' + nd.label + '</div>' +
+        '<div class="n-m">\\(' + texMat(M(nd.m), nd.pre) + '\\)</div>' +
+        '<div class="n-s">\\(' + stabTeX + '\\)</div>' +
+        '<div class="n-d">orbit dim ' + nd.od + ' · stab dim ' + nd.sd + '</div>' +
+        '<div class="n-t">' + TYPE[nd.type].word + (nd.family ? ', one orbit per \\(\\kappa\\in\\mathbb R\\)' : '') + '</div>';
+      d.addEventListener('click', function(){ select(k); });
+      d.addEventListener('keydown', function(ev){ if (ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); select(k); } });
+      dgs.appendChild(d); nodeEls[k] = d;
+    });
+    edgeEls.forEach(function(o){ dgs.appendChild(o.label); });
+    if (fb.layout === 'grid'){
+      addLbl(dgs, 390, 722, R`line 1 \((e_1,\ \text{eigenvalue } i)\): w \(\leftarrow\) 0 \(\rightarrow\) v`, 'muted');
+      const rl = addLbl(dgs, 12, 360, R`line 2 \((e_2,\ \text{eigenvalue } -i)\): w \(\leftarrow\) 0 \(\rightarrow\) v`, 'muted');
+      rl.style.transform = 'translate(-50%, -50%) rotate(-90deg)';
+    } else if (fb.layout === 'vee'){
+      addLbl(dgs, 340, 428, fb.axis, 'muted');
+    }
+    fitDiagram();
+    tex(dgs);
+  }
+  function addLbl(parent, x, y, html, cls){ const l = document.createElement('div'); l.className = 'lbl' + (cls ? ' ' + cls : ''); l.style.left = x + 'px'; l.style.top = y + 'px'; l.innerHTML = html; parent.appendChild(l); return l; }
+
+  function refreshSel(){
+    Object.keys(nodeEls).forEach(function(k){ nodeEls[k].classList.toggle('sel', k === sel); nodeEls[k].setAttribute('aria-pressed', k === sel ? 'true' : 'false'); });
+    edgeEls.forEach(function(o){ const hot = (o.e.a === sel || o.e.b === sel); o.line.classList.toggle('hot', hot); o.head.classList.toggle('hot', hot); o.label.hidden = (FIB[cur].layout === 'free') && !hot; o.label.classList.toggle('hot', hot); });
+  }
+  function link(k){ const nd = FIB[cur].nodes[k]; return '<a class="nl t-' + nd.type + '" href="#" data-k="' + k + '">' + nodeName(cur, k) + '</a>'; }
+  function details(){
+    const fb = FIB[cur], k = sel, nd = fb.nodes[k];
+    const ds = down(cur, k), us = up(cur, k), outs = fb.edges.filter(function(e){ return e.a === k; });
+    let h = '<div class="dhead"><strong>' + nodeName(cur, k) + '</strong><span class="badge t-' + nd.type + '">' + TYPE[nd.type].badge + '</span></div>';
+    h += '<div class="dmat">\\(\\gamma=' + texMat(M(nd.m), nd.pre) + '\\)</div>';
+    h += '<p>' + nd.what + '</p>';
+    h += '<table class="dtable"><tr><td>stabilizer</td><td>' + (nd.stabLong === 'trivial' ? 'trivial' : nd.stabLong) + ' (dimension ' + nd.sd + ')</td></tr>' +
+      '<tr><td>orbit dimension</td><td>\\(' + nd.od + '=4-' + nd.sd + '\\)</td></tr>' +
+      '<tr><td>\\(\\det K_\\gamma,\\ \\det L_\\gamma\\)</td><td>\\(' + nd.dK + ',\\ ' + nd.dL + '\\)</td></tr>' +
+      '<tr><td>semisimple</td><td>' + ((nd.type === 'ss' || nd.type === 'rs') ? 'yes: the orbit is closed' : 'no: the orbit is not closed') + '</td></tr>' +
+      '<tr><td>regular</td><td>' + (nd.sd === 0 ? 'yes: the stabilizer is trivial' : 'no: the stabilizer has dimension ' + nd.sd) + '</td></tr></table>';
+    h += '<p>Its closure contains: ' + (ds.length ? ds.map(link).join(', ') : 'only itself') + '.<br>It lies in the closure of: ' + (us.length ? us.map(link).join(', ') : 'no other orbit') + '.</p>';
+    outs.forEach(function(e){
+      h += '<div class="arrow"><p><strong>Arrow to the ' + link(e.b) + '.</strong> Conjugating by \\(' + edgeConj(e) + '\\) gives a family in this orbit:</p>' +
+        '<div class="dmat">\\(' + texMat(edgeFam(cur, e)) + R`\ \xrightarrow{\ ` + e.lim + R`\ }\ ` + texMat(M(fb.nodes[e.b].m), fb.nodes[e.b].pre) + '\\)</div>' +
+        (e.slide ? '<p class="caption">No diagonal conjugation can do this: \\(\\mathrm{diag}(h_1,h_2)\\) multiplies \\(y_{12}\\) by \\(h_1/h_2\\) and the coupling coordinates by \\(h_1,h_2\\), so their ratio \\(y_{12}v_2/v_1\\) never changes. The slide uses the unipotent part of \\(h_s\\).</p>' : '') + '</div>';
+    });
+    untex(det); det.innerHTML = h;
+    det.querySelectorAll('a[data-k]').forEach(function(a){ a.addEventListener('click', function(ev){ ev.preventDefault(); select(a.getAttribute('data-k')); }); });
+    tex(det);
+  }
+  function select(k){ sel = k; refreshSel(); details(); }
+
+  // Figure 1: every point of the figure selects the fibre over it
+  const F1POS = { rsU3: [400, 124], rsU12: [631, 143.2], rsU21: [427, 28], wallI: [316, 69.2], wallII: [580, 52], split: [490, 100], nonsplit: [115, 100], P: [214, 100] };
+  const f1svg = document.getElementById('f1svg'), f1ring = document.getElementById('f1ring');
+  const f1targets = Array.prototype.slice.call(f1svg.querySelectorAll('[data-f]'));
+  function svgPt(ev){ const m = f1svg.getScreenCTM(); if (!m) return null; const p = f1svg.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY; return p.matrixTransform(m.inverse()); }
+  function placeRing(x, y){ f1ring.setAttribute('cx', x); f1ring.setAttribute('cy', y); f1ring.style.display = ''; }
+  f1targets.forEach(function(el){
+    const f = el.getAttribute('data-f');
+    el.setAttribute('role', 'button');
+    el.addEventListener('keydown', function(ev){ if (ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); choose(f); } });
+  });
+  // press anywhere and drag: the ring follows the pointer and snaps onto walls, the dashed line and the tips
+  const LENS_BEZ = [[[214,100],[286,94],[346,38.8],[418,55]], [[418,55],[448,61.6],[472,89.8],[490,100]], [[490,100],[472,110.2],[448,138.4],[418,145]], [[418,145],[346,161.2],[286,106],[214,100]]];
+  const LENS_PTS = [];
+  LENS_BEZ.forEach(function(B){
+    for (let i = 0; i < 80; i++){ const t = i/80, u = 1 - t; LENS_PTS.push([0, 1].map(function(k){ return u*u*u*B[0][k] + 3*u*u*t*B[1][k] + 3*u*t*t*B[2][k] + t*t*t*B[3][k]; })); }
+  });
+  const WEDGE_PTS = [[490, 100], [670, 11.2], [670, 188.8]];
+  function nearestOn(pts, closed, x, y){
+    let best = { d: Infinity, p: null };
+    const n = pts.length, m = closed ? n : n - 1;
+    for (let i = 0; i < m; i++){
+      const a = pts[i], b = pts[(i + 1) % n], dx = b[0] - a[0], dy = b[1] - a[1], L2 = dx*dx + dy*dy;
+      const t = L2 ? Math.max(0, Math.min(1, ((x - a[0])*dx + (y - a[1])*dy)/L2)) : 0;
+      const px = a[0] + t*dx, py = a[1] + t*dy, d = Math.hypot(x - px, y - py);
+      if (d < best.d) best = { d: d, p: [px, py] };
+    }
+    return best;
+  }
+  function inside(pts, x, y){
+    let c = false;
+    for (let i = 0, j = pts.length - 1; i < pts.length; j = i++){
+      const a = pts[i], b = pts[j];
+      if ((a[1] > y) !== (b[1] > y) && x < (b[0] - a[0])*(y - a[1])/(b[1] - a[1]) + a[0]) c = !c;
+    }
+    return c;
+  }
+  // the kind of point under (x, y), in the coordinates of the figure
+  function f1probe(x, y){
+    const m = f1svg.getScreenCTM(), sc = (m && m.a) ? m.a : 1, tipTol = 10/sc, tol = 6/sc;
+    x = Math.max(10, Math.min(670, x)); y = Math.max(10, Math.min(190, y));
+    if (Math.hypot(x - 490, y - 100) < tipTol) return { f: 'split', x: 490, y: 100 };
+    if (Math.hypot(x - 214, y - 100) < tipTol) return { f: 'P', x: 214, y: 100 };
+    const e1 = nearestOn([[490, 100], [670, 11.2]], false, x, y), e2 = nearestOn([[490, 100], [670, 188.8]], false, x, y);
+    const near = [['nonsplit', nearestOn([[22, 100], [214, 100]], false, x, y)], ['wallI', nearestOn(LENS_PTS, true, x, y)], ['wallII', e1.d < e2.d ? e1 : e2]];
+    near.sort(function(A, B){ return A[1].d - B[1].d; });
+    if (near[0][1].d < tol) return { f: near[0][0], x: near[0][1].p[0], y: near[0][1].p[1] };
+    if (inside(WEDGE_PTS, x, y)) return { f: 'rsU12', x: x, y: y };
+    if (inside(LENS_PTS, x, y)) return { f: 'rsU3', x: x, y: y };
+    return { f: 'rsU21', x: x, y: y };
+  }
+  let f1drag = false, f1timer = 0, f1pending = null;
+  function f1apply(r){ if (r.f !== cur) choose(r.f, r.x, r.y); else placeRing(r.x, r.y); }
+  function f1move(ev, now){
+    const p = svgPt(ev); if (!p) return;
+    const r = f1probe(p.x, p.y);
+    placeRing(r.x, r.y);
+    f1targets.forEach(function(el){ el.classList.toggle('on', el.getAttribute('data-f') === r.f); });
+    clearTimeout(f1timer); f1pending = null;
+    if (r.f === cur) return;
+    if (now) f1apply(r);
+    else { f1pending = r; f1timer = setTimeout(function(){ if (f1pending){ const q = f1pending; f1pending = null; f1apply(q); } }, 110); }
+  }
+  f1svg.addEventListener('pointerdown', function(ev){
+    if (ev.button) return;
+    ev.preventDefault();
+    f1drag = true; f1svg.classList.add('dragging');
+    try { f1svg.setPointerCapture(ev.pointerId); } catch(e){}
+    f1move(ev, true);
+  });
+  f1svg.addEventListener('pointermove', function(ev){ if (f1drag) f1move(ev, false); });
+  function f1end(){
+    if (!f1drag) return;
+    f1drag = false; f1svg.classList.remove('dragging');
+    if (f1pending){ clearTimeout(f1timer); const q = f1pending; f1pending = null; f1apply(q); }
+  }
+  f1svg.addEventListener('pointerup', f1end); f1svg.addEventListener('pointercancel', f1end);
+
+  function choose(f, rx, ry){
+    cur = f; sel = DEFAULT_SEL[f];
+    ORDER.forEach(function(g){ document.getElementById('tab-' + g).setAttribute('aria-selected', g === f ? 'true' : 'false'); });
+    f1targets.forEach(function(el){ el.classList.toggle('on', el.getAttribute('data-f') === f); });
+    if (rx !== undefined) placeRing(rx, ry); else placeRing(F1POS[f][0], F1POS[f][1]);
+    untex(infoEl); infoEl.innerHTML = 'Class \\(\\mathrm{inv}=' + FIB[f].inv + '\\). ' + FIB[f].info + ' Every element of \\(S_3(\\mathbb R)\\) with this \\(\\mathrm{inv}\\) lies in exactly one of the orbits shown.';
+    tex(infoEl);
+    buildDiagram(); refreshSel(); details();
+    if (s3api) s3api.focus(f);
+    try { history.replaceState(null, '', '#' + f); } catch(e){}
+  }
+
+  // Geometry of the slice {det = 1, tr real}: coordinates (x, y, h) with b = x + iy, h = (tr - 1)/2.
+  function s3geom(){
+    const BOX = { x0: -1.4, x1: 2.2, y0: -2.2, y1: 2.2, h0: -1.6, h1: 1.6 };
+    const SHEET = { kap: 2.6, binf: 0.3, h0: -1.6, h1: 0.55, ymax: 0.66 };
+    function beta(h){ return h <= -1 ? 0 : (h <= 0 ? SHEET.kap*(1+h)*(1+h)*(-h) : -SHEET.binf*Math.tanh(SHEET.kap*h/SHEET.binf)); }
+    function wsh(h){ return h <= -1 ? 0 : Math.abs(beta(h))*Math.sqrt((1+h)/(1-h)); }
+    function sheetX(h){ return 1 - beta(h); }
+    // below the slice: a copy of S, moved down along x by COPY_DX, and under it the floor at FLOOR_X onto which S is projected
+    let sxMin = Infinity, sxMax = -Infinity;
+    for (let i = 0; i <= 400; i++){ const v = sheetX(SHEET.h0 + (SHEET.h1 - SHEET.h0)*i/400); sxMin = Math.min(sxMin, v); sxMax = Math.max(sxMax, v); }
+    const COPY_DX = BOX.x1 + 0.35 - sxMin, FLOOR_X = sxMax + COPY_DX + 0.95;
+    function disc(x, y, h){ return 4*(x-h)*((1-h)*y*y - (1+h)*(x-1)*(x-1)); }
+    // 0 = U(3), 1 = U(2,1), 2 = U(1,2), -1 = on the discriminant
+    function chamber(x, y, h){ const D = disc(x, y, h); if (Math.abs(D) < 1e-14) return -1; return D > 0 ? 1 : (x*x + y*y < 1 ? 0 : 2); }
+    function clip(px, py, dx, dy){
+      let t0 = -Infinity, t1 = Infinity;
+      function lim(p, d, lo, hi){
+        if (Math.abs(d) < 1e-12){ if (p < lo || p > hi){ t0 = 1; t1 = 0; } return; }
+        let a = (lo - p)/d, b = (hi - p)/d; if (a > b){ const s = a; a = b; b = s; }
+        t0 = Math.max(t0, a); t1 = Math.min(t1, b);
+      }
+      lim(px, dx, BOX.x0, BOX.x1); lim(py, dy, BOX.y0, BOX.y1);
+      return t0 <= t1 ? [t0, t1] : null;
+    }
+    const P = [], Q = [], curves = [], SHV = [];
+    function vtx(p){ P.push(p[0], p[1], p[2]); return P.length/3 - 1; }
+    function cross(a, b){ return [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]]; }
+    function sub(a, b){ return [a[0]-b[0], a[1]-b[1], a[2]-b[2]]; }
+    function sides(p, n){
+      for (let e = 1e-4; e < 5e-2; e *= 4){
+        const a = chamber(p[0]+e*n[0], p[1]+e*n[1], p[2]+e*n[2]), b = chamber(p[0]-e*n[0], p[1]-e*n[1], p[2]-e*n[2]);
+        if (a >= 0 && b >= 0) return [a, b];
+      }
+      return [1, 1];
+    }
+    // kind 'wall': colour each side by the chamber it faces; kind 'sheet': colour by the chamber it lies in
+    function grid(kind, piece, nu, nv, f){
+      const idx = [];
+      for (let i = 0; i <= nu; i++){ const row = []; for (let j = 0; j <= nv; j++) row.push(vtx(f(i/nu, j/nv))); idx.push(row); }
+      if (kind === 'sheet') idx.forEach(function(row){ row.forEach(function(k){ SHV.push(k); }); });
+      for (let i = 0; i < nu; i++) for (let j = 0; j < nv; j++){
+        const a = idx[i][j], b = idx[i+1][j], c = idx[i+1][j+1], d = idx[i][j+1];
+        const pa = [P[3*a], P[3*a+1], P[3*a+2]], pb = [P[3*b], P[3*b+1], P[3*b+2]], pc = [P[3*c], P[3*c+1], P[3*c+2]], pd = [P[3*d], P[3*d+1], P[3*d+2]];
+        const ar = cross(sub(pc, pa), sub(pd, pb)); if (Math.hypot(ar[0], ar[1], ar[2]) < 1e-11) continue;
+        const u = (i + 0.5)/nu, v = (j + 0.5)/nv, du = 0.25/nu, dv = 0.25/nv;
+        const p = f(u, v);
+        let n = cross(sub(f(u + du, v), f(u - du, v)), sub(f(u, v + dv), f(u, v - dv)));
+        let L = Math.hypot(n[0], n[1], n[2]);
+        if (L < 1e-14){ n = ar; L = Math.hypot(n[0], n[1], n[2]); }
+        n = [n[0]/L, n[1]/L, n[2]/L];
+        let cf, cb;
+        if (kind === 'sheet'){ cf = cb = chamber(p[0], p[1], p[2]); }
+        else { const s = sides(p, n); cf = s[0]; cb = s[1]; }
+        Q.push({ v: [a, b, c, d], n: n, cf: cf, cb: cb, cat: kind === 'sheet' ? 'sh' : ((cf === 0 || cb === 0) ? 'w1' : 'w2'), piece: piece });
+      }
+    }
+    // the plane x = h
+    const hA = Math.max(BOX.h0, BOX.x0), hB = Math.min(BOX.h1, BOX.x1);
+    grid('wall', 'disc', 28, 12, function(u, v){ const t = Math.PI*u, h = -Math.cos(t), s = Math.sin(t); return [h, (2*v - 1)*s, h]; });
+    grid('wall', 'plane+', 28, 6, function(u, v){ const t = Math.PI*u, h = -Math.cos(t), s = Math.sin(t); return [h, s + v*(BOX.y1 - s), h]; });
+    grid('wall', 'plane-', 28, 6, function(u, v){ const t = Math.PI*u, h = -Math.cos(t), s = Math.sin(t); return [h, -s + v*(BOX.y0 + s), h]; });
+    grid('wall', 'planeTop', 5, 14, function(u, v){ const h = 1 + u*(hB - 1); return [h, BOX.y0 + v*(BOX.y1 - BOX.y0), h]; });
+    grid('wall', 'planeBot', 5, 14, function(u, v){ const h = hA + u*(-1 - hA); return [h, BOX.y0 + v*(BOX.y1 - BOX.y0), h]; });
+    // the Pluecker conoid: at angle phi the line b = 1 + r e^{i phi} at height h = -cos 2phi;
+    // each line is cut at the axis r = 0 and at the plane, r = -2 cos phi (the point lambda^{-+1})
+    function conoid(phA, phB, which){
+      grid('wall', 'con' + (phA === 0 ? 'L' : 'R') + which, 40, 8, function(u, v){
+        const ph = phA + u*(phB - phA), c = Math.cos(ph), s = Math.sin(ph), re = -2*c, t = clip(1, 0, c, s);
+        let ra, rb;
+        if (c >= 0){ if (which === 0){ ra = t[0]; rb = re; } else if (which === 1){ ra = re; rb = 0; } else { ra = 0; rb = t[1]; } }
+        else { if (which === 0){ ra = t[0]; rb = 0; } else if (which === 1){ ra = 0; rb = re; } else { ra = re; rb = t[1]; } }
+        const r = ra + v*(rb - ra);
+        return [1 + r*c, r*s, -Math.cos(2*ph)];
+      });
+    }
+    for (let w = 0; w < 3; w++){ conoid(0, Math.PI/2, w); conoid(Math.PI/2, Math.PI, w); }
+    // the sheet S = {x = 1 - beta(h)}
+    const SH = SHEET;
+    grid('sheet', 'shOut', 6, 12, function(u, v){ const h = SH.h0 + u*(-1 - SH.h0); return [sheetX(h), -SH.ymax + 2*SH.ymax*v, h]; });
+    grid('sheet', 'shLens', 26, 6, function(u, v){ const h = -1 + u, w = wsh(h); return [sheetX(h), (2*v - 1)*w, h]; });
+    grid('sheet', 'shL+', 26, 5, function(u, v){ const h = -1 + u, w = wsh(h); return [sheetX(h), w + v*(SH.ymax - w), h]; });
+    grid('sheet', 'shL-', 26, 5, function(u, v){ const h = -1 + u, w = wsh(h); return [sheetX(h), -w - v*(SH.ymax - w), h]; });
+    grid('sheet', 'shWedge', 14, 6, function(u, v){ const h = u*SH.h1, w = wsh(h); return [sheetX(h), (2*v - 1)*w, h]; });
+    grid('sheet', 'shW+', 14, 5, function(u, v){ const h = u*SH.h1, w = wsh(h); return [sheetX(h), w + v*(SH.ymax - w), h]; });
+    grid('sheet', 'shW-', 14, 5, function(u, v){ const h = u*SH.h1, w = wsh(h); return [sheetX(h), -w - v*(SH.ymax - w), h]; });
+    // curves; those with onS lie on S and move with it
+    function poly(cat, n, f, onS){ const pts = []; for (let i = 0; i <= n; i++) pts.push(f(i/n)); curves.push({ cat: cat, pts: pts, onS: !!onS }); }
+    poly('split', 30, function(t){ return [1, 0, -1 + 2*t]; });
+    poly('split', 120, function(t){ const a = 2*Math.PI*t; return [Math.cos(a), Math.sin(a), Math.cos(a)]; });
+    poly('nsUp', 10, function(t){ return [1, 0, 1 + t*(BOX.h1 - 1)]; });
+    poly('nsDown', 10, function(t){ return [1, 0, -1 - t*(-1 - BOX.h0)]; });
+    function sheetCurves(lens, wedge, edge, onS){
+      [1, -1].forEach(function(sg){
+        poly(lens, 40, function(t){ const h = -1 + t; return [sheetX(h), sg*wsh(h), h]; }, onS);
+        poly(wedge, 24, function(t){ const h = t*SH.h1; return [sheetX(h), sg*wsh(h), h]; }, onS);
+        poly(edge, 60, function(t){ const h = SH.h0 + t*(SH.h1 - SH.h0); return [sheetX(h), sg*SH.ymax, h]; }, onS);
+      });
+      [SH.h0, SH.h1].forEach(function(h){ poly(edge, 6, function(t){ return [sheetX(h), -SH.ymax + 2*SH.ymax*t, h]; }, onS); });
+    }
+    sheetCurves('shw1', 'shw2', 'shEdge', true);
+    poly('shNs', 12, function(t){ return [1, 0, SH.h0 + t*(-1 - SH.h0)]; }, true);
+    sheetCurves('gLens', 'gWedge', 'gEdge', false);
+    // the projection along x, from S down to the floor
+    const hm = -0.264;
+    [[-1, 0], [0, 0], [SH.h0, SH.ymax], [SH.h0, -SH.ymax], [SH.h1, SH.ymax], [SH.h1, -SH.ymax], [hm, wsh(hm)], [hm, -wsh(hm)], [0.4, wsh(0.4)], [0.4, -wsh(0.4)]].forEach(function(q){
+      const x0 = sheetX(q[0]);
+      poly('guide', 10, function(t){ return [x0 + t*(FLOOR_X - x0), q[1], q[0]]; });
+    });
+    const X = [BOX.x0, BOX.x1], Y = [BOX.y0, BOX.y1], Hh = [BOX.h0, BOX.h1];
+    [[0,0],[0,1],[1,0],[1,1]].forEach(function(ab){
+      poly('box', 6, function(t){ return [X[0] + t*(X[1]-X[0]), Y[ab[0]], Hh[ab[1]]]; });
+      poly('box', 6, function(t){ return [X[ab[0]], Y[0] + t*(Y[1]-Y[0]), Hh[ab[1]]]; });
+      poly('box', 6, function(t){ return [X[ab[0]], Y[ab[1]], Hh[0] + t*(Hh[1]-Hh[0])]; });
+    });
+    // a piece is one connected stratum, so its two side colours are constant: use the majority (fixes the few quads at singular corners)
+    const votes = {};
+    Q.forEach(function(q){ const k = q.piece, key = q.cf + ',' + q.cb; votes[k] = votes[k] || {}; votes[k][key] = (votes[k][key] || 0) + 1; });
+    Object.keys(votes).forEach(function(k){
+      let best = null; Object.keys(votes[k]).forEach(function(key){ if (!best || votes[k][key] > votes[k][best]) best = key; });
+      votes[k] = best.split(',').map(Number);
+    });
+    Q.forEach(function(q){ const c = votes[q.piece]; q.cf = c[0]; q.cb = c[1]; if (q.cat !== 'sh') q.cat = (q.cf === 0 || q.cb === 0) ? 'w1' : 'w2'; });
+    return { BOX: BOX, SHEET: SHEET, FLOOR_X: FLOOR_X, COPY_DX: COPY_DX, SHV: SHV, beta: beta, wsh: wsh, sheetX: sheetX, disc: disc, chamber: chamber, clip: clip, P: P, Q: Q, curves: curves };
+  }
+
+  // ---------- the slice {det = 1, tr real} in three dimensions ----------
+  const s3api = (function(){
+    const view = document.getElementById('s3view'), cv = document.getElementById('s3c');
+    if (!view || !cv || !cv.getContext) return null;
+    const ctx = cv.getContext('2d'), labelsEl = document.getElementById('s3labels'), tipEl = document.getElementById('s3tip');
+    const projBtn = document.getElementById('s3proj'), resetBtn = document.getElementById('s3reset');
+    const fogChk = document.getElementById('s3fog'), outerChk = document.getElementById('s3outer'), sheetChk = document.getElementById('s3sheetc'), planeChk = document.getElementById('s3planec');
+    const slider = document.getElementById('s3hs'), hOut = document.getElementById('s3hv'), hOut2 = document.getElementById('s3hv2');
+    const G = s3geom(), BOX = G.BOX, SH = G.SHEET, FX = G.FLOOR_X, CDX = G.COPY_DX;
+    const reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    // the eight fibres of the explorer, as points (x, y, h)
+    const FPTS = [
+      { f: 'rsU3', p: [1/3, 0, 0], l: '(a)', dx: 0, dy: -13 }, { f: 'rsU21', p: [-1, 0, 0], l: '(b)', dx: -14, dy: -10 },
+      { f: 'rsU12', p: [2, 0, 0], l: '(a)', dx: 14, dy: -10 }, { f: 'wallI', p: [0, 0, 0], l: '(c)', dx: -13, dy: 10 },
+      { f: 'wallII', p: [0, 2, 0], l: '(c)', dx: 14, dy: -8 }, { f: 'split', p: [1, 0, 0], l: '(d)', dx: 13, dy: 11 },
+      { f: 'nonsplit', p: [1, 0, 1.25], l: '(e)', dx: 0, dy: 14 }, { f: 'P', p: [1, 0, 1], l: '', dx: 0, dy: 0 }];
+
+    let COL = {}, CH = [];
+    function parseCol(s){
+      s = (s || '').trim();
+      if (s[0] === '#'){ const n = parseInt(s.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
+      const m = s.match(/rgba?\(([^)]+)\)/); if (m){ const a = m[1].split(',').map(parseFloat); return [a[0], a[1], a[2]]; }
+      return [128, 128, 128];
+    }
+    // chamber colours: U(3), U(2,1), U(1,2)
+    function readCols(){
+      const cs = getComputedStyle(document.documentElement);
+      ['u3', 'u21', 'u12', 'orange', 'ink', 'muted', 'surface', 'purple', 'line'].forEach(function(k){ COL[k] = parseCol(cs.getPropertyValue('--' + k)); });
+      CH = [COL.u3, COL.u21, COL.u12];
+    }
+    function rgba(c, a, f){ f = f || 1; return 'rgba(' + Math.min(255, Math.round(c[0]*f)) + ',' + Math.min(255, Math.round(c[1]*f)) + ',' + Math.min(255, Math.round(c[2]*f)) + ',' + Math.max(0, Math.min(1, a)).toFixed(3) + ')'; }
+    function blend(c, a){ const s = COL.surface; return [Math.round(s[0] + (c[0] - s[0])*a), Math.round(s[1] + (c[1] - s[1])*a), Math.round(s[2] + (c[2] - s[2])*a)]; }
+
+    // the chambers as tinted volumes: a stack of translucent layers x = const, each coloured by chamber
+    // alpha: the strongest tint per layer; GA scales it down in the normal view, where U(2,1) is only a faint background
+    const FOG = { n: 64, ni: 132, nj: 96, alpha: [0.064, 0.032, 0.12] }, GA = [0.62, 0.22, 0.62];
+    let fogLayers = [];
+    // fade the fog out near the edges of the box, so the stack of layers shows no hard rims
+    function soft(t){ const s = Math.min(1, Math.min(t, 1 - t)/0.08); return s*s*(3 - 2*s); }
+    function buildFog(){
+      fogLayers = [];
+      for (let k = 0; k < FOG.n; k++){
+        const x = BOX.x0 + (k + 0.5)*(BOX.x1 - BOX.x0)/FOG.n, wk = soft((k + 0.5)/FOG.n);
+        const cs = [0, 1, 2].map(function(){ const c = document.createElement('canvas'); c.width = FOG.ni; c.height = FOG.nj; return c; });
+        const imgs = cs.map(function(c){ return c.getContext('2d').createImageData(FOG.ni, FOG.nj); });
+        for (let j = 0; j < FOG.nj; j++){
+          const h = BOX.h0 + (j + 0.5)/FOG.nj*(BOX.h1 - BOX.h0);
+          for (let i = 0; i < FOG.ni; i++){
+            const y = BOX.y0 + (i + 0.5)/FOG.ni*(BOX.y1 - BOX.y0);
+            let ch = G.chamber(x, y, h); if (ch < 0) ch = 1;
+            const col = CH[ch], o = 4*(j*FOG.ni + i), d = imgs[ch].data;
+            d[o] = col[0]; d[o+1] = col[1]; d[o+2] = col[2]; d[o+3] = Math.round(255*FOG.alpha[ch]*wk*soft((i + 0.5)/FOG.ni)*soft((j + 0.5)/FOG.nj));
+          }
+        }
+        cs.forEach(function(c, k){ c.getContext('2d').putImageData(imgs[k], 0, 0); });
+        fogLayers.push({ x: x, c: cs });
+      }
+    }
+
+    // camera: the x-axis always points down the screen. phi turns the picture about the x-axis, el tilts it
+    // (el = 0 looks horizontally, larger el looks more from above). Rows of the matrix: screen right, screen up, toward the viewer.
+    function camMat(ph, e){
+      const cp = Math.cos(ph), sp = Math.sin(ph), ce = Math.cos(e), se = Math.sin(e);
+      return [0, sp, cp, -ce, se*cp, -se*sp, -se, -ce*cp, ce*sp];
+    }
+    const PHI0 = -15*Math.PI/180, EL0 = 30*Math.PI/180, ELMIN = 10*Math.PI/180, ELMAX = 72*Math.PI/180;
+    // tau = 1: the copy of S hangs below the slice; tau = 0: it is back in its place inside the slice
+    let phi = PHI0, el = EL0, tau = 1, busy = false, focus = null, hs = 0, chFocus = -1;   // chFocus: a chamber picked in the legend, or -1
+    const PIV = [(BOX.x0 + FX)/2, 0, 0];
+    let W = 0, H = 0, dpr = 1, M = camMat(phi, el), S = 1, CX = 0, CY = 0;
+    const NV = G.P.length/3, isSh = new Uint8Array(NV);
+    const SXa = new Float32Array(NV), SYa = new Float32Array(NV), SZa = new Float32Array(NV);   // walls, and S in place
+    const SXc = new Float32Array(NV), SYc = new Float32Array(NV), SZc = new Float32Array(NV);   // the copy of S
+    const SXf = new Float32Array(NV), SYf = new Float32Array(NV), SZf = new Float32Array(NV);   // the projection of S
+    G.SHV.forEach(function(k){ isSh[k] = 1; });
+    // one scale for every turn and tilt, so that the picture never jumps
+    const DIAG = Math.hypot(BOX.y1 - BOX.y0, BOX.h1 - BOX.h0) + 0.2, SPAN = Math.hypot(FX - BOX.x0 + 0.25, DIAG);
+    function baseScale(){ return Math.min(W/(DIAG + 0.1), H/SPAN); }
+    // mode 0: as it is in the slice; 1: on the copy of S; 2: on the projection
+    function xOf(x, mode){ return mode === 1 ? x + CDX*tau : (mode === 2 ? FX : x); }
+    function proj(p, mode){ const x = xOf(p[0], mode) - PIV[0], y = p[1] - PIV[1], z = p[2] - PIV[2]; return [CX + S*(M[0]*x + M[1]*y + M[2]*z), CY - S*(M[3]*x + M[4]*y + M[5]*z), M[6]*x + M[7]*y + M[8]*z]; }
+    let pending = false;
+    function request(){ if (!pending){ pending = true; requestAnimationFrame(function(){ pending = false; render(); }); } }
+    function resize(){
+      const w = view.clientWidth; if (!w) return;
+      const h = Math.round(Math.max(380, Math.min(820, w*0.98)));
+      dpr = window.devicePixelRatio || 1; W = w; H = h;
+      view.style.height = h + 'px'; cv.width = Math.round(w*dpr); cv.height = Math.round(h*dpr); cv.style.width = w + 'px'; cv.style.height = h + 'px';
+      render();
+    }
+
+    // the section at h: the plane line x = h and, for |h| <= 1, the two conoid lines through b = 1
+    function secLines(h){
+      const L = [{ p: [h, 0], d: [0, 1] }];
+      if (Math.abs(h) <= 1){ const ph = 0.5*Math.acos(Math.max(-1, Math.min(1, -h))); L.push({ p: [1, 0], d: [Math.cos(ph), Math.sin(ph)] }, { p: [1, 0], d: [Math.cos(ph), -Math.sin(ph)] }); }
+      return L;
+    }
+    function lam(h){
+      if (Math.abs(h) <= 1){ const s = Math.sqrt(Math.max(0, 1 - h*h)); return [[h, s], [h, -s]]; }
+      const r = Math.sqrt(h*h - 1); return [[h + r, 0], [h - r, 0]];
+    }
+    function seg3(a, b, h, n){ const out = []; for (let i = 0; i <= n; i++){ const t = i/n; out.push([a[0] + t*(b[0] - a[0]), a[1] + t*(b[1] - a[1]), h]); } return out; }
+    function clipRect(p, d, x0, x1, y0, y1){
+      let t0 = -Infinity, t1 = Infinity;
+      [[p[0], d[0], x0, x1], [p[1], d[1], y0, y1]].forEach(function(c){
+        if (Math.abs(c[1]) < 1e-12){ if (c[0] < c[2] || c[0] > c[3]){ t0 = 1; t1 = 0; } return; }
+        let a = (c[2] - c[0])/c[1], b = (c[3] - c[0])/c[1]; if (a > b){ const s = a; a = b; b = s; }
+        t0 = Math.max(t0, a); t1 = Math.min(t1, b);
+      });
+      return t0 <= t1 ? [t0, t1] : null;
+    }
+
+    // labels over the picture
+    const LBL = [];
+    function addL(html, p, where, mode, dx, dy, cls, minor){
+      const el = document.createElement('div'); el.className = 's3lbl' + (cls ? ' ' + cls : ''); el.innerHTML = html; labelsEl.appendChild(el);
+      LBL.push({ el: el, p: p, where: where, mode: mode, dx: dx || 0, dy: dy || 0, minor: !!minor }); return el;
+    }
+    addL(R`\(P_+\)`, [1, 0, 1], 'slice', 0, -4, -15);
+    addL(R`\(P_-\)`, [1, 0, -1], 'slice', 0, -4, -15);
+    addL(R`\(\mathrm U(3)\)`, [-0.05, 0, -0.6], 'slice', 0, 0, 0);
+    FPTS.forEach(function(F){ if (F.l) F.lbl = addL(F.l, F.p, 'slice', 0, F.dx, F.dy, 'small'); });
+    addL(R`the sheet \(S\), moved down along \(x\)`, [G.sheetX(SH.h0), -SH.ymax, SH.h0], 'copy', 1, 0, -14, 'small', true);
+    [['(e)', -1.36, 0, -1, -11, 'small', true], [R`\(P_-\)`, -1, 0, -2, 14], [R`\(\mathrm U(3)\)`, -0.36, 0, 0, 0], ['(d)', 0, 0, 2, 14, 'small', true],
+     [R`\(\mathrm U(1,2)\)`, 0.36, 0], [R`\(\mathrm U(2,1)\)`, -0.6, 0.6, 0, 0, '', true], [R`its projection: Figure 1`, (SH.h0 + SH.h1)/2, -SH.ymax, 0, 16, 'small', true]
+    ].forEach(function(L){ addL(L[0], [0, L[2], L[1]], 'floor', 2, L[3] || 0, L[4] || 0, L[5], L[6]); });
+    const AX = [addL(R`\(x\)`, null, 'axis'), addL(R`\(y\)`, null, 'axis'), addL(R`\(h\)`, null, 'axis')];
+
+    // style: colour, width, dashed
+    const STY = { split: ['ink', 2.6], nsUp: ['orange', 3.2, 1], nsDown: ['orange', 3.2, 1], shw1: ['u3', 2.2], shw2: ['u12', 2.2], shEdge: ['muted', 1.1], shNs: ['orange', 2.6, 1],
+      gLens: ['u3', 1.7], gWedge: ['u12', 1.7], gEdge: ['muted', 1, 1], guide: ['muted', 1, 1], box: ['line', 1.1], sect: ['purple', 1.4], sectL: ['ink', 1.1], sectT: ['u3', 2.4] };
+    function curveAlpha(cat){
+      const on = sheetChk.checked;
+      if (cat === 'shw1' || cat === 'shw2' || cat === 'shEdge' || cat === 'shNs') return on ? 1 : 0;
+      if (cat === 'gLens' || cat === 'gWedge') return on ? 0.95*tau : 0;
+      if (cat === 'gEdge') return on ? 0.75*tau : 0;
+      if (cat === 'guide') return on ? 0.7 : 0;
+      if (cat === 'box') return outerChk.checked && !fogChk.checked ? 1 : 0;   // the box frames the cut walls when there is no tint
+      return 1;
+    }
+    const LIGHT = [-0.36, 0.56, 0.75];
+    function render(){
+      if (!W) return;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+      M = camMat(phi, el); S = baseScale(); CX = W/2; CY = H/2;
+      const Pp = G.P;
+      function put(X, Y, Z, i, xr){ const x = xr - PIV[0], y = Pp[3*i+1] - PIV[1], z = Pp[3*i+2] - PIV[2]; X[i] = CX + S*(M[0]*x + M[1]*y + M[2]*z); Y[i] = CY - S*(M[3]*x + M[4]*y + M[5]*z); Z[i] = M[6]*x + M[7]*y + M[8]*z; }
+      for (let i = 0; i < NV; i++){
+        const x0 = Pp[3*i];
+        if (isSh[i]){ put(SXc, SYc, SZc, i, x0 + CDX*tau); put(SXf, SYf, SZf, i, FX); }
+        else put(SXa, SYa, SZa, i, x0);
+      }
+      const items = [];
+      // a wall is more opaque on the side that faces U(3) or U(1,2), so the chambers read as rooms
+      const f1 = focus === 'wallI', f2 = focus === 'wallII', on2 = outerChk.checked || f2;
+      const AW1 = [f1 ? 0.7 : 0.56, f1 ? 0.3 : 0.12, 0.3];
+      const AW2 = on2 ? [0, f2 ? 0.1 : 0.04, f2 ? 0.5 : 0.38] : [0, 0, 0];
+      // picking a chamber in the legend strengthens it and fades the other two
+      const CF = [0, 1, 2].map(function(c){ return chFocus < 0 ? 1 : (c === chFocus ? (c === 1 ? 4 : 1.6) : 0.25); });
+      const FA = [0, 1, 2].map(function(c){ return chFocus < 0 ? GA[c] : (c === chFocus ? 1 : 0.12); });
+      const ASH = sheetChk.checked ? [0.66, 0.36, 0.6] : [0, 0, 0];
+      const ARR = [[SXa, SYa, SZa], [SXc, SYc, SZc], [SXf, SYf, SZf]];
+      for (let k = 0; k < G.Q.length; k++){
+        const qd = G.Q[k], v0 = qd.v, nn0 = qd.n;
+        if (qd.cat === 'sh'){
+          const a = ASH[qd.cf]; if (a < 0.01) continue;
+          [1, 2].forEach(function(m){ const Z = ARR[m][2]; items.push({ z: (Z[v0[0]] + Z[v0[1]] + Z[v0[2]] + Z[v0[3]])/4, t: 0, k: k, a: a, m: m }); });
+          continue;
+        }
+        const nz0 = M[6]*nn0[0] + M[7]*nn0[1] + M[8]*nn0[2], ch0 = nz0 >= 0 ? qd.cf : qd.cb, a = Math.min(0.85, (qd.cat === 'w1' ? AW1 : AW2)[ch0]*CF[ch0]);
+        if (a < 0.01) continue;
+        items.push({ z: (SZa[v0[0]] + SZa[v0[1]] + SZa[v0[2]] + SZa[v0[3]])/4, t: 0, k: k, a: a, m: 0 });
+      }
+      if (fogChk.checked){
+        const yc = (BOX.y0 + BOX.y1)/2 - PIV[1], hc = (BOX.h0 + BOX.h1)/2 - PIV[2];
+        fogLayers.forEach(function(L, k){ const x = L.x - PIV[0]; [0, 1, 2].forEach(function(c){ const ga = FA[c]; if (ga > 0.01) items.push({ z: M[6]*x + M[7]*yc + M[8]*hc + 1e-4*c, t: 3, k: k, ch: c, ga: ga }); }); });
+      }
+      const segs = [];
+      G.curves.forEach(function(c){
+        const a = curveAlpha(c.cat); if (a < 0.01) return;
+        if (c.onS){ segs.push({ pts: c.pts, cat: c.cat, a: a, mode: 1 }); segs.push({ pts: c.pts, cat: c.cat, a: a, mode: 2 }); }
+        else segs.push({ pts: c.pts, cat: c.cat, a: a, mode: 0 });
+      });
+      if (planeChk.checked){
+        // with the outer walls the section fills the box; without them only a window around the solid
+        const R0 = { x0: -1.25, x1: 1.6, y0: -1.3, y1: 1.3 };
+        const C4 = [[R0.x0, R0.y0], [R0.x1, R0.y0], [R0.x1, R0.y1], [R0.x0, R0.y1], [R0.x0, R0.y0]];
+        for (let i = 0; i < 4; i++) segs.push({ pts: seg3(C4[i], C4[i+1], hs, 6), cat: 'sect', a: 0.5, mode: 0 });
+        secLines(hs).forEach(function(L){
+          const t = clipRect(L.p, L.d, R0.x0, R0.x1, R0.y0, R0.y1); if (!t) return;
+          segs.push({ pts: seg3([L.p[0] + t[0]*L.d[0], L.p[1] + t[0]*L.d[1]], [L.p[0] + t[1]*L.d[0], L.p[1] + t[1]*L.d[1]], hs, 14), cat: 'sectL', a: 1, mode: 0 });
+        });
+        if (Math.abs(hs) < 1){ const l = lam(hs), T = [[1, 0], l[0], l[1], [1, 0]]; for (let i = 0; i < 3; i++) segs.push({ pts: seg3(T[i], T[i+1], hs, 8), cat: 'sectT', a: 1, mode: 0 }); }
+      }
+      segs.forEach(function(sg){
+        const pr = sg.pts.map(function(p){ return proj(p, sg.mode); }); sg.pr = pr; sg.cum = [0];
+        for (let i = 1; i < pr.length; i++) sg.cum.push(sg.cum[i-1] + Math.hypot(pr[i][0] - pr[i-1][0], pr[i][1] - pr[i-1][1]));
+        for (let i = 0; i + 1 < pr.length; i++) items.push({ z: (pr[i][2] + pr[i+1][2])/2 + 0.003, t: 1, s: sg, i: i });
+      });
+      [[1, 0, 1], [1, 0, -1]].forEach(function(p){ const pr = proj(p, 0); items.push({ z: pr[2] + 0.02, t: 2, pr: pr, r: focus === 'P' ? 6.5 : 5.2, c: COL.ink, a: 1, ring: false }); });
+      if (sheetChk.checked){ [1, 2].forEach(function(m){ [[1, 0, -1], [1, 0, 0]].forEach(function(p){ const pr = proj(p, m); items.push({ z: pr[2] + 0.02, t: 2, pr: pr, r: 4.4, c: COL.ink, a: 1, ring: false }); }); }); }
+      FPTS.forEach(function(F){
+        F.pr = proj(F.p, 0);
+        if (F.f === 'P'){ if (focus === 'P') items.push({ z: F.pr[2] + 0.03, t: 2, pr: F.pr, r: 0, c: COL.purple, a: 1, ring: true }); return; }
+        items.push({ z: F.pr[2] + 0.03, t: 2, pr: F.pr, r: 4.3, c: COL.purple, a: 1, ring: focus === F.f });
+      });
+      items.sort(function(A, B){ return A.z - B.z; });
+      ctx.lineJoin = 'round';
+      const dyF = (BOX.y1 - BOX.y0)/FOG.ni, dhF = (BOX.h1 - BOX.h0)/FOG.nj;
+      for (let n = 0; n < items.length; n++){
+        const it = items[n];
+        if (it.t === 0){
+          const qd = G.Q[it.k], v = qd.v, nn = qd.n, A = ARR[it.m], X = A[0], Y = A[1];
+          const nx = M[0]*nn[0] + M[1]*nn[1] + M[2]*nn[2], ny = M[3]*nn[0] + M[4]*nn[1] + M[5]*nn[2], nz = M[6]*nn[0] + M[7]*nn[1] + M[8]*nn[2];
+          const ch = nz >= 0 ? qd.cf : qd.cb, f = qd.cat === 'sh' ? 1 : 0.8 + 0.28*Math.abs(nx*LIGHT[0] + ny*LIGHT[1] + nz*LIGHT[2]);
+          ctx.beginPath(); ctx.moveTo(X[v[0]], Y[v[0]]); ctx.lineTo(X[v[1]], Y[v[1]]); ctx.lineTo(X[v[2]], Y[v[2]]); ctx.lineTo(X[v[3]], Y[v[3]]); ctx.closePath();
+          ctx.fillStyle = rgba(CH[ch] || COL.muted, it.a, f); ctx.fill();
+        } else if (it.t === 3){
+          // one fog layer: an affine image of the plane x = const
+          const L = fogLayers[it.k], x = L.x - PIV[0], y0 = BOX.y0 - PIV[1], h0 = BOX.h0 - PIV[2];
+          const ex = CX + S*(M[0]*x + M[1]*y0 + M[2]*h0), fy = CY - S*(M[3]*x + M[4]*y0 + M[5]*h0);
+          ctx.setTransform(dpr*S*M[1]*dyF, -dpr*S*M[4]*dyF, dpr*S*M[2]*dhF, -dpr*S*M[5]*dhF, dpr*ex, dpr*fy);
+          ctx.globalAlpha = it.ga; ctx.drawImage(L.c[it.ch], 0, 0); ctx.globalAlpha = 1;
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        } else if (it.t === 1){
+          const sg = it.s, st = STY[sg.cat], p0 = sg.pr[it.i], p1 = sg.pr[it.i + 1];
+          let w = st[1];
+          if ((focus === 'split' && sg.cat === 'split') || (focus === 'nonsplit' && (sg.cat === 'nsUp' || sg.cat === 'nsDown'))) w *= 1.75;
+          ctx.strokeStyle = rgba(COL[st[0]], sg.a); ctx.lineWidth = w;
+          if (st[2]){ ctx.lineCap = 'butt'; ctx.setLineDash(st[1] < 1.5 ? [4, 4] : [7, 5]); ctx.lineDashOffset = sg.cum[it.i]; } else { ctx.lineCap = 'round'; ctx.setLineDash([]); }
+          ctx.beginPath(); ctx.moveTo(p0[0], p0[1]); ctx.lineTo(p1[0], p1[1]); ctx.stroke();
+        } else {
+          ctx.setLineDash([]);
+          if (it.r > 0){ ctx.fillStyle = rgba(it.c, it.a); ctx.beginPath(); ctx.arc(it.pr[0], it.pr[1], it.r, 0, 2*Math.PI); ctx.fill(); }
+          if (it.ring){ ctx.strokeStyle = rgba(COL.purple, it.a); ctx.lineWidth = 2.2; ctx.beginPath(); ctx.arc(it.pr[0], it.pr[1], 8, 0, 2*Math.PI); ctx.stroke(); }
+        }
+      }
+      ctx.setLineDash([]);
+      // axis triad in the lower left corner
+      const O = [34, H - 40], axes = [[M[0], M[3]], [M[1], M[4]], [M[2], M[5]]];
+      ctx.strokeStyle = rgba(COL.muted, 1); ctx.lineWidth = 1.4; ctx.lineCap = 'round';
+      axes.forEach(function(a, i){
+        ctx.beginPath(); ctx.moveTo(O[0], O[1]); ctx.lineTo(O[0] + 24*a[0], O[1] - 24*a[1]); ctx.stroke();
+        AX[i].style.left = (O[0] + 33*a[0]) + 'px'; AX[i].style.top = (O[1] - 33*a[1]) + 'px';
+      });
+      const on = sheetChk.checked;
+      LBL.forEach(function(L){
+        if (!L.p) return;
+        let op = 1;
+        if (L.where === 'floor') op = on ? 1 : 0;
+        if (L.where === 'copy') op = on ? Math.max(0, (tau - 0.6)/0.4) : 0;
+        if (L.minor && S < 75) op = 0;   // on a small screen only the main labels
+        const pr = proj(L.p, L.mode);
+        L.el.style.left = (pr[0] + L.dx) + 'px'; L.el.style.top = (pr[1] + L.dy) + 'px';
+        L.el.style.opacity = op; L.el.style.visibility = op < 0.02 ? 'hidden' : 'visible';
+      });
+    }
+
+    // interaction: sideways drag turns about the x-axis, vertical drag tilts; the x-axis keeps pointing down
+    let drag = null;
+    function turnBy(dx, dy){
+      phi -= dx*0.008; el = Math.max(ELMIN, Math.min(ELMAX, el + dy*0.006)); request();   // the front of the picture follows the pointer
+    }
+    function nearest(ev){
+      const r = view.getBoundingClientRect(), x = ev.clientX - r.left, y = ev.clientY - r.top;
+      let best = null, bd = 13;
+      FPTS.forEach(function(F){ if (!F.pr) return; const d = Math.hypot(F.pr[0] - x, F.pr[1] - y); if (d < bd){ bd = d; best = F; } });
+      return best;
+    }
+    function showTip(F, ev){
+      if (!F){ tipEl.style.display = 'none'; view.classList.remove('hot'); return; }
+      const r = view.getBoundingClientRect();
+      tipEl.textContent = FIB[F.f].tab + ' — click to open'; tipEl.style.display = 'block';
+      tipEl.style.left = Math.min(r.width - 10 - tipEl.offsetWidth, ev.clientX - r.left + 12) + 'px'; tipEl.style.top = (ev.clientY - r.top - 30) + 'px';
+      view.classList.add('hot');
+    }
+    function openFibre(f){
+      choose(f);
+      const ex = document.getElementById('explorer'); if (ex && ex.scrollIntoView) ex.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    }
+    view.addEventListener('pointerdown', function(ev){
+      if (busy) return;
+      drag = { x: ev.clientX, y: ev.clientY, x0: ev.clientX, y0: ev.clientY, moved: false };
+      try { view.setPointerCapture(ev.pointerId); } catch(e){}
+      view.classList.add('drag');
+    });
+    view.addEventListener('pointermove', function(ev){
+      if (!drag){ showTip(nearest(ev), ev); return; }
+      const dx = ev.clientX - drag.x, dy = ev.clientY - drag.y; drag.x = ev.clientX; drag.y = ev.clientY;
+      if (Math.abs(ev.clientX - drag.x0) + Math.abs(ev.clientY - drag.y0) > 4) drag.moved = true;
+      if (drag.moved){ showTip(null); turnBy(dx, dy); }
+    });
+    function endDrag(ev){
+      if (drag && !drag.moved && ev && ev.type === 'pointerup'){ const F = nearest(ev); if (F) openFibre(F.f); }
+      drag = null; view.classList.remove('drag');
+    }
+    view.addEventListener('pointerup', endDrag); view.addEventListener('pointercancel', endDrag);
+    view.addEventListener('pointerleave', function(){ if (!drag) showTip(null); });
+    view.addEventListener('keydown', function(ev){
+      const k = { ArrowLeft: [-12, 0], ArrowRight: [12, 0], ArrowUp: [0, -12], ArrowDown: [0, 12] }[ev.key];
+      if (k && !busy){ ev.preventDefault(); turnBy(k[0], k[1]); }
+    });
+
+    function animate(to, done){
+      if (busy) return; busy = true;
+      phi = Math.atan2(Math.sin(phi), Math.cos(phi));
+      const p0 = phi, e0 = el, t0v = tau, t0 = performance.now(), dur = reduceMotion ? 1 : 1100;
+      function step(now){
+        const t = Math.min(1, (now - t0)/dur), e = t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2)/2;
+        phi = p0 + (to.phi - p0)*e; el = e0 + (to.el - e0)*e; tau = t0v + (to.tau - t0v)*e;
+        render();
+        if (t < 1) requestAnimationFrame(step); else { busy = false; if (done) done(); }
+      }
+      requestAnimationFrame(step);
+    }
+    function setProjLabel(){ projBtn.textContent = tau > 0.5 ? 'Lift the copy of S into the slice' : 'Move the copy of S down again'; }
+    projBtn.addEventListener('click', function(){
+      if (busy) return;
+      if (!sheetChk.checked){ sheetChk.checked = true; }
+      animate({ phi: phi, el: el, tau: tau > 0.5 ? 0 : 1 }, setProjLabel);
+    });
+    resetBtn.addEventListener('click', function(){ animate({ phi: PHI0, el: EL0, tau: tau }); });
+    [fogChk, outerChk, sheetChk, planeChk].forEach(function(c){ c.addEventListener('change', request); });
+    const chipEls = Array.prototype.slice.call(document.querySelectorAll('#slice .chip'));
+    chipEls.forEach(function(b){
+      b.addEventListener('click', function(){
+        const c = +b.getAttribute('data-ch'); chFocus = chFocus === c ? -1 : c;
+        chipEls.forEach(function(o){ o.setAttribute('aria-pressed', +o.getAttribute('data-ch') === chFocus ? 'true' : 'false'); });
+        request();
+      });
+    });
+    setProjLabel();
+
+    // the section panel
+    const secW = document.getElementById('s3secw'), sec = document.getElementById('s3sec'), sctx = sec.getContext('2d');
+    const secL = document.getElementById('s3secl'), secCap = document.getElementById('s3secap');
+    const SW = { x0: -1.7, x1: 2.5, y0: -2.35, y1: 2.35 };
+    function pl(html){ const el = document.createElement('div'); el.className = 's3lbl'; el.innerHTML = html; secL.appendChild(el); return el; }
+    const SL = { one: pl(R`\(1\)`), lam: pl(R`\(\lambda\)`), lami: pl(R`\(\lambda^{-1}\)`), u3: pl(R`\(\mathrm U(3)\)`) };
+    function place(el, x, y, dx, dy, on){
+      el.style.display = on ? '' : 'none'; if (!on) return;
+      el.style.left = 'calc(' + ((x - SW.x0)/(SW.x1 - SW.x0)*100).toFixed(2) + '% + ' + dx + 'px)';
+      el.style.top = 'calc(' + ((SW.y1 - y)/(SW.y1 - SW.y0)*100).toFixed(2) + '% + ' + dy + 'px)';
+    }
+    function dot(c2, x, y, r, fill, stroke){ c2.beginPath(); c2.arc(x, y, r, 0, 2*Math.PI); if (fill){ c2.fillStyle = fill; c2.fill(); } if (stroke){ c2.strokeStyle = stroke; c2.lineWidth = 1.6; c2.stroke(); } }
+    function drawSection(){
+      const w = secW.clientWidth; if (!w) return;
+      const hp = Math.round(w*(SW.y1 - SW.y0)/(SW.x1 - SW.x0)), d = window.devicePixelRatio || 1;
+      secW.style.height = hp + 'px';
+      const PW = Math.round(w*d), PH = Math.round(hp*d);
+      if (sec.width !== PW || sec.height !== PH){ sec.width = PW; sec.height = PH; sec.style.width = w + 'px'; sec.style.height = hp + 'px'; }
+      const img = sctx.createImageData(PW, PH), px = img.data, soft = [blend(CH[0], 0.3), blend(CH[1], 0.22), blend(CH[2], 0.3)];
+      for (let j = 0; j < PH; j++){
+        const y = SW.y1 - (j + 0.5)/PH*(SW.y1 - SW.y0);
+        for (let i = 0; i < PW; i++){
+          const x = SW.x0 + (i + 0.5)/PW*(SW.x1 - SW.x0); let c = G.chamber(x, y, hs); if (c < 0) c = 1;
+          const o = 4*(j*PW + i), col = soft[c]; px[o] = col[0]; px[o+1] = col[1]; px[o+2] = col[2]; px[o+3] = 255;
+        }
+      }
+      sctx.setTransform(1, 0, 0, 1, 0, 0); sctx.putImageData(img, 0, 0); sctx.setTransform(d, 0, 0, d, 0, 0);
+      const sc = w/(SW.x1 - SW.x0), X = function(x){ return (x - SW.x0)*sc; }, Y = function(y){ return (SW.y1 - y)*sc; };
+      sctx.setLineDash([3, 3]); sctx.strokeStyle = rgba(COL.muted, 0.75); sctx.lineWidth = 1;
+      sctx.beginPath(); sctx.arc(X(0), Y(0), sc, 0, 2*Math.PI); sctx.stroke(); sctx.setLineDash([]);
+      sctx.strokeStyle = rgba(COL.ink, 0.85); sctx.lineWidth = 1.3;
+      secLines(hs).forEach(function(L){
+        const t = clipRect(L.p, L.d, SW.x0, SW.x1, SW.y0, SW.y1); if (!t) return;
+        sctx.beginPath(); sctx.moveTo(X(L.p[0] + t[0]*L.d[0]), Y(L.p[1] + t[0]*L.d[1])); sctx.lineTo(X(L.p[0] + t[1]*L.d[0]), Y(L.p[1] + t[1]*L.d[1])); sctx.stroke();
+      });
+      const l = lam(hs), ell = Math.abs(hs) < 1, edge = Math.abs(Math.abs(hs) - 1) < 1e-9;
+      sctx.strokeStyle = rgba(CH[0], 1); sctx.lineWidth = 2.4;
+      if (ell){ sctx.beginPath(); sctx.moveTo(X(1), Y(0)); sctx.lineTo(X(l[0][0]), Y(l[0][1])); sctx.lineTo(X(l[1][0]), Y(l[1][1])); sctx.closePath(); sctx.stroke(); }
+      if (Math.abs(hs + 1) < 1e-9){ sctx.beginPath(); sctx.moveTo(X(-1), Y(0)); sctx.lineTo(X(1), Y(0)); sctx.stroke(); }
+      if (ell){ l.forEach(function(p){ dot(sctx, X(p[0]), Y(p[1]), 3.8, rgba(COL.ink, 1)); }); }
+      else if (!edge){ l.forEach(function(p){ dot(sctx, X(p[0]), Y(p[1]), 3.6, rgba(COL.surface, 1), rgba(COL.ink, 1)); }); }
+      if (ell) dot(sctx, X(1), Y(0), 3.8, rgba(COL.ink, 1));
+      else if (edge) dot(sctx, X(1), Y(0), 5.6, rgba(COL.ink, 1));
+      else dot(sctx, X(1), Y(0), 4.6, rgba(COL.orange, 1));
+      secPts = [];
+      FPTS.forEach(function(F){
+        if (Math.abs(F.p[2] - hs) > 0.004) return;
+        const x = X(F.p[0]), y = Y(F.p[1]); secPts.push({ f: F.f, x: x, y: y });
+        if (F.f === 'P') sctx.strokeStyle = rgba(COL.purple, 1), sctx.lineWidth = 2, sctx.beginPath(), sctx.arc(x, y, 8.5, 0, 2*Math.PI), sctx.stroke();
+        else dot(sctx, x, y, 3.4, rgba(COL.purple, 1));
+      });
+      place(SL.one, 1, 0, 11, 11, true);
+      place(SL.lam, l[0][0], l[0][1], ell ? -10 : 0, ell ? -11 : -13, !edge);
+      place(SL.lami, l[1][0], l[1][1], ell ? -12 : 0, ell ? 12 : -13, !edge);
+      place(SL.u3, (1 + 2*hs)/3, 0.36*Math.sqrt(Math.max(0, 1 - hs*hs)), 0, 0, ell && hs < 0.55);
+    }
+    let secPts = [];
+    sec.addEventListener('click', function(ev){
+      const r = sec.getBoundingClientRect(), x = ev.clientX - r.left, y = ev.clientY - r.top;
+      let best = null, bd = 12; secPts.forEach(function(p){ const d = Math.hypot(p.x - x, p.y - y); if (d < bd){ bd = d; best = p; } });
+      if (best) openFibre(best.f);
+    });
+    sec.addEventListener('mousemove', function(ev){
+      const r = sec.getBoundingClientRect(), x = ev.clientX - r.left, y = ev.clientY - r.top;
+      sec.style.cursor = secPts.some(function(p){ return Math.hypot(p.x - x, p.y - y) < 12; }) ? 'pointer' : 'default';
+    });
+    function fmtH(h){ return (h < 0 ? '-' : '') + Math.abs(h).toFixed(2); }
+    function caption(){
+      const hstr = fmtH(hs);
+      let s;
+      if (Math.abs(hs) < 1) s = R`At \(h=` + hstr + R`\) the eigenvalues are \(1\) and \(\lambda^{\pm1}=e^{\pm i\theta}\) with \(\cos\theta=h\). The triangle is the \(\mathrm U(3)\) chamber. The regions across its sides are \(\mathrm U(2,1)\), and those at its vertices are \(\mathrm U(1,2)\). The vertices are split corners, and the rest of the three lines are walls.`;
+      else if (Math.abs(hs - 1) < 1e-9) s = R`At \(h=1\) all three eigenvalues are \(1\). The triangle has shrunk to the point \(b=1\), which is \(P_+=\mathrm{inv}(1)\). The discriminant is the line \(x=1\), with \(\mathrm U(2,1)\) on the left and \(\mathrm U(1,2)\) on the right.`;
+      else if (Math.abs(hs + 1) < 1e-9) s = R`At \(h=-1\) the eigenvalues are \(1,-1,-1\). The triangle has collapsed onto the segment \([-1,1]\), which consists of walls, and \(b=1\) is the full reduced origin \(P_-\). The discriminant is \(\{x=-1\}\cup\{y=0\}\).`;
+      else s = R`At \(h=` + hstr + R`\) the eigenvalues are \(1\) and the real pair \(\lambda^{\pm1}=h\pm\sqrt{h^2-1}\). The discriminant is the bisector \(x=h\) of the pair, which is a wall between \(\mathrm U(2,1)\) and \(\mathrm U(1,2)\), together with the isolated point \(b=1\), which is a nonsplit corner inside \(\mathrm U(2,1)\).`;
+      if (Math.abs(hs) < 0.004) s += ' The purple points are the fibres (a)–(d) of the explorer; click one to open it.';
+      untex(secCap); secCap.innerHTML = s; tex(secCap);
+      untex(hOut2); hOut2.innerHTML = R`\(h=` + hstr + R`\)`; tex(hOut2);
+    }
+    function setH(v, full){
+      hs = Math.round(v*100)/100; slider.value = hs; hOut.textContent = fmtH(hs);
+      drawSection(); request(); if (full) caption();
+    }
+    slider.addEventListener('input', function(){ setH(parseFloat(slider.value), false); });
+    slider.addEventListener('change', function(){ setH(parseFloat(slider.value), true); });
+    document.querySelectorAll('#slice .snap button').forEach(function(b){ b.addEventListener('click', function(){ setH(parseFloat(b.getAttribute('data-h')), true); }); });
+
+    // the sheet panel: Figure 1 to scale
+    const shW = document.getElementById('s3shw'), shc = document.getElementById('s3sh'), shx = shc.getContext('2d'), shL = document.getElementById('s3shl');
+    const HW = { h0: -1.65, h1: 0.6, y0: -0.82, y1: 0.82 };
+    function sl(html, h, y, cls){
+      const el = document.createElement('div'); el.className = 's3lbl' + (cls ? ' ' + cls : ''); el.innerHTML = html; shL.appendChild(el);
+      el.style.left = ((h - HW.h0)/(HW.h1 - HW.h0)*100).toFixed(2) + '%'; el.style.top = ((HW.y1 - y)/(HW.y1 - HW.y0)*100).toFixed(2) + '%';
+    }
+    sl('(e)', -1.36, 0.12, 'small'); sl(R`\(P_-\)`, -1.0, -0.15); sl(R`\(\mathrm U(3)\)`, -0.36, 0); sl('(a)', -0.68, 0, 'small');
+    sl('(c)', -0.5, 0.28, 'small'); sl('(d)', 0.0, -0.17, 'small'); sl(R`\(\mathrm U(1,2)\)`, 0.38, 0); sl('(a)', 0.46, -0.3, 'small');
+    sl('(c)', 0.25, 0.49, 'small'); sl(R`\(\mathrm U(2,1)\)`, -0.72, 0.52); sl('(b)', -1.3, -0.45, 'small');
+    sl(R`\(h=-1\)`, -1.0, -0.71, 'small'); sl(R`\(h=0\)`, 0.0, -0.71, 'small');
+    function drawSheet(){
+      const w = shW.clientWidth; if (!w) return;
+      const hp = Math.round(w*(HW.y1 - HW.y0)/(HW.h1 - HW.h0)), d = window.devicePixelRatio || 1;
+      shW.style.height = hp + 'px';
+      const PW = Math.round(w*d), PH = Math.round(hp*d);
+      if (shc.width !== PW || shc.height !== PH){ shc.width = PW; shc.height = PH; shc.style.width = w + 'px'; shc.style.height = hp + 'px'; }
+      const img = shx.createImageData(PW, PH), px = img.data, soft = [blend(CH[0], 0.3), blend(CH[1], 0.22), blend(CH[2], 0.3)];
+      for (let i = 0; i < PW; i++){
+        const h = HW.h0 + (i + 0.5)/PW*(HW.h1 - HW.h0), x = G.sheetX(h);
+        for (let j = 0; j < PH; j++){
+          const y = HW.y1 - (j + 0.5)/PH*(HW.y1 - HW.y0); let c = G.chamber(x, y, h); if (c < 0) c = 1;
+          const o = 4*(j*PW + i), col = soft[c]; px[o] = col[0]; px[o+1] = col[1]; px[o+2] = col[2]; px[o+3] = 255;
+        }
+      }
+      shx.setTransform(1, 0, 0, 1, 0, 0); shx.putImageData(img, 0, 0); shx.setTransform(d, 0, 0, d, 0, 0);
+      const sc = w/(HW.h1 - HW.h0), X = function(h){ return (h - HW.h0)*sc; }, Y = function(y){ return (HW.y1 - y)*sc; };
+      [[-1, 0, 0], [0, HW.h1, 2]].forEach(function(r){
+        [1, -1].forEach(function(sg){
+          shx.strokeStyle = rgba(CH[r[2]], 1); shx.lineWidth = 2; shx.beginPath();
+          for (let k = 0; k <= 80; k++){ const h = r[0] + (r[1] - r[0])*k/80, y = sg*G.wsh(h); if (k) shx.lineTo(X(h), Y(y)); else shx.moveTo(X(h), Y(y)); }
+          shx.stroke();
+        });
+      });
+      shx.strokeStyle = rgba(COL.orange, 1); shx.lineWidth = 2.2; shx.setLineDash([6, 4]);
+      shx.beginPath(); shx.moveTo(X(HW.h0), Y(0)); shx.lineTo(X(-1), Y(0)); shx.stroke(); shx.setLineDash([]);
+      dot(shx, X(-1), Y(0), 4.6, rgba(COL.ink, 1)); dot(shx, X(0), Y(0), 3.8, rgba(COL.ink, 1));
+    }
+
+    function refreshAll(){ readCols(); buildFog(); resize(); drawSection(); drawSheet(); }
+    readCols(); buildFog();
+    if (window.ResizeObserver){ new ResizeObserver(function(){ resize(); drawSection(); drawSheet(); }).observe(view); }
+    window.addEventListener('resize', function(){ resize(); drawSection(); drawSheet(); });
+    if (window.matchMedia){ const mq = window.matchMedia('(prefers-color-scheme: dark)'); if (mq.addEventListener) mq.addEventListener('change', refreshAll); }
+    if (window.MutationObserver){ new MutationObserver(refreshAll).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'class'] }); }
+    resize(); setH(0, true); drawSheet();
+    if (window.__S3DEBUG) window.__s3 = { view: function(p, e, t){ phi = p*Math.PI/180; el = e*Math.PI/180; if (t !== undefined) tau = t; render(); }, state: function(){ return { phi: phi*180/Math.PI, el: el*180/Math.PI, tau: tau }; } };
+    return { focus: function(f){ focus = f; request(); } };
+  })();
+
+  const start = (location.hash || '').slice(1);
+  choose(ORDER.indexOf(start) >= 0 ? start : 'wallI');
+  if (window.ResizeObserver){ new ResizeObserver(fitAll).observe(document.querySelector('.wrap')); }
+  window.addEventListener('resize', fitAll);
+  fitAll();
+  tex(document.querySelector('header')); tex(document.getElementById('f1s'));
+  document.querySelectorAll('.caption, .figcap, .notes, table.stab').forEach(function(el){ tex(el); });
+  tex(document.getElementById('slice'));
+})();
+</script>
+
+</body>
+</html>
