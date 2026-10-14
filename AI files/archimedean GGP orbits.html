@@ -124,6 +124,23 @@ table.stab tr:last-child td{border-bottom:none}
 .notes{display:grid;gap:7px;margin:0;padding-left:1.1rem;font-size:.97rem}
 p{margin:0}
 mjx-container{color:inherit}
+.n-j{font-size:11px;color:var(--muted)}
+.gtag{display:inline-block;font-size:10.5px;font-weight:600;line-height:1.3;color:var(--c);border:1.5px solid var(--c);border-radius:999px;padding:0 6px;vertical-align:1px}
+.g-u3{--c:var(--u3)} .g-u21{--c:var(--u21)} .g-u12{--c:var(--u12)}
+.colsep{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4}
+.edge.assoc{stroke-dasharray:2 4}
+.elbl.assoc{border-style:dashed}
+.lbl.head{font-size:11.5px;line-height:1.35}
+.lbl.ph{white-space:normal;width:170px}
+.wread{font-family:var(--sans);font-size:.8rem;line-height:1.45;color:var(--ink);background:var(--wash);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.srclink{font-family:var(--sans);font-size:.85rem}
+.sides{display:flex;flex-wrap:wrap;width:fit-content;max-width:100%;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.side{flex:1 1 auto;font-family:var(--sans);font-size:.84rem;padding:7px 14px;border:0;background:var(--surface);color:var(--ink);cursor:pointer}
+.side + .side{border-left:1px solid var(--line)}
+.side[aria-selected="true"]{background:var(--purple);color:#fff}
+.side:focus-visible{outline:2px solid var(--purple);outline-offset:-2px}
+#det{overflow-x:auto}
+@media (max-width:520px){.dtable td:first-child{white-space:normal}.dtable td{padding-right:8px}}
 .s3intro{display:grid;gap:8px;max-width:84ch;min-width:0}
 #slice mjx-container[display="true"]{display:block;max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:2px}
 .s3grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,350px);gap:18px;align-items:start}
@@ -171,6 +188,7 @@ mjx-container{color:inherit}
 .snap{display:flex;flex-wrap:wrap;gap:6px}
 .snap .btn{padding:3px 9px;font-size:.78rem}
 .s3list{margin:0;padding-left:1.15rem;display:grid;gap:4px}
+.wread{font-family:var(--sans);font-size:.8rem;line-height:1.45;color:var(--ink);background:var(--wash);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
 </style>
 </head>
 <body>
@@ -179,7 +197,7 @@ mjx-container{color:inherit}
 <div class="wrap">
 <header>
   <h1>Fibres over the orbit space</h1>
-  <p class="eyebrow">Companion to the note · rank two · source side \(S_3(\mathbb R)\)</p>
+  <p class="eyebrow">Companion to the note · rank two · source side \(S_3(\mathbb R)\) and unitary side</p>
 </header>
 
 <section id="explorer" aria-label="Figure 1 and the fibre over the selected point">
@@ -218,7 +236,11 @@ mjx-container{color:inherit}
         <div class="lbl" style="left:190px;top:152px">full reduced origin:<br>\(g|_W\) central</div>
       </div>
     </div>
-        <p class="figcap">Figure 1 of the note, schematic. Click anywhere, or drag the small ring, and the explorer shows the fibre over the point under the ring. A chamber gives a regular semisimple point, the boundary of the lens a wall next to \(\mathrm U(3)\), an edge of the blue wedge a wall next to \(\mathrm U(1,2)\), the dashed line a nonsplit corner, and the right and left tips of the lens the split corner and the full reduced origin. Near a wall, the dashed line or a tip, the ring snaps onto it. The last section draws this figure to scale.</p>
+        <p class="figcap">Figure 1 of the note, schematic. Click anywhere, or drag the small ring, and the explorer shows the fibre over the point under the ring, on the side chosen above the tabs. A chamber gives a regular semisimple point, the boundary of the lens a wall next to \(\mathrm U(3)\), an edge of the blue wedge a wall next to \(\mathrm U(1,2)\), the dashed line a nonsplit corner, and the right and left tips of the lens the split corner and the full reduced origin. Near a wall, the dashed line or a tip, the ring snaps onto it. The last section draws this figure to scale.</p>
+      </div>
+      <div class="sides" role="tablist" aria-label="Which side">
+        <button class="side" type="button" role="tab" data-side="s" aria-selected="true">Source side \(S_3(\mathbb R)\)</button>
+        <button class="side" type="button" role="tab" data-side="u" aria-selected="false">Unitary side \(\mathrm U(3),\ \mathrm U(2,1),\ \mathrm U(1,2)\)</button>
       </div>
       <div class="tabs" role="tablist" id="tabs" aria-label="Fibres"></div>
       <div class="card">
@@ -266,6 +288,38 @@ mjx-container{color:inherit}
   </div>
   <p class="caption">In every case the semisimple representatives are exactly the elements fixed by \(S\) that are generic for what \(S\) leaves free. When the generic condition fails, the element lies over a deeper point.</p>
 </section>
+<section aria-labelledby="nohu">
+    <h2 id="nohu">Conventions on the unitary side</h2>
+    <ul class="notes">
+      <li>\(V=W\oplus\mathbb Ce\) with \(\langle x,y\rangle=y^*Jx\) and \(J=\mathrm{diag}(J_W,1)\), so \(e\) is the last basis vector, \(\langle e,e\rangle=1\) and \(e\perp W\). Every representative comes with its own \(J\); forms of the same signature are isometric.</li>
+      <li>\(W\) of signature \((2,0)\), \((1,1)\), \((0,2)\) gives \(\mathrm U(V)=\mathrm U(3)\), \(\mathrm U(2,1)\), \(\mathrm U(1,2)\). The group \(\mathrm U(W)=\{k:k^*J_Wk=J_W\}\) acts by conjugation by \(\mathrm{diag}(k,1)\). It is \(\mathrm U(2)\), which is compact, for \(\mathrm U(3)\) and \(\mathrm U(1,2)\), and \(\mathrm U(1,1)\) for \(\mathrm U(2,1)\).</li>
+      <li>\(\mathrm{inv}_U(g)=(\det g,\operatorname{tr}g,\langle ge,e\rangle)\), and \(\gamma\in S_3(\mathbb R)\) matches \(g\) when \(\mathrm{inv}(\gamma)=\mathrm{inv}_U(g)\).</li>
+      <li>With \(K_g=[e,ge,g^2e]\) one has \(\Delta_S(\mathrm{inv}_Ug)=-\det J\,|\det K_g|^2\). So \(g\) is regular semisimple exactly when \(e\) is cyclic for \(g\), and the sign of \(\Delta_S\) is \(-\operatorname{sign}\det J\). The two source-side conditions \(\det K\ne0\) and \(\det L\ne0\) become one, because \(g^{-1}\) is the adjoint of \(g\) and \(\mathbb C[g^{-1}]=\mathbb C[g]\).</li>
+      <li>An orbit of \(\mathrm U(W)\) on \(\mathrm U(V)\) is the same as an orbit of \(\mathrm U(V)\) on pairs \((g,e')\) with \(\langle e',e'\rangle=1\). For semisimple \(g\) with an orthogonal eigenbasis \(f_j\) this is the vector \(e=\sum a_jf_j\) up to the centralizer of \(g\), recorded by the weights \(\beta_j=\langle f_j,f_j\rangle|a_j|^2\). They add up to \(1\), \(b=\sum\beta_j\nu_j\), and their signs are the signs of the eigenlines.</li>
+      <li>Since \(\mathrm U(W)\) is compact for \(\mathrm U(3)\) and \(\mathrm U(1,2)\), every fibre there is one closed orbit. Non-closed orbits exist only in \(\mathrm U(2,1)\), and only over nonsplit corners and full reduced origins: there \(\mathbb C[g]e\) is a degenerate plane, containing an isotropic line orthogonal to it.</li>
+      <li>When \(J_W\) is hyperbolic, \(k_t=\mathrm{diag}(t,\bar t^{-1},1)\) lies in \(\mathrm U(W)\) for \(t\in\mathbb C^\times\). Conjugating by \(k_t\) multiplies \(g_{12},g_{13},g_{32}\) by \(|t|^2,t,\bar t\), and \(g_{21},g_{23},g_{31}\) by \(|t|^{-2},\bar t^{-1},t^{-1}\).</li>
+      <li>Every matrix was checked numerically: \(g^*Jg=J\), the common \(\mathrm{inv}_U\), the stabilizer dimension in \(\mathrm U(W)\), and the limit along each arrow.</li>
+    </ul>
+  </section>
+
+<section aria-labelledby="sthu">
+  <h2 id="sthu">Stabilizers, and the two sides compared</h2>
+  <div class="card scroll">
+    <table class="stab">
+      <thead><tr><th>Kind of point</th><th>Stabilizer of a closed orbit in \(\mathrm U(W)\)</th><th>Source side</th><th>Orbits in \(S_3(\mathbb R)\)</th><th>\(\mathrm U(3)\)</th><th>\(\mathrm U(2,1)\)</th><th>\(\mathrm U(1,2)\)</th></tr></thead>
+      <tbody>
+        <tr><td>(a), (b) regular semisimple</td><td>\(\{1\}\)</td><td>\(\{1\}\)</td><td>1</td><td colspan="3">1 in the group of its chamber, none in the other two</td></tr>
+        <tr><td>(c) wall next to \(\mathrm U(3)\)</td><td>\(\mathrm U(1)\), rotating the hidden line</td><td>\(\mathbb R^\times\)</td><td>3</td><td>1</td><td>1</td><td>0</td></tr>
+        <tr><td>(c) wall next to \(\mathrm U(1,2)\)</td><td>\(\mathrm U(1)\), rotating the hidden line</td><td>\(\mathbb R^\times\)</td><td>3</td><td>0</td><td>1</td><td>1</td></tr>
+        <tr><td>(d) split corner</td><td>\(\mathrm U(1)^2\), rotating the two eigenlines in \(W\)</td><td>\((\mathbb R^\times)^2\)</td><td>9</td><td>1</td><td>2</td><td>1</td></tr>
+        <tr><td>(e) nonsplit corner</td><td>\(\{\mathrm{diag}(t,\bar t^{-1})\}\cong\mathbb C^\times\)</td><td>\(\mathbb C^\times\)</td><td>3</td><td>0</td><td>3</td><td>0</td></tr>
+        <tr><td>full reduced origin</td><td>all of \(\mathrm U(W)\)</td><td>\(\mathrm{GL}_2(\mathbb R)\)</td><td>8 and a family</td><td>1</td><td>3 and a family</td><td>1</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="caption">On the two sides the stabilizers are real forms of the same complex group: \(\mathbb R^\times\) and \(\mathrm U(1)\) of \(\mathbb C^\times\), \((\mathbb R^\times)^2\) and \(\mathrm U(1)^2\) of \((\mathbb C^\times)^2\), and \(\mathrm{GL}_2(\mathbb R)\) and \(\mathrm U(W)\) of \(\mathrm{GL}_2(\mathbb C)\). Over a split corner the four closed orbits match the four quadrants of Figure 1, and \(\mathrm U(2,1)\) has two of them: over a real group one fibre can contain several closed orbits that are conjugate only over \(\mathbb C\).</p>
+</section>
+
 <section id="slice" aria-labelledby="s3title">
   <h2 id="s3title">The orbit space in three dimensions</h2>
   <div class="s3intro">
@@ -279,6 +333,7 @@ mjx-container{color:inherit}
       <li>Away from the corners, \(\mathbb C[g]e\) is a plane on both, so these are the walls.</li>
       <li>Chambers, for \(|h|&lt;1\): write \(b=\beta_1+\beta_2\lambda+\beta_3\lambda^{-1}\) with \(\beta_1+\beta_2+\beta_3=1\). Each \(\beta_j\) has the sign of the corresponding eigenline of \(g\). So the number of negative \(\beta_j\) is \(0\), \(1\) or \(2\), in the \(\mathrm U(3)\), \(\mathrm U(2,1)\) or \(\mathrm U(1,2)\) chamber.</li>
       <li>Hence the closure of the \(\mathrm U(3)\) chamber is a solid. Its section at height \(h\in[-1,1]\) is the triangle with vertices \(1,\lambda,\lambda^{-1}\), the numerical range of \(g\).</li>
+      <li>On the unitary side these \(\beta_j\) are the weights \(\langle f_j,f_j\rangle|a_j|^2\) of \(e=\sum a_jf_j\) on an orthogonal eigenbasis of \(g\), and they determine the closed orbit. Click a point in the section panel to read them off.</li>
     </ul>
   </div>
 
@@ -326,6 +381,7 @@ mjx-container{color:inherit}
           <button class="btn" type="button" data-h="1.25">\(h=\tfrac54\)</button>
         </div>
         <p class="figcap" id="s3secap"></p>
+        <div class="wread" id="s3wread">Click a point of the section to read off the weights of the closed unitary orbit over it.</div>
       </div>
       <div class="card panel">
         <h3>The sheet \(S\) seen along the \(x\)-axis: Figure 1, drawn to scale</h3>
@@ -409,7 +465,7 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'glo
   const UNIL = R`\(\left\{\left(\begin{smallmatrix}1&b\\0&1\end{smallmatrix}\right)\right\}\cong\mathbb R\), the unipotent matrices that commute with \(y\) and fix the coupling vector`;
   const YH = R`y=\left(\begin{smallmatrix}0&1/2\\0&0\end{smallmatrix}\right)`;
 
-  const FIB = {
+  const FIB_S = {
     rsU3: { tab: '(a) in U(3)', point: 'a3', inv: R`\left(1,1,\tfrac13\right)`, layout: 'one', W: 680, H: 250, BW: 260,
       info: R`A point (a) inside the \(\mathrm U(3)\) chamber, with eigenvalues \(1,\pm i\) and \(b=\tfrac13\). Over a regular semisimple point the fibre is a single orbit, closed and with trivial stabilizer.`,
       nodes: { o: { x: 340, y: 118, label: 'the only orbit', pre: R`\tfrac13`, m: R`2+i&1-i&1-i\\-2i&-i&2i\\2&1+3i&1`, stab: ONE, stabLong: 'trivial', od: 4, sd: 0, type: 'rs', dK: R`-\tfrac{4i}{9}`, dL: R`-\tfrac{4i}{3}`,
@@ -495,7 +551,7 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'glo
 
   // split corner: nine orbits on a 3 x 3 grid
   (function(){
-    const S = FIB.split, X = { w: 120, '0': 390, v: 660 }, Y = { v: 90, '0': 360, w: 630 };
+    const S = FIB_S.split, X = { w: 120, '0': 390, v: 660 }, Y = { v: 90, '0': 360, w: 630 };
     const MAT = { '00': R`i&0&0\\0&-i&0\\0&0&1`, 'v0': R`i&0&-1+i\\0&-i&0\\0&0&1`, '0v': R`i&0&0\\0&-i&1+i\\0&0&1`, 'w0': R`i&0&0\\0&-i&0\\-1+i&0&1`, '0w': R`i&0&0\\0&-i&0\\0&1+i&1`,
       'vv': R`i&0&-1+i\\0&-i&1+i\\0&0&1`, 'ww': R`i&0&0\\0&-i&0\\-1+i&1+i&1`, 'vw': R`i&-1&-1+i\\0&-i&0\\0&1+i&1`, 'wv': R`i&0&0\\-1&-i&1+i\\-1+i&0&1` };
     const DK = { vv: R`4i`, ww: '0' }, DL = { vv: '0', ww: R`4i` };
@@ -521,26 +577,114 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'glo
     }); });
   })();
   const VEE = { '0': [340, 335], v: [520, 90], w: [160, 90] };
-  ['wallI','wallII','nonsplit'].forEach(function(f){ Object.keys(FIB[f].nodes).forEach(function(k){ FIB[f].nodes[k].x = VEE[k][0]; FIB[f].nodes[k].y = VEE[k][1]; }); });
+  ['wallI','wallII','nonsplit'].forEach(function(f){ Object.keys(FIB_S[f].nodes).forEach(function(k){ FIB_S[f].nodes[k].x = VEE[k][0]; FIB_S[f].nodes[k].y = VEE[k][1]; }); });
+
+  // the unitary side: the same points, with their fibres in U(3), U(2,1) and U(1,2)
+  const GU = { U3: R`\mathrm U(3)`, U21: R`\mathrm U(2,1)`, U12: R`\mathrm U(1,2)` };
+  const JH = R`\left(\begin{smallmatrix}0&1&0\\1&0&0\\0&0&1\end{smallmatrix}\right)`;
+  const KT = R`\mathrm{diag}(t,\bar t^{-1},1)`;
+  const EIG = R`eigenvalues \(1,i,-i\)`;
+  // a node: grp, label, m (with optional prefactor pre), J, stab, stabLong, od, sd, type, dK, what
+  const FIB_U = {
+    rsU3: { tab: '(a) in U(3)', inv: R`\left(1,1,\tfrac13\right)`, W: 720, H: 300, BW: 210,
+      info: R`A point (a) inside the \(\mathrm U(3)\) chamber: eigenvalues \(1,\pm i\) and \(b=\tfrac13\). The weights are \(\beta=(\tfrac13,\tfrac13,\tfrac13)\), all positive, so only \(\mathrm U(3)\) has elements with these invariants. There the fibre is one closed orbit with trivial stabilizer.`,
+      heads: true, empty: ['U21', 'U12'],
+      nodes: { o: { x: 120, y: 165, grp: 'U3', label: 'the only orbit', pre: R`\tfrac13`, m: R`0&-3i&3i\\-i&2&1\\2i&2&1`, J: R`\mathrm{diag}(\tfrac23,2,1)`, stab: ONE, stabLong: 'trivial', od: 4, sd: 0, type: 'rs', dK: R`\tfrac{2i}{3}`,
+        what: R`In an orthogonal eigenbasis \(f_1,f_2,f_3\) of \(g\) for \(1,i,-i\) with \(\langle f_j,f_j\rangle=\tfrac13\), the vector is \(e=f_1+f_2+f_3\). The matrix is written in the basis \(w_1=f_2-f_3,\ w_2=2f_1-f_2-f_3,\ e\) of \(V\), so \(W=\mathrm{span}(w_1,w_2)\). The vector \(e\) is cyclic for \(g\).` } }, edges: [] },
+    rsU21: { tab: '(b) in U(2,1)', inv: R`(1,1,-1)`, W: 720, H: 300, BW: 210,
+      info: R`A point (b) in the \(\mathrm U(2,1)\) chamber: eigenvalues \(1,\pm i\) and \(b=-1\). The weights are \(\beta=(-1,1,1)\): the eigenline for \(1\) is negative, so only \(\mathrm U(2,1)\) occurs. The fibre is one closed orbit with trivial stabilizer.`,
+      heads: true, empty: ['U3', 'U12'],
+      nodes: { o: { x: 360, y: 165, grp: 'U21', label: 'the only orbit', m: R`0&i&i\\-i&2&1\\2i&-2&-1`, J: R`\mathrm{diag}(2,-2,1)`, stab: ONE, stabLong: 'trivial', od: 4, sd: 0, type: 'rs', dK: R`2i`,
+        what: R`In an orthogonal eigenbasis for \(1,i,-i\) with \(\langle f_j,f_j\rangle=-1,1,1\), the vector is \(e=f_1+f_2+f_3\). The basis used is \(w_1=f_2-f_3,\ w_2=2f_1+f_2+f_3,\ e\), and \(W=\mathrm{span}(w_1,w_2)\) has signature \((1,1)\).` } }, edges: [] },
+    rsU12: { tab: '(a) in U(1,2)', inv: R`(1,1,2)`, W: 720, H: 300, BW: 210,
+      info: R`A point (a) in the \(\mathrm U(1,2)\) chamber: eigenvalues \(1,\pm i\) and \(b=2\). The weights are \(\beta=(2,-\tfrac12,-\tfrac12)\): two negative eigenlines, so only \(\mathrm U(1,2)\) occurs. The fibre is one closed orbit with trivial stabilizer.`,
+      heads: true, empty: ['U3', 'U21'],
+      nodes: { o: { x: 600, y: 165, grp: 'U12', label: 'the only orbit', m: R`0&2i&i\\i&-1&-1\\-i&2&2`, J: R`\mathrm{diag}(-1,-2,1)`, stab: ONE, stabLong: 'trivial', od: 4, sd: 0, type: 'rs', dK: R`-2i`,
+        what: R`In an orthogonal eigenbasis for \(1,i,-i\) with \(\langle f_j,f_j\rangle=2,-\tfrac12,-\tfrac12\), the vector is \(e=f_1+f_2+f_3\). The basis used is \(w_1=f_2-f_3,\ w_2=f_1+2f_2+2f_3,\ e\), and \(W\) is negative definite.` } }, edges: [] },
+    wallI: { tab: '(c) wall next to U(3)', inv: R`(1,1,0)`, W: 720, H: 300, BW: 210,
+      info: R`A wall point (c) between \(\mathrm U(3)\) and \(\mathrm U(2,1)\), with \(b=0\). The eigenline \(L=\mathbb Ce_1\) for \(1\) is orthogonal to \(e\) (weight \(0\)), and \(\Pi=\mathbb C[g]e=\mathrm{span}(e_2,e)\) carries \(\pm i\) with weights \(\tfrac12,\tfrac12\), so \(\Pi\) is positive definite. The sign of \(L\) is free: positive gives \(\mathrm U(3)\), negative gives \(\mathrm U(2,1)\). Each group has one closed orbit, with stabilizer \(\mathrm U(1)\) rotating \(L\).`,
+      heads: true, empty: ['U12'],
+      nodes: {
+        a: { x: 120, y: 165, grp: 'U3', label: 'the only orbit', m: R`1&0&0\\0&0&i\\0&i&0`, J: R`\mathrm{diag}(1,1,1)`, stab: R`\{\mathrm{diag}(t,1,1)\}`, stabLong: R`\(\{\mathrm{diag}(t,1,1):|t|=1\}\cong\mathrm U(1)\), rotating the hidden line \(L\)`, od: 3, sd: 1, type: 'ss', dK: '0',
+          what: R`The same matrix as the closed orbit on the source side. \(g=1\oplus g_\Pi\) on \(V=L\oplus\Pi\) with \(L\) positive. Since \(\Pi\) is a non-degenerate plane, every \(g\) over this point splits this way, so the orbit is the whole fibre in \(\mathrm U(3)\).` },
+        b: { x: 360, y: 165, grp: 'U21', label: 'the only orbit', m: R`1&0&0\\0&0&i\\0&i&0`, J: R`\mathrm{diag}(-1,1,1)`, stab: R`\{\mathrm{diag}(t,1,1)\}`, stabLong: R`\(\{\mathrm{diag}(t,1,1):|t|=1\}\cong\mathrm U(1)\), rotating the hidden line \(L\)`, od: 3, sd: 1, type: 'ss', dK: '0',
+          what: R`The same matrix, now with \(L\) negative, so \(V=L\oplus\Pi\) has signature \((2,1)\). Again \(\Pi\) is non-degenerate, so this is the whole fibre in \(\mathrm U(2,1)\).` } }, edges: [] },
+    wallII: { tab: '(c) wall next to U(1,2)', inv: R`(1,1,2i)`, W: 720, H: 300, BW: 210,
+      info: R`A wall point (c) between \(\mathrm U(2,1)\) and \(\mathrm U(1,2)\), with \(b=2i\). Again \(e\perp L=\mathbb Ce_1\), and \(\Pi=\mathrm{span}(e_2,e)\) carries \(i\) and \(-i\) with weights \(\tfrac32\) and \(-\tfrac12\), so \(\Pi\) has signature \((1,1)\). A positive \(L\) gives \(\mathrm U(2,1)\), a negative one \(\mathrm U(1,2)\).`,
+      heads: true, empty: ['U3'],
+      nodes: {
+        a: { x: 360, y: 165, grp: 'U21', label: 'the only orbit', m: R`1&0&0\\0&-2i&i\\0&-3i&2i`, J: R`\mathrm{diag}(1,-3,1)`, stab: R`\{\mathrm{diag}(t,1,1)\}`, stabLong: R`\(\{\mathrm{diag}(t,1,1):|t|=1\}\cong\mathrm U(1)\), rotating \(L\)`, od: 3, sd: 1, type: 'ss', dK: '0',
+          what: R`The same matrix as the closed orbit on the source side, unitary for \(J=\mathrm{diag}(1,-3,1)\). Here \(\langle e_2,e_2\rangle=-3\) makes \(\Pi\) of signature \((1,1)\).` },
+        b: { x: 600, y: 165, grp: 'U12', label: 'the only orbit', m: R`1&0&0\\0&-2i&i\\0&-3i&2i`, J: R`\mathrm{diag}(-1,-3,1)`, stab: R`\{\mathrm{diag}(t,1,1)\}`, stabLong: R`\(\{\mathrm{diag}(t,1,1):|t|=1\}\cong\mathrm U(1)\), rotating \(L\)`, od: 3, sd: 1, type: 'ss', dK: '0',
+          what: R`The same matrix with \(L\) negative, so \(V\) has signature \((1,2)\) and \(W\) is negative definite.` } }, edges: [] },
+    split: { tab: '(d) split corner', inv: R`(1,1,1)`, W: 720, H: 580, BW: 200,
+      info: R`A split corner (d): \(e\) is the eigenvector for \(1\), and \(g|_W=\mathrm{diag}(i,-i)\) has two non-degenerate eigenlines. Their signs give four closed orbits, one for each quadrant at the corner, placed here as in Figure 1: \(\mathrm U(3)\) toward the lens, \(\mathrm U(1,2)\) toward the wedge, \(\mathrm U(2,1)\) twice. There are no non-closed orbits.`,
+      center: R`the split corner`,
+      nodes: {
+        pp: { x: 130, y: 290, grp: 'U3', label: 'both lines positive', m: R`i&0&0\\0&-i&0\\0&0&1`, J: R`\mathrm{diag}(1,1,1)`, stab: R`\{\mathrm{diag}(t_1,t_2,1)\}`, stabLong: R`\(\{\mathrm{diag}(t_1,t_2,1):|t_1|=|t_2|=1\}\cong\mathrm U(1)^2\)`, od: 2, sd: 2, type: 'ss', dK: '0',
+          what: R`\(g=\mathrm{diag}(i,-i,1)\), the source-side matrix. Both eigenlines \(e_1,e_2\) in \(W\) are positive.` },
+        pm: { x: 360, y: 100, grp: 'U21', label: R`line of \(i\) positive`, m: R`i&0&0\\0&-i&0\\0&0&1`, J: R`\mathrm{diag}(1,-1,1)`, stab: R`\{\mathrm{diag}(t_1,t_2,1)\}`, stabLong: R`\(\mathrm U(1)^2\), rotating the two eigenlines`, od: 2, sd: 2, type: 'ss', dK: '0',
+          what: R`The eigenline of \(i\) is positive and that of \(-i\) negative. No element of \(\mathrm U(W)\cong\mathrm U(1,1)\) can exchange a positive and a negative line, so this orbit differs from the one below, although both are closed and have the same invariants.` },
+        mp: { x: 360, y: 480, grp: 'U21', label: R`line of \(-i\) positive`, m: R`i&0&0\\0&-i&0\\0&0&1`, J: R`\mathrm{diag}(-1,1,1)`, stab: R`\{\mathrm{diag}(t_1,t_2,1)\}`, stabLong: R`\(\mathrm U(1)^2\), rotating the two eigenlines`, od: 2, sd: 2, type: 'ss', dK: '0',
+          what: R`The eigenline of \(i\) is negative and that of \(-i\) positive. Over a real group one fibre can contain several closed orbits: these two are conjugate only over \(\mathbb C\).` },
+        mm: { x: 590, y: 290, grp: 'U12', label: 'both lines negative', m: R`i&0&0\\0&-i&0\\0&0&1`, J: R`\mathrm{diag}(-1,-1,1)`, stab: R`\{\mathrm{diag}(t_1,t_2,1)\}`, stabLong: R`\(\mathrm U(1)^2\)`, od: 2, sd: 2, type: 'ss', dK: '0',
+          what: R`Both eigenlines in \(W\) are negative, so \(V\) has signature \((1,2)\).` } }, edges: [] },
+    nonsplit: { tab: '(e) nonsplit corner', inv: R`\left(1,\tfrac72,1\right)`, W: 720, H: 500, BW: 210,
+      info: R`A nonsplit corner (e): eigenvalues \(1,2,\tfrac12\) with \(e\) on the eigenvalue \(1\). The eigenlines \(f=\mathbb Ce_1\), \(f'=\mathbb Ce_2\) for \(2,\tfrac12\) are isotropic, which needs \(W\) of signature \((1,1)\): only \(\mathrm U(2,1)\) occurs, with \(J\) hyperbolic on \(W\). Besides the closed orbit there are two regular orbits, where \(e\) is coupled to \(f\) or to \(f'\).`,
+      nodes: {
+        '0': { x: 360, y: 395, grp: 'U21', label: 'closed orbit', m: R`2&0&0\\0&\tfrac12&0\\0&0&1`, J: JH, stab: R`\{\mathrm{diag}(t,\bar t^{-1},1)\}`, stabLong: R`\(\{\mathrm{diag}(t,\bar t^{-1},1):t\in\mathbb C^\times\}\cong\mathbb C^\times\), scaling the two isotropic eigenlines oppositely`, od: 2, sd: 2, type: 'ss', dK: '0',
+          what: R`\(g=\mathrm{diag}(2,\tfrac12,1)\) on the hyperbolic basis \(e_1,e_2\) of \(W\) (\(\langle e_1,e_2\rangle=1\)) and \(e\). It fixes \(e\).` },
+        cf: { x: 180, y: 110, grp: 'U21', label: R`\(e\) coupled to \(f\)`, m: R`2&-\tfrac14&1\\0&\tfrac12&0\\0&-\tfrac12&1`, J: JH, stab: ONE, stabLong: 'trivial', od: 4, sd: 0, type: 'reg', dK: '0',
+          what: R`\(ge=e+e_1\). The plane \(\mathbb C[g]e=\mathrm{span}(e,e_1)\) is degenerate: \(e_1\) is isotropic and orthogonal to it. So \(e\) is not cyclic, and the point is still the corner, but \(g\) does not split as \(g|_W\oplus1\).` },
+        cg: { x: 540, y: 110, grp: 'U21', label: R`\(e\) coupled to \(f'\)`, m: R`2&0&0\\-1&\tfrac12&1\\-2&0&1`, J: JH, stab: ONE, stabLong: 'trivial', od: 4, sd: 0, type: 'reg', dK: '0',
+          what: R`\(ge=e+e_2\). Now \(\mathbb C[g]e=\mathrm{span}(e,e_2)\) is the degenerate plane.` } },
+      edges: [
+        { a: 'cf', b: '0', conj: KT, fam: R`2&-\tfrac{|t|^2}{4}&t\\0&\tfrac12&0\\0&-\tfrac{\bar t}{2}&1`, lim: R`t\to0`, short: R`k_t,\ t\to0` },
+        { a: 'cg', b: '0', conj: KT, fam: R`2&0&0\\-|t|^{-2}&\tfrac12&\bar t^{-1}\\-2t^{-1}&0&1`, lim: R`t\to\infty`, short: R`k_t,\ t\to\infty` } ] },
+    P: { tab: 'full reduced origin', inv: R`(1,3,1)`, W: 760, H: 680, BW: 186,
+      info: R`The full reduced origin \(P=\mathrm{inv}(1)\). In \(\mathrm U(3)\) and \(\mathrm U(1,2)\) the fibre is the single point \(g=1\). In \(\mathrm U(2,1)\) it also contains two parabolic orbits (\(e\) fixed, \(g|_W\) unipotent) and a one-parameter family of orbits of regular unipotent elements, indexed by the invariant \(\kappa\). The rows are orbit dimensions \(3,2,0\).`,
+      nodes: {
+        fam: { x: 380, y: 100, grp: 'U21', label: R`family, one orbit per \(\kappa\in\mathbb R\)`, m: R`1&\tfrac{i\kappa-1}{2}&i\\0&1&0\\0&i&1`, J: JH, stab: R`\left\{\left(\begin{smallmatrix}1&ir\\0&1\end{smallmatrix}\right)\right\}`, stabLong: R`\(\left\{\left(\begin{smallmatrix}1&ir\\0&1\end{smallmatrix}\right):r\in\mathbb R\right\}\cong\mathbb R\), unipotent elements of \(\mathrm U(W)\) fixing \(e_1\)`, od: 3, sd: 1, type: 'nei', dK: '0', family: true,
+          what: R`\(g\) is a regular unipotent element (one Jordan block), with \(ge=e+ie_1\). The number \(\kappa=2\,\mathrm{Im}\langle(g-1)x,x\rangle/|\langle(g-1)e,x\rangle|^2\), for any \(x\in W\) with \(\langle(g-1)e,x\rangle\ne0\), is a \(\mathrm U(W)\)-invariant, so different \(\kappa\) give different orbits. The same matrices are the family on the source side.` },
+        pp: { x: 230, y: 340, grp: 'U21', label: R`parabolic, \(s>0\)`, m: R`1&i&0\\0&1&0\\0&0&1`, J: JH, stab: R`\left\{\left(\begin{smallmatrix}a&b\\0&a\end{smallmatrix}\right)\right\}`, stabLong: R`\(\left\{\left(\begin{smallmatrix}a&b\\0&a\end{smallmatrix}\right):|a|=1,\ b\in a\,i\mathbb R\right\}\cong\mathrm U(1)\times\mathbb R\)`, od: 2, sd: 2, type: 'nei', dK: '0',
+          what: R`\(g=g_W\oplus1\) with \(g_W=\left(\begin{smallmatrix}1&is\\0&1\end{smallmatrix}\right)\), \(s=1\): \(e\) is fixed and \(g_W\) is unipotent. The sign of \(s\) is an invariant: \(\mathrm{Im}\langle(g-1)x,x\rangle\) has the sign of \(s\) on \(W\).` },
+        pm: { x: 530, y: 340, grp: 'U21', label: R`parabolic, \(s<0\)`, m: R`1&-i&0\\0&1&0\\0&0&1`, J: JH, stab: R`\left\{\left(\begin{smallmatrix}a&b\\0&a\end{smallmatrix}\right)\right\}`, stabLong: R`\(\mathrm U(1)\times\mathbb R\)`, od: 2, sd: 2, type: 'nei', dK: '0',
+          what: R`The same with \(s=-1\).` },
+        c3: { x: 100, y: 580, grp: 'U3', label: 'the only orbit', m: R`1&0&0\\0&1&0\\0&0&1`, J: R`\mathrm{diag}(1,1,1)`, stab: R`\mathrm U(W)`, stabLong: R`all of \(\mathrm U(W)\cong\mathrm U(2)\)`, od: 0, sd: 4, type: 'ss', dK: '0',
+          what: R`In \(\mathrm U(3)\) the group \(\mathrm U(W)\) is compact, so every orbit is closed and the fibre is the point \(g=1\).` },
+        c21: { x: 380, y: 580, grp: 'U21', label: 'closed orbit', m: R`1&0&0\\0&1&0\\0&0&1`, J: JH, stab: R`\mathrm U(W)`, stabLong: R`all of \(\mathrm U(W)\cong\mathrm U(1,1)\)`, od: 0, sd: 4, type: 'ss', dK: '0',
+          what: R`The only closed orbit in the \(\mathrm U(2,1)\) fibre: the point \(g=1\).` },
+        c12: { x: 660, y: 580, grp: 'U12', label: 'the only orbit', m: R`1&0&0\\0&1&0\\0&0&1`, J: R`\mathrm{diag}(-1,-1,1)`, stab: R`\mathrm U(W)`, stabLong: R`all of \(\mathrm U(W)\cong\mathrm U(2)\)`, od: 0, sd: 4, type: 'ss', dK: '0',
+          what: R`In \(\mathrm U(1,2)\) the group \(\mathrm U(W)\) is again compact, so the fibre is the point \(g=1\).` } },
+      edges: [
+        { a: 'fam', b: 'c21', conj: KT, fam: R`1&|t|^2\tfrac{i\kappa-1}{2}&it\\0&1&0\\0&i\bar t&1`, lim: R`t\to0`, short: R`k_t,\ t\to0` },
+        { a: 'pp', b: 'c21', conj: KT, fam: R`1&i|t|^2&0\\0&1&0\\0&0&1`, lim: R`t\to0`, short: R`k_t,\ t\to0` },
+        { a: 'pm', b: 'c21', conj: KT, fam: R`1&-i|t|^2&0\\0&1&0\\0&0&1`, lim: R`t\to0`, short: R`k_t,\ t\to0` },
+        { a: 'fam', b: 'pp', assoc: true, short: R`\kappa\to+\infty` },
+        { a: 'fam', b: 'pm', assoc: true, short: R`\kappa\to-\infty` } ] }
+  };
+  let FIB = FIB_S, side = 's';
+
 
   const NAMES = { o: 'the only orbit', '0': 'closed orbit', v: 'orbit coupled through the column', w: 'orbit coupled through the row' };
-  function nodeName(f, k){
+  function nodeNameS(f, k){
     const nd = FIB[f].nodes[k];
     if (f === 'P') return { rv: R`regular orbit with \(v\) cyclic`, rw: R`regular orbit with \(w\) cyclic`, nv: R`orbit \(y\ne0,\ yv=0\)`, ka: R`family \(y=\kappa\,vw\)`, nw: R`orbit \(y\ne0,\ wy=0\)`, v: R`orbit \(y=0\), only \(v\)`, n: R`orbit \(y\ne0,\ v=w=0\)`, w: R`orbit \(y=0\), only \(w\)`, z: R`closed orbit \(\{1\}\)` }[k];
     if (f === 'split') return k === '00' ? 'closed orbit (0, 0)' : 'orbit (' + k[0] + ', ' + k[1] + ')';
     return NAMES[k] || nd.label;
   }
-  function edgeConj(e){ return e.slide ? e.conj : diagTex(e.h); }
-  function edgeFam(f, e){
+  function edgeConjS(e){ return e.slide ? e.conj : diagTex(e.h); }
+  function edgeFamS(f, e){
     if (e.slide) return M(e.fam);
     const m = M(FIB[f].nodes[e.a].m), h = e.h;
     return m.map(function(r, i){ return r.map(function(x, j){ const hi = h[i], hj = h[j]; if (hi === hj) return x; return texScale(x, hi === '1' ? '' : hi, hj === '1' ? '' : hj); }); });
   }
-  function down(f, a){ const out = []; (function rec(x){ FIB[f].edges.forEach(function(e){ if (e.a === x && out.indexOf(e.b) < 0){ out.push(e.b); rec(e.b); } }); })(a); return out; }
-  function up(f, b){ const out = []; (function rec(x){ FIB[f].edges.forEach(function(e){ if (e.b === x && out.indexOf(e.a) < 0){ out.push(e.a); rec(e.a); } }); })(b); return out; }
+  function down(f, a){ const out = []; (function rec(x){ FIB[f].edges.forEach(function(e){ if (!e.assoc && e.a === x && out.indexOf(e.b) < 0){ out.push(e.b); rec(e.b); } }); })(a); return out; }
+  function up(f, b){ const out = []; (function rec(x){ FIB[f].edges.forEach(function(e){ if (!e.assoc && e.b === x && out.indexOf(e.a) < 0){ out.push(e.a); rec(e.a); } }); })(b); return out; }
 
   const ORDER = ['rsU3', 'rsU21', 'rsU12', 'wallI', 'wallII', 'split', 'nonsplit', 'P'];
-  const DEFAULT_SEL = { rsU3: 'o', rsU21: 'o', rsU12: 'o', wallI: 'v', wallII: 'v', split: 'vw', nonsplit: 'v', P: 'rv' };
+  const DEFAULT_SEL_S = { rsU3: 'o', rsU21: 'o', rsU12: 'o', wallI: 'v', wallII: 'v', split: 'vw', nonsplit: 'v', P: 'rv' };
+  const DEFAULT_SEL_U = { rsU3: 'o', rsU21: 'o', rsU12: 'o', wallI: 'a', wallII: 'a', split: 'pm', nonsplit: 'cf', P: 'fam' };
   let cur = 'wallI', sel = 'v';
   const tabsEl = document.getElementById('tabs'), infoEl = document.getElementById('info'), det = document.getElementById('det');
   const dgo = document.getElementById('dgo'), dgs = document.getElementById('dgs');
@@ -570,7 +714,7 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'glo
     fitDiagram();
   }
 
-  function buildDiagram(){
+  function buildDiagramS(){
     untex(dgs); dgs.innerHTML = ''; edgeEls = []; nodeEls = {};
     const fb = FIB[cur], W = fb.W, H = fb.H, BW = fb.BW, BH = 150;
     dgs.style.width = W + 'px'; dgs.style.height = H + 'px';
@@ -627,6 +771,73 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'glo
     fitDiagram();
     tex(dgs);
   }
+  function nodeNameU(f, k){ const nd = FIB[f].nodes[k]; return '\\(' + GU[nd.grp] + '\\): ' + nd.label; }
+  function edgeConjU(e){ return e.conj; }
+  function edgeFamU(f, e){ return M(e.fam); }
+  function buildDiagramU(){
+    untex(dgs); dgs.innerHTML = ''; edgeEls = []; nodeEls = {};
+    const fb = FIB[cur], W = fb.W, H = fb.H, BW = fb.BW, BH = 186;
+    const COLX = { U3: 120, U21: 360, U12: 600 };
+    const SUB = { U3: R`\(W\) positive definite`, U21: R`\(W\) of signature \((1,1)\)`, U12: R`\(W\) negative definite` };
+    dgs.style.width = W + 'px'; dgs.style.height = H + 'px';
+    const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('width', W); svg.setAttribute('height', H); svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.setAttribute('aria-hidden', 'true'); dgs.appendChild(svg);
+    if (fb.heads){
+      [240, 480].forEach(function(x){ const ln = document.createElementNS(NS, 'line'); ln.setAttribute('x1', x); ln.setAttribute('x2', x); ln.setAttribute('y1', 6); ln.setAttribute('y2', H - 6); ln.setAttribute('class', 'colsep'); svg.appendChild(ln); });
+    }
+    fb.edges.forEach(function(e){
+      const A = fb.nodes[e.a], B = fb.nodes[e.b];
+      let x1, y1, x2, y2, kind;
+      if (A.y === B.y){ kind = 'h'; const sg = A.x < B.x ? 1 : -1; x1 = A.x + sg * BW / 2; x2 = B.x - sg * BW / 2; y1 = y2 = A.y; }
+      else if (A.x === B.x){ kind = 'v'; const sg = A.y < B.y ? 1 : -1; y1 = A.y + sg * BH / 2; y2 = B.y - sg * BH / 2; x1 = x2 = A.x; }
+      else { kind = 'd'; x1 = A.x; y1 = A.y + BH / 2; x2 = B.x; y2 = B.y - BH / 2; }
+      const ln = document.createElementNS(NS, 'line');
+      const L = Math.hypot(x2 - x1, y2 - y1), ux = (x2 - x1) / L, uy = (y2 - y1) / L;
+      ln.setAttribute('x1', x1); ln.setAttribute('y1', y1); ln.setAttribute('x2', e.assoc ? x2 : x2 - 8 * ux); ln.setAttribute('y2', e.assoc ? y2 : y2 - 8 * uy);
+      ln.setAttribute('class', 'edge' + (e.assoc ? ' assoc' : '')); svg.appendChild(ln);
+      const hd = document.createElementNS(NS, 'path');
+      const px = -uy, py = ux;
+      if (!e.assoc) hd.setAttribute('d', 'M' + x2 + ' ' + y2 + ' L' + (x2 - 10 * ux + 4.5 * px) + ' ' + (y2 - 10 * uy + 4.5 * py) + ' L' + (x2 - 10 * ux - 4.5 * px) + ' ' + (y2 - 10 * uy - 4.5 * py) + ' Z');
+      hd.setAttribute('class', 'ahead'); svg.appendChild(hd);
+      const lb = document.createElement('div'); lb.className = 'elbl' + (e.assoc ? ' assoc' : '');
+      lb.innerHTML = '\\(' + e.short + '\\)';
+      const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+      lb.style.left = mx + 'px'; lb.style.top = my + 'px';
+      if (kind === 'h') lb.style.transform = 'translate(-50%, calc(-100% - 6px))';
+      else if (kind === 'v') lb.style.transform = 'translate(9px, -50%)';
+      else if (e.assoc) lb.style.transform = x2 < x1 ? 'translate(calc(-100% - 10px), -50%)' : 'translate(10px, -50%)';   // dotted lines: label on the outer side
+      else lb.style.transform = x2 > x1 ? 'translate(calc(-100% - 10px), -50%)' : 'translate(10px, -50%)';
+      edgeEls.push({ e: e, line: ln, head: hd, label: lb });
+    });
+    Object.keys(fb.nodes).forEach(function(k){
+      const nd = fb.nodes[k];
+      const d = document.createElement('div');
+      d.className = 'node t-' + nd.type + (nd.family ? ' family' : '');
+      d.style.left = (nd.x - BW / 2) + 'px'; d.style.top = (nd.y - BH / 2) + 'px'; d.style.width = BW + 'px'; d.style.height = BH + 'px';
+      d.tabIndex = 0; d.setAttribute('role', 'button');
+      d.innerHTML = '<div class="n-l"><span class="gtag g-' + nd.grp.toLowerCase() + '">\\(' + GU[nd.grp] + '\\)</span> ' + nd.label + '</div>' +
+        '<div class="n-m">\\(g=' + texMat(M(nd.m), nd.pre) + '\\)</div>' +
+        '<div class="n-j">\\(J=' + nd.J + '\\)</div>' +
+        '<div class="n-s">\\(\\mathrm{Stab}=' + nd.stab + '\\)</div>' +
+        '<div class="n-d">orbit dim ' + nd.od + ' · stab dim ' + nd.sd + '</div>' +
+        '<div class="n-t">' + TYPE[nd.type].word + '</div>';
+      d.addEventListener('click', function(){ select(k); });
+      d.addEventListener('keydown', function(ev){ if (ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); select(k); } });
+      dgs.appendChild(d); nodeEls[k] = d;
+    });
+    edgeEls.forEach(function(o){ dgs.appendChild(o.label); });
+    if (fb.heads){
+      Object.keys(COLX).forEach(function(g){ addLbl(dgs, COLX[g], 24, '<span class="gtag g-' + g.toLowerCase() + '">\\(' + GU[g] + '\\)</span><br><span class="muted">' + SUB[g] + '</span>', 'head'); });
+      (fb.empty || []).forEach(function(g){ addLbl(dgs, COLX[g], 165, R`no element of \(` + GU[g] + R`\) has these invariants`, 'muted ph'); });
+    }
+    if (fb.center) addLbl(dgs, W / 2, H / 2, fb.center, 'muted');
+    fitDiagram();
+    tex(dgs);
+  }
+  function nodeName(f, k){ return side === 'u' ? nodeNameU(f, k) : nodeNameS(f, k); }
+  function edgeConj(e){ return side === 'u' ? edgeConjU(e) : edgeConjS(e); }
+  function edgeFam(f, e){ return side === 'u' ? edgeFamU(f, e) : edgeFamS(f, e); }
+  function buildDiagram(){ return side === 'u' ? buildDiagramU() : buildDiagramS(); }
   function addLbl(parent, x, y, html, cls){ const l = document.createElement('div'); l.className = 'lbl' + (cls ? ' ' + cls : ''); l.style.left = x + 'px'; l.style.top = y + 'px'; l.innerHTML = html; parent.appendChild(l); return l; }
 
   function refreshSel(){
@@ -634,7 +845,7 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'glo
     edgeEls.forEach(function(o){ const hot = (o.e.a === sel || o.e.b === sel); o.line.classList.toggle('hot', hot); o.head.classList.toggle('hot', hot); o.label.hidden = (FIB[cur].layout === 'free') && !hot; o.label.classList.toggle('hot', hot); });
   }
   function link(k){ const nd = FIB[cur].nodes[k]; return '<a class="nl t-' + nd.type + '" href="#" data-k="' + k + '">' + nodeName(cur, k) + '</a>'; }
-  function details(){
+  function detailsS(){
     const fb = FIB[cur], k = sel, nd = fb.nodes[k];
     const ds = down(cur, k), us = up(cur, k), outs = fb.edges.filter(function(e){ return e.a === k; });
     let h = '<div class="dhead"><strong>' + nodeName(cur, k) + '</strong><span class="badge t-' + nd.type + '">' + TYPE[nd.type].badge + '</span></div>';
@@ -655,6 +866,34 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'glo
     det.querySelectorAll('a[data-k]').forEach(function(a){ a.addEventListener('click', function(ev){ ev.preventDefault(); select(a.getAttribute('data-k')); }); });
     tex(det);
   }
+  function detailsU(){
+    const fb = FIB[cur], k = sel, nd = fb.nodes[k];
+    const ds = down(cur, k), us = up(cur, k), outs = fb.edges.filter(function(e){ return e.a === k && !e.assoc; });
+    const asc = fb.edges.filter(function(e){ return e.assoc && (e.a === k || e.b === k); });
+    const closed = nd.type === 'ss' || nd.type === 'rs';
+    let h = '<div class="dhead"><strong>' + nodeName(cur, k) + '</strong><span class="badge t-' + nd.type + '">' + TYPE[nd.type].badge + '</span></div>';
+    h += '<div class="dmat">\\(g=' + texMat(M(nd.m), nd.pre) + R`,\qquad J=` + nd.J + '\\)</div>';
+    h += '<p>' + nd.what + '</p>';
+    h += '<table class="dtable"><tr><td>group</td><td>\\(' + GU[nd.grp] + '\\)</td></tr>' +
+      '<tr><td>stabilizer in \\(\\mathrm U(W)\\)</td><td>' + (nd.stabLong === 'trivial' ? 'trivial' : nd.stabLong) + ' (dimension ' + nd.sd + ')</td></tr>' +
+      '<tr><td>orbit dimension</td><td>\\(' + nd.od + '=4-' + nd.sd + '\\)</td></tr>' +
+      '<tr><td>\\(\\det K_g\\)</td><td>\\(' + nd.dK + '\\)' + (nd.dK === '0' ? R`: \(e\) is not cyclic for \(g\)` : R`: \(e\) is cyclic for \(g\)`) + '</td></tr>' +
+      '<tr><td>semisimple</td><td>' + (closed ? 'yes: the orbit is closed' : 'no: the orbit is not closed') + '</td></tr>' +
+      '<tr><td>regular</td><td>' + (nd.sd === 0 ? 'yes: the stabilizer is trivial' : 'no: the stabilizer has dimension ' + nd.sd) + '</td></tr></table>';
+    h += '<p>Its closure contains: ' + (ds.length ? ds.map(link).join(', ') : 'only itself') + '.<br>It lies in the closure of: ' + (us.length ? us.map(link).join(', ') : 'no other orbit') + '.</p>';
+    outs.forEach(function(e){
+      h += '<div class="arrow"><p><strong>Arrow to the ' + link(e.b) + '.</strong> Conjugating by \\(k_t=' + e.conj + '\\) gives a family in this orbit:</p>' +
+        '<div class="dmat">\\(' + texMat(M(e.fam)) + R`\ \xrightarrow{\ ` + e.lim + R`\ }\ ` + texMat(M(fb.nodes[e.b].m), fb.nodes[e.b].pre) + '\\)</div></div>';
+    });
+    asc.forEach(function(e){
+      const other = e.a === k ? e.b : e.a;
+      h += '<div class="arrow"><p><strong>Dotted line to the ' + link(other) + '.</strong> ' + R`As \(` + e.short + R`\), conjugating by \(k_t\) with \(|t|^2=1/|\kappa|\) makes the family tend to a parabolic element with \(s=\pm\tfrac12\), which lies in this parabolic orbit. This is not a closure relation: \(\kappa\) is constant on each orbit of the family, so no single orbit of the family has a parabolic element in its closure.</p></div>`;
+    });
+    untex(det); det.innerHTML = h;
+    det.querySelectorAll('a[data-k]').forEach(function(a){ a.addEventListener('click', function(ev){ ev.preventDefault(); select(a.getAttribute('data-k')); }); });
+    tex(det);
+  }
+  function details(){ return side === 'u' ? detailsU() : detailsS(); }
   function select(k){ sel = k; refreshSel(); details(); }
 
   // Figure 1: every point of the figure selects the fibre over it
@@ -736,15 +975,15 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'glo
   f1svg.addEventListener('pointerup', f1end); f1svg.addEventListener('pointercancel', f1end);
 
   function choose(f, rx, ry){
-    cur = f; sel = DEFAULT_SEL[f];
+    cur = f; sel = (side === 'u' ? DEFAULT_SEL_U : DEFAULT_SEL_S)[f];
     ORDER.forEach(function(g){ document.getElementById('tab-' + g).setAttribute('aria-selected', g === f ? 'true' : 'false'); });
     f1targets.forEach(function(el){ el.classList.toggle('on', el.getAttribute('data-f') === f); });
     if (rx !== undefined) placeRing(rx, ry); else placeRing(F1POS[f][0], F1POS[f][1]);
-    untex(infoEl); infoEl.innerHTML = 'Class \\(\\mathrm{inv}=' + FIB[f].inv + '\\). ' + FIB[f].info + ' Every element of \\(S_3(\\mathbb R)\\) with this \\(\\mathrm{inv}\\) lies in exactly one of the orbits shown.';
+    untex(infoEl); infoEl.innerHTML = 'Class \\(\\mathrm{inv}=' + FIB[f].inv + '\\). ' + FIB[f].info + (side === 'u' ? ' Every element of \\(\\mathrm U(3)\\), \\(\\mathrm U(2,1)\\) or \\(\\mathrm U(1,2)\\) with this \\(\\mathrm{inv}\\) lies in exactly one of the orbits shown.' : ' Every element of \\(S_3(\\mathbb R)\\) with this \\(\\mathrm{inv}\\) lies in exactly one of the orbits shown.');
     tex(infoEl);
     buildDiagram(); refreshSel(); details();
     if (s3api) s3api.focus(f);
-    try { history.replaceState(null, '', '#' + f); } catch(e){}
+    try { history.replaceState(null, '', '#' + f + (side === 'u' ? '-u' : '')); } catch(e){}
   }
 
   // Geometry of the slice {det = 1, tr real}: coordinates (x, y, h) with b = x + iy, h = (tr - 1)/2.
@@ -878,9 +1117,11 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'glo
     if (!view || !cv || !cv.getContext) return null;
     const ctx = cv.getContext('2d'), labelsEl = document.getElementById('s3labels'), tipEl = document.getElementById('s3tip');
     const projBtn = document.getElementById('s3proj'), resetBtn = document.getElementById('s3reset');
-    const fogChk = document.getElementById('s3fog'), outerChk = document.getElementById('s3outer'), sheetChk = document.getElementById('s3sheetc'), planeChk = document.getElementById('s3planec');
+    // without the projection button (the unitary page) there is no sheet S, no copy and no floor
+    const fogChk = document.getElementById('s3fog'), outerChk = document.getElementById('s3outer'), planeChk = document.getElementById('s3planec');
+    const sheetChk = document.getElementById('s3sheetc') || { checked: false, addEventListener: function(){} };
     const slider = document.getElementById('s3hs'), hOut = document.getElementById('s3hv'), hOut2 = document.getElementById('s3hv2');
-    const G = s3geom(), BOX = G.BOX, SH = G.SHEET, FX = G.FLOOR_X, CDX = G.COPY_DX;
+    const G = s3geom(), BOX = G.BOX, SH = G.SHEET, FX = projBtn ? G.FLOOR_X : G.BOX.x1 + 0.3, CDX = G.COPY_DX;
     const reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
     // the eight fibres of the explorer, as points (x, y, h)
     const FPTS = [
@@ -1187,8 +1428,8 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'glo
       }
       requestAnimationFrame(step);
     }
-    function setProjLabel(){ projBtn.textContent = tau > 0.5 ? 'Lift the copy of S into the slice' : 'Move the copy of S down again'; }
-    projBtn.addEventListener('click', function(){
+    function setProjLabel(){ if (projBtn) projBtn.textContent = tau > 0.5 ? 'Lift the copy of S into the slice' : 'Move the copy of S down again'; }
+    if (projBtn) projBtn.addEventListener('click', function(){
       if (busy) return;
       if (!sheetChk.checked){ sheetChk.checked = true; }
       animate({ phi: phi, el: el, tau: tau > 0.5 ? 0 : 1 }, setProjLabel);
@@ -1256,6 +1497,7 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'glo
         if (F.f === 'P') sctx.strokeStyle = rgba(COL.purple, 1), sctx.lineWidth = 2, sctx.beginPath(), sctx.arc(x, y, 8.5, 0, 2*Math.PI), sctx.stroke();
         else dot(sctx, x, y, 3.4, rgba(COL.purple, 1));
       });
+      if (wpt){ sctx.strokeStyle = rgba(COL.purple, 1); sctx.lineWidth = 2; sctx.beginPath(); sctx.arc(X(wpt[0]), Y(wpt[1]), 6, 0, 2*Math.PI); sctx.stroke(); }
       place(SL.one, 1, 0, 11, 11, true);
       place(SL.lam, l[0][0], l[0][1], ell ? -10 : 0, ell ? -11 : -13, !edge);
       place(SL.lami, l[1][0], l[1][1], ell ? -12 : 0, ell ? 12 : -13, !edge);
@@ -1265,8 +1507,37 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'glo
     sec.addEventListener('click', function(ev){
       const r = sec.getBoundingClientRect(), x = ev.clientX - r.left, y = ev.clientY - r.top;
       let best = null, bd = 12; secPts.forEach(function(p){ const d = Math.hypot(p.x - x, p.y - y); if (d < bd){ bd = d; best = p; } });
-      if (best) openFibre(best.f);
+      if (best){ openFibre(best.f); return; }
+      if (wread){ const sc = r.width/(SW.x1 - SW.x0); wpt = [SW.x0 + x/sc, SW.y1 - y/sc]; drawSection(); weights(); }
     });
+    // the weights of the closed orbit over a point b of the section (unitary page only)
+    const wread = document.getElementById('s3wread');
+    let wpt = null;
+    function f3(v){ const a = Math.abs(v) < 5e-4 ? 0 : v; return (a < 0 ? '-' : '') + Math.abs(a).toFixed(3); }
+    function sgn(v){ return Math.abs(v) < 0.02 ? '0' : (v > 0 ? '+' : '-'); }
+    function weights(){
+      if (!wread || !wpt) return;
+      const x = wpt[0], y = wpt[1], h = hs, bT = R`\(b=` + f3(x) + (y < 0 ? '-' : '+') + f3(Math.abs(y)) + R`i\)`;
+      let s;
+      if (Math.abs(Math.abs(h) - 1) < 1e-9){
+        s = bT + R`. At \(h=\pm1\) the eigenvalues \(\lambda,\lambda^{-1}\) coincide; move the section to read off weights.`;
+      } else if (Math.abs(h) < 1){
+        const sn = Math.sqrt(1 - h*h), b1 = (x - h)/(1 - h), r = (1 - x)/(1 - h), b2 = (r + y/sn)/2, b3 = (r - y/sn)/2;
+        const sg = [sgn(b1), sgn(b2), sgn(b3)], neg = sg.filter(function(c){ return c === '-'; }).length, zer = sg.filter(function(c){ return c === '0'; }).length;
+        const grp = [R`\(\mathrm U(3)\)`, R`\(\mathrm U(2,1)\)`, R`\(\mathrm U(1,2)\)`][neg];
+        s = bT + R`. Weights on the eigenlines of \(1,\lambda,\lambda^{-1}\) (\(\lambda=e^{i\theta}\), \(\cos\theta=h\)): \(\beta=(` + f3(b1) + ',' + f3(b2) + ',' + f3(b3) + R`)\), signs \((` + sg.join(',') + R`)\). `;
+        if (zer === 0) s += 'The closed orbit is in ' + grp + R`: in an orthogonal eigenbasis \(f_j\) with \(\langle f_j,f_j\rangle=\beta_j\), \(g=\mathrm{diag}(1,\lambda,\lambda^{-1})\) and \(e=f_1+f_2+f_3\).`;
+        else if (zer === 1) s += R`One weight is (nearly) \(0\): a wall, where \(e\) is orthogonal to that eigenline and its sign is free, so two groups have a closed orbit.`;
+        else s += R`Two weights are (nearly) \(0\): a corner, where \(e\) is an eigenvector and the other two lines may have any signs.`;
+      } else {
+        const lam = h + Math.sqrt(h*h - 1), w1 = (h - x)/(h - 1), zs = (x - 1)/(2*(h - 1)), zt = y/(lam - 1/lam);
+        s = bT + R`. Here \(\lambda=h+\sqrt{h^2-1}\) is real and its eigenline and that of \(\lambda^{-1}\) are isotropic. Write \(e=a_1f_1+af+a'f'\) with \(\langle f,f'\rangle=1\): the eigenline of \(1\) has weight \(\langle f_1,f_1\rangle|a_1|^2=` + f3(w1) + R`\) and \(a\bar a'=` + f3(zs) + (zt < 0 ? '-' : '+') + f3(Math.abs(zt)) + R`i\). `;
+        if (Math.hypot(x - 1, y) < 0.03) s += R`This is (nearly) the nonsplit corner \(b=1\), where \(a=a'=0\).`;
+        else if (Math.abs(w1) < 0.02) s += R`The weight is (nearly) \(0\): a wall.`;
+        else s += 'The closed orbit is in ' + (w1 > 0 ? R`\(\mathrm U(2,1)\)` : R`\(\mathrm U(1,2)\)`) + R`: \(V\) is the hyperbolic plane \(\mathrm{span}(f,f')\) plus the line \(\mathbb Cf_1\), whose sign is the sign of this weight.`;
+      }
+      untex(wread); wread.innerHTML = s; tex(wread);
+    }
     sec.addEventListener('mousemove', function(ev){
       const r = sec.getBoundingClientRect(), x = ev.clientX - r.left, y = ev.clientY - r.top;
       sec.style.cursor = secPts.some(function(p){ return Math.hypot(p.x - x, p.y - y) < 12; }) ? 'pointer' : 'default';
@@ -1285,16 +1556,17 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'glo
     }
     function setH(v, full){
       hs = Math.round(v*100)/100; slider.value = hs; hOut.textContent = fmtH(hs);
-      drawSection(); request(); if (full) caption();
+      drawSection(); request(); if (full){ caption(); weights(); }
     }
     slider.addEventListener('input', function(){ setH(parseFloat(slider.value), false); });
     slider.addEventListener('change', function(){ setH(parseFloat(slider.value), true); });
     document.querySelectorAll('#slice .snap button').forEach(function(b){ b.addEventListener('click', function(){ setH(parseFloat(b.getAttribute('data-h')), true); }); });
 
     // the sheet panel: Figure 1 to scale
-    const shW = document.getElementById('s3shw'), shc = document.getElementById('s3sh'), shx = shc.getContext('2d'), shL = document.getElementById('s3shl');
+    const shW = document.getElementById('s3shw'), shc = document.getElementById('s3sh'), shx = shc ? shc.getContext('2d') : null, shL = document.getElementById('s3shl');
     const HW = { h0: -1.65, h1: 0.6, y0: -0.82, y1: 0.82 };
     function sl(html, h, y, cls){
+      if (!shL) return;
       const el = document.createElement('div'); el.className = 's3lbl' + (cls ? ' ' + cls : ''); el.innerHTML = html; shL.appendChild(el);
       el.style.left = ((h - HW.h0)/(HW.h1 - HW.h0)*100).toFixed(2) + '%'; el.style.top = ((HW.y1 - y)/(HW.y1 - HW.y0)*100).toFixed(2) + '%';
     }
@@ -1303,6 +1575,7 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'glo
     sl('(c)', 0.25, 0.49, 'small'); sl(R`\(\mathrm U(2,1)\)`, -0.72, 0.52); sl('(b)', -1.3, -0.45, 'small');
     sl(R`\(h=-1\)`, -1.0, -0.71, 'small'); sl(R`\(h=0\)`, 0.0, -0.71, 'small');
     function drawSheet(){
+      if (!shW) return;
       const w = shW.clientWidth; if (!w) return;
       const hp = Math.round(w*(HW.y1 - HW.y0)/(HW.h1 - HW.h0)), d = window.devicePixelRatio || 1;
       shW.style.height = hp + 'px';
@@ -1341,7 +1614,19 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'glo
     return { focus: function(f){ focus = f; request(); } };
   })();
 
-  const start = (location.hash || '').slice(1);
+  // the side switch above the tabs
+  const sideEls = Array.prototype.slice.call(document.querySelectorAll('#explorer .side'));
+  function setSideButtons(){ sideEls.forEach(function(b){ b.setAttribute('aria-selected', b.getAttribute('data-side') === side ? 'true' : 'false'); }); }
+  sideEls.forEach(function(b){
+    b.addEventListener('click', function(){
+      const s2 = b.getAttribute('data-side'); if (s2 === side) return;
+      side = s2; FIB = side === 'u' ? FIB_U : FIB_S; setSideButtons();
+      choose(cur, +f1ring.getAttribute('cx'), +f1ring.getAttribute('cy'));
+    });
+  });
+  let start = (location.hash || '').slice(1);
+  if (/-u$/.test(start)){ side = 'u'; FIB = FIB_U; start = start.slice(0, -2); }
+  setSideButtons();
   choose(ORDER.indexOf(start) >= 0 ? start : 'wallI');
   if (window.ResizeObserver){ new ResizeObserver(fitAll).observe(document.querySelector('.wrap')); }
   window.addEventListener('resize', fitAll);
@@ -1349,6 +1634,7 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'glo
   tex(document.querySelector('header')); tex(document.getElementById('f1s'));
   document.querySelectorAll('.caption, .figcap, .notes, table.stab').forEach(function(el){ tex(el); });
   tex(document.getElementById('slice'));
+  tex(document.querySelector('#explorer .sides'));
 })();
 </script>
 
