@@ -17,8 +17,8 @@
   --gray:#74736C; --gray-soft:rgba(130,129,122,.30);
   --purple:#4E45AE; --rs:#1F4E9B;
   --orange-hi:rgba(232,149,42,.32); --teal-hi:rgba(29,158,117,.40); --gray-hi:rgba(130,129,122,.50); --sel-soft:rgba(78,69,174,.38);
-  --u3:#15835F; --u21:#C9741A; --u12:#2F62CE; --u3-soft:rgba(29,158,117,.22); --u21-soft:rgba(232,149,42,.18); --u12-soft:rgba(47,98,206,.17);
-  --u3-hi:rgba(29,158,117,.40); --u21-hi:rgba(232,149,42,.32); --u12-hi:rgba(47,98,206,.32);
+  --u3:#15835F; --u21:#C9741A; --u12:#2F62CE; --u3-soft:rgba(29,158,117,.22); --u21-soft:rgba(232,149,42,.3); --u12-soft:rgba(47,98,206,.17);
+  --u3-hi:rgba(29,158,117,.40); --u21-hi:rgba(232,149,42,.44); --u12-hi:rgba(47,98,206,.32);
   --serif:"Source Serif 4", Georgia, "Times New Roman", serif;
   --sans:"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
 }
@@ -29,8 +29,8 @@
     --orange:#F0A847; --orange-soft:rgba(240,168,71,.14);
     --gray:#B3B2AB; --gray-soft:rgba(179,178,171,.22);
     --purple:#A39BF5; --rs:#86A9F2; --orange-hi:rgba(240,168,71,.30); --teal-hi:rgba(63,199,154,.36); --gray-hi:rgba(179,178,171,.42); --sel-soft:rgba(163,155,245,.48); color-scheme:dark;
-    --u3:#3FC79A; --u21:#F0A847; --u12:#7EA6F6; --u3-soft:rgba(63,199,154,.20); --u21-soft:rgba(240,168,71,.15); --u12-soft:rgba(126,166,246,.20);
-    --u3-hi:rgba(63,199,154,.36); --u21-hi:rgba(240,168,71,.30); --u12-hi:rgba(126,166,246,.36);
+    --u3:#3FC79A; --u21:#F0A847; --u12:#7EA6F6; --u3-soft:rgba(63,199,154,.20); --u21-soft:rgba(240,168,71,.26); --u12-soft:rgba(126,166,246,.20);
+    --u3-hi:rgba(63,199,154,.36); --u21-hi:rgba(240,168,71,.42); --u12-hi:rgba(126,166,246,.36);
   }
 }
 :root[data-theme="dark"]{
@@ -39,8 +39,8 @@
   --orange:#F0A847; --orange-soft:rgba(240,168,71,.14);
   --gray:#B3B2AB; --gray-soft:rgba(179,178,171,.22);
   --purple:#A39BF5; --rs:#86A9F2; --orange-hi:rgba(240,168,71,.30); --teal-hi:rgba(63,199,154,.36); --gray-hi:rgba(179,178,171,.42); --sel-soft:rgba(163,155,245,.48); color-scheme:dark;
-    --u3:#3FC79A; --u21:#F0A847; --u12:#7EA6F6; --u3-soft:rgba(63,199,154,.20); --u21-soft:rgba(240,168,71,.15); --u12-soft:rgba(126,166,246,.20);
-    --u3-hi:rgba(63,199,154,.36); --u21-hi:rgba(240,168,71,.30); --u12-hi:rgba(126,166,246,.36);
+    --u3:#3FC79A; --u21:#F0A847; --u12:#7EA6F6; --u3-soft:rgba(63,199,154,.20); --u21-soft:rgba(240,168,71,.26); --u12-soft:rgba(126,166,246,.20);
+    --u3-hi:rgba(63,199,154,.36); --u21-hi:rgba(240,168,71,.42); --u12-hi:rgba(126,166,246,.36);
 }
 body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:16.5px;line-height:1.55}
 .wrap{max-width:1180px;margin:0 auto;padding-inline:20px;padding-block:18px 64px;display:grid;gap:28px}
@@ -365,7 +365,7 @@ mjx-container{color:inherit}
         <span><span class="dt" style="--c:var(--purple)"></span>the fibres above (click one)</span>
         <span><span class="ln dash thin" style="--c:var(--muted)"></span>projection along \(x\)</span>
       </div>
-      <p class="figcap">The \(x\)-axis always points down. Drag sideways to turn the picture about it, and up or down to tilt it. The chambers are tinted: \(\mathrm U(3)\) teal, \(\mathrm U(1,2)\) a strong blue, and \(\mathrm U(2,1)\), which is everything else, a faint orange; each wall is coloured on each side by the chamber that side faces. Click a chamber in the legend to show it alone. The thick edges of the solid are the axis \(b=1\) for \(|h|&lt;1\) and the ellipse \(b=\lambda^{\pm1}\) on the plane; the dashed axis beyond \(P_\pm=(h,b)=(\pm1,1)\) consists of nonsplit corners. Under the slice hangs a copy of the sheet \(S\), moved straight down along \(x\), and under that its projection, which is Figure 1. The dashed vertical lines join the place of \(S\) in the slice, the copy and the projection, and the thin teal and blue curves on the walls show where \(S\) cuts them. The first button lifts the copy back into place.</p>
+      <p class="figcap">The \(x\)-axis always points down. Drag sideways to turn the picture about it, and up or down to tilt it. The chambers are tinted: \(\mathrm U(3)\) teal, \(\mathrm U(2,1)\) orange and \(\mathrm U(1,2)\) blue; each wall is coloured on each side by the chamber that side faces. Click a chamber in the legend to show it alone. The thick edges of the solid are the axis \(b=1\) for \(|h|&lt;1\) and the ellipse \(b=\lambda^{\pm1}\) on the plane; the dashed axis beyond \(P_\pm=(h,b)=(\pm1,1)\) consists of nonsplit corners. Under the slice hangs a copy of the sheet \(S\), moved straight down along \(x\), and under that its projection, which is Figure 1. The dashed vertical lines join the place of \(S\) in the slice, the copy and the projection, and the thin teal and blue curves on the walls show where \(S\) cuts them. The first button lifts the copy back into place.</p>
     </div>
     <div class="s3side">
       <div class="card panel">
@@ -1148,7 +1148,7 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'glo
 
     // the chambers as tinted volumes: a stack of translucent layers x = const, each coloured by chamber
     // alpha: the strongest tint per layer; GA scales it down in the normal view, where U(2,1) is only a faint background
-    const FOG = { n: 64, ni: 132, nj: 96, alpha: [0.064, 0.032, 0.12] }, GA = [0.62, 0.22, 0.62];
+    const FOG = { n: 64, ni: 132, nj: 96, alpha: [0.064, 0.032, 0.12] }, GA = [0.62, 0.55, 0.62];
     let fogLayers = [];
     // fade the fog out near the edges of the box, so the stack of layers shows no hard rims
     function soft(t){ const s = Math.min(1, Math.min(t, 1 - t)/0.08); return s*s*(3 - 2*s); }
@@ -1268,12 +1268,12 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'glo
       const items = [];
       // a wall is more opaque on the side that faces U(3) or U(1,2), so the chambers read as rooms
       const f1 = focus === 'wallI', f2 = focus === 'wallII', on2 = outerChk.checked || f2;
-      const AW1 = [f1 ? 0.7 : 0.56, f1 ? 0.3 : 0.12, 0.3];
-      const AW2 = on2 ? [0, f2 ? 0.1 : 0.04, f2 ? 0.5 : 0.38] : [0, 0, 0];
+      const AW1 = [f1 ? 0.7 : 0.56, f1 ? 0.36 : 0.24, 0.3];
+      const AW2 = on2 ? [0, f2 ? 0.18 : 0.11, f2 ? 0.5 : 0.38] : [0, 0, 0];
       // picking a chamber in the legend strengthens it and fades the other two
       const CF = [0, 1, 2].map(function(c){ return chFocus < 0 ? 1 : (c === chFocus ? (c === 1 ? 4 : 1.6) : 0.25); });
       const FA = [0, 1, 2].map(function(c){ return chFocus < 0 ? GA[c] : (c === chFocus ? 1 : 0.12); });
-      const ASH = sheetChk.checked ? [0.66, 0.36, 0.6] : [0, 0, 0];
+      const ASH = sheetChk.checked ? [0.66, 0.5, 0.6] : [0, 0, 0];
       const ARR = [[SXa, SYa, SZa], [SXc, SYc, SZc], [SXf, SYf, SZf]];
       for (let k = 0; k < G.Q.length; k++){
         const qd = G.Q[k], v0 = qd.v, nn0 = qd.n;
@@ -1464,7 +1464,7 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'glo
       secW.style.height = hp + 'px';
       const PW = Math.round(w*d), PH = Math.round(hp*d);
       if (sec.width !== PW || sec.height !== PH){ sec.width = PW; sec.height = PH; sec.style.width = w + 'px'; sec.style.height = hp + 'px'; }
-      const img = sctx.createImageData(PW, PH), px = img.data, soft = [blend(CH[0], 0.3), blend(CH[1], 0.22), blend(CH[2], 0.3)];
+      const img = sctx.createImageData(PW, PH), px = img.data, soft = [blend(CH[0], 0.3), blend(CH[1], 0.36), blend(CH[2], 0.3)];
       for (let j = 0; j < PH; j++){
         const y = SW.y1 - (j + 0.5)/PH*(SW.y1 - SW.y0);
         for (let i = 0; i < PW; i++){
@@ -1581,7 +1581,7 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, svg: { fontCache: 'glo
       shW.style.height = hp + 'px';
       const PW = Math.round(w*d), PH = Math.round(hp*d);
       if (shc.width !== PW || shc.height !== PH){ shc.width = PW; shc.height = PH; shc.style.width = w + 'px'; shc.style.height = hp + 'px'; }
-      const img = shx.createImageData(PW, PH), px = img.data, soft = [blend(CH[0], 0.3), blend(CH[1], 0.22), blend(CH[2], 0.3)];
+      const img = shx.createImageData(PW, PH), px = img.data, soft = [blend(CH[0], 0.3), blend(CH[1], 0.36), blend(CH[2], 0.3)];
       for (let i = 0; i < PW; i++){
         const h = HW.h0 + (i + 0.5)/PW*(HW.h1 - HW.h0), x = G.sheetX(h);
         for (let j = 0; j < PH; j++){
